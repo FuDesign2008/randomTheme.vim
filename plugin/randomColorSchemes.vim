@@ -7,7 +7,7 @@
 "
 "
 "
-
+finish
 if &cp || exists("g:random_color_schemes")
     finish
 endif
