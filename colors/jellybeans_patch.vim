@@ -1,11 +1,11 @@
-"Vim colorscheme molo
-"based on molokai.vim
+"Vim colorscheme jelly
+"based on jellybeans.vim
 "author: fudesign2008@163.com
 
 " Based on
-runtime colors/molokai.vim
+runtime colors/jellybeans.vim
 
-let g:colors_name = "molo"
+let g:colors_name = "jellybeans_patch"
 
 
 hi Search         guifg=NONE        guibg=#902020     gui=NONE      ctermfg=NONE        ctermbg=NONE      cterm=NONE

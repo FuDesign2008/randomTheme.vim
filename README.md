@@ -59,7 +59,7 @@ Good color schemes for vim
     * [Railscasts](https://github.com/jpo/vim-railscasts-theme)
     * [Twilight](https://github.com/matthewtodd/vim-twilight)
     * [Vividchalk](https://github.com/tpope/vim-vividchalk)
-    * [Candy](https://github.com/vim-scripts/candy.vim)
+    * [Candy](https://github.com/vim-scripts/candy.vim) -> fileencoding === dos
     * PhD  -> no repo
     * [ir_black](http://www.github.com/twerth/ir_black)
     * ir_blue
@@ -98,7 +98,6 @@ Bundle 'nanotech/jellybeans.vim'
 Bundle 'jpo/vim-railscasts-theme'
 Bundle 'matthewtodd/vim-twilight'
 Bundle 'tpope/vim-vividchalk'
-Bundle 'vim-scripts/candy.vim'
 Bundle 'twerth/ir_black'
 Bundle 'tomasr/molokai'
 Bundle 'therubymug/vim-pyte'
@@ -119,30 +118,35 @@ By default, the `./plugin/randomColorSchemes.vim` will random color schemes in
 If you want to addd other colors, yon can put these codes into `.vimrc`:
 
 ```vim
-let g:random_color_schemes = [ 'grb256',
-    \ 'distinguished',
-    \ 'guardian',
-    \ 'codeschool',
-    \ 'jellybeans',
-    \ 'railscasts',
-    \ 'twilight',
-    \ 'vividchalk',
-    \ 'candy',
-    \ 'phd',
-    \ 'ir_black',
-    \ 'ir_blue',
-    \ 'ir_dark',
-    \ 'molokai',
-    \ 'pyte',
-    \ 'eclipse',
-    \ 'summerfruit',
-    \ 'autumnleaf_modified',
-    \ 'ironman',
-    \ 'nuvola',
-    \ 'simpleandfriendly',
-    \ 'butterscream',
-    \ 'github',
-    \ 'proton',
-    \ 'solarized' ]
+let g:random_color_schemes_light = ['pyte',
+                    \ 'eclipse',
+                    \ 'summerfruit',
+                    \ 'autumnleaf_modified',
+                    \ 'ironman',
+                    \ 'nuvola',
+                    \ 'simpleandfriendly',
+                    \ 'butterscream',
+                    \ 'github',
+                    \ 'proton']
+
+let g:random_color_schemes_dark = [ 'grb256',
+                    \ 'distinguished',
+                    \ 'guardian',
+                    \ 'codeschool',
+                    \ 'jellybeans',
+                    \ 'railscasts',
+                    \ 'twilight',
+                    \ 'vividchalk',
+                    \ 'candy',
+                    \ 'phd',
+                    \ 'ir_black',
+                    \ 'ir_blue',
+                    \ 'ir_dark',
+                    \ 'molokai']
+
+let g:random_color_schemes_dark = ['solarized']
+
+"default is 1
+let g:random_color_schemes_patch = 0
 ```
 
