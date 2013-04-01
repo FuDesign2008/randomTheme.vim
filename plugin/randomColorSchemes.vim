@@ -16,7 +16,7 @@ let g:random_color_schemes_loaded = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:light_schemes = ['pyte',
+let s:color_schemes = ['pyte',
                     \ 'eclipse',
                     \ 'summerfruit',
                     \ 'autumnleaf_modified',
@@ -25,9 +25,8 @@ let s:light_schemes = ['pyte',
                     \ 'simpleandfriendly',
                     \ 'butterscream',
                     \ 'github',
-                    \ 'proton']
-
-let s:dark_schemes = [ 'grb256',
+                    \ 'proton',
+                    \ 'grb256',
                     \ 'distinguished',
                     \ 'guardian',
                     \ 'codeschool',
@@ -42,42 +41,37 @@ let s:dark_schemes = [ 'grb256',
                     \ 'ir_dark',
                     \ 'molokai']
 
-let s:both_schemes = ['solarized']
+let s:color_schemes_both = ['solarized']
 
-if !exists('g:random_color_schemes_light')
-    let g:random_color_schemes_light = s:light_schemes
-endif
-if !exists('g:random_color_schemes_dark')
-    let g:random_color_schemes_dark = s:dark_schemes
+if !exists('g:random_color_schemes')
+    let g:random_color_schemes = s:color_schemes
 endif
 if !exists('g:random_color_schemes_both')
-    let g:random_color_schemes_both = s:both_schemes
+    let g:random_color_schemes_both = s:color_schemes_both
 endif
 
 if !exists('g:random_color_schemes_patch')
     let g:random_color_schemes_patch = 1
 endif
 
-let s:terminal_color_schemes = extend([], g:random_color_schemes_dark)
-let s:terminal_color_schemes = extend(s:terminal_color_schemes, g:random_color_schemes_both)
+let s:all_color_schemes = extend([], g:random_color_schemes)
+let s:all_color_schemes = extend(s:all_color_schemes, g:random_color_schemes_both)
 
-let s:gui_color_schemes = extend([], s:terminal_color_schemes)
-let s:gui_color_schemes = extend(s:gui_color_schemes, g:random_color_schemes_light)
-
-function! s:GetRandomScheme()
-    if has('gui_runing')
-        let colors = s:gui_color_schemes
-    else
-        let colors = s:terminal_color_schemes
-    endif
-
+function! s:GetOneOrZero()
     let str_time = localtime() . ''
     let time_len = strlen(str_time)
-    let colors_len = len(colors)
+    let last_int = strpart(str_time, time_len - 1) + 0
+    return last_int % 2
+endfunction
+
+function! s:GetRandomScheme()
+    let str_time = localtime() . ''
+    let time_len = strlen(str_time)
+    let colors_len = len(s:all_color_schemes)
     let last_int = strpart(str_time, time_len - colors_len) + 0
 
     let remainder = last_int % colors_len
-    return colors[remainder]
+    return s:all_color_schemes[remainder]
 endfunction
 
 function! s:RandomColorScheme()
@@ -87,14 +81,13 @@ function! s:RandomColorScheme()
         return
     endif
     "set background
-    if has('gui_runing')
-        if index(g:random_color_schemes_light, scheme) >= 0
-            execute 'set background=light'
-        elseif index(g:random_color_schemes_dark, scheme) >= 0
+    if index(g:random_color_schemes_both, scheme) >=0
+        if s:GetOneOrZero() == 1
             execute 'set background=dark'
+        else
+            execute 'set background=light'
         endif
-    else
-        execute 'set background=dark'
+
     endif
     "set colorscheme
     if g:random_color_schemes_patch
