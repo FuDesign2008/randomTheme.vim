@@ -17,39 +17,37 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:color_schemes = ['pyte',
-                    \ 'eclipse',
                     \ 'summerfruit',
                     \ 'autumnleaf_modified',
                     \ 'ironman',
-                    \ 'nuvola',
-                    \ 'oceanlight',
-                    \ 'simpleandfriendly',
-                    \ 'butterscream',
-                    \ 'github',
                     \ 'proton',
                     \ 'mayansmoke',
-                    \ 'grb256',
-                    \ 'guardian',
                     \ 'codeschool',
                     \ 'distinguished',
                     \ 'jellybeans',
                     \ 'railscasts',
                     \ 'twilight',
                     \ 'vividchalk',
-                    \ 'candy',
-                    \ 'phd',
                     \ 'ir_black',
                     \ 'ir_blue',
                     \ 'ir_dark',
-                    \ 'molokai']
+                    \ 'molokai',
+                    \ 'zenburn',
+                    \ 'desert',
+                    \ 'gentooish',
+                    \ 'wombat',
+                    \ 'wombat256',
+                    \ 'lucius'
+                    \]
 
-let s:color_schemes_both = ['solarized']
+let s:color_schemes_gui_only = ['solarized']
 
 if !exists('g:random_color_schemes')
     let g:random_color_schemes = s:color_schemes
 endif
-if !exists('g:random_color_schemes_both')
-    let g:random_color_schemes_both = s:color_schemes_both
+
+if !exists('g:color_schemes_gui_only')
+    let g:color_schemes_gui_only = s:color_schemes_gui_only
 endif
 
 if !exists('g:random_color_schemes_patch')
@@ -57,7 +55,7 @@ if !exists('g:random_color_schemes_patch')
 endif
 
 let s:all_color_schemes = extend([], g:random_color_schemes)
-let s:all_color_schemes = extend(s:all_color_schemes, g:random_color_schemes_both)
+let s:all_color_schemes = extend(s:all_color_schemes, s:color_schemes_gui_only)
 
 function! s:GetOneOrZero()
     let str_time = localtime() . ''
@@ -78,20 +76,17 @@ endfunction
 
 function! s:RandomColorScheme()
     let scheme = s:GetRandomScheme()
-
+    let isGui = has('gui_running')
+    let limit = 10
+    let counter = 0
+    while (!isGui && counter < limit && index(g:color_schemes_gui_only, scheme) > -1) {
+        let scheme = s:GetRandomScheme()
+        couter += 1
+    }
     if strlen(scheme) == 0
         return
     endif
-    "set background
-    if index(g:random_color_schemes_both, scheme) >=0
-        if s:GetOneOrZero() == 1
-            execute 'set background=dark'
-        else
-            execute 'set background=light'
-        endif
 
-    endif
-    "set colorscheme
     if g:random_color_schemes_patch
         let file_path = globpath(&runtimepath, 'colors/' . scheme . '_patch.vim')
         if filereadable(file_path)

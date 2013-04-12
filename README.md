@@ -49,6 +49,13 @@ Good color schemes for vim
     * [molokai](http://www.github.com/tomasr/molokai)
     * [mayansmoke](https://github.com/vim-scripts/mayansmoke)
 
+###[Top Color Schemes](http://www.vim.org/scripts/script_search_results.php?keywords=&script_type=color+scheme&order_by=rating&direction=descending&search=search)
+    * [zenburn](https://github.com/jnurmine/Zenburn)
+    * [desert](https://github.com/vim-scripts/desert.vim)
+    * [gentooish](https://github.com/briancarper/gentooish.vim)
+    * [wombat256](https://github.com/FuDesign2008/vim-wombat256i)
+    * [lucius](https://github.com/jonathanfilip/vim-lucius)
+
 ###Total
 
 1. Light Schemes
@@ -79,9 +86,54 @@ Good color schemes for vim
     * ir_blue
     * ir_dark
     * [molokai](http://www.github.com/tomasr/molokai)
+    * [zenburn](https://github.com/jnurmine/Zenburn)
+    * [desert](https://github.com/vim-scripts/desert.vim)
+    * [gentooish](https://github.com/briancarper/gentooish.vim)
+    * [wombat](https://github.com/cschlueter/vim-wombat)
+    * wombat256
+    * [lucius](https://github.com/jonathanfilip/vim-lucius)
 1. Special Schemes
     * [solarized](https://github.com/altercation/vim-colors-solarized)
 
+##Color Schemes Testing
+
+scheme               | gui   | terminal  | total
+==================== | ===== | ========= | ======
+pyte                 | ++    | 0         | ++
+eclipse              | 0     | 0         | 0
+summerfruit          | ++    | 0         | ++
+autumnleaf_modified  | +     | +         | ++
+ironman              | +     | 0         | +
+nuvola               | +     | --        | -
+oceanlight           | +     | 0         | +
+simpleandfriendly    | -     | -         | --
+butterscream         | 0     | 0         | 0
+github               | +     | 0         | +
+proton               | ++    | 0         | ++
+mayansmoke           | +     | +         | ++
+grb256               | +     | 0         | +
+guardian             | 0     | -         | -
+codeschool           | ++    | +         | +++
+distinguished        | +     | +         | ++
+jellybeans           | ++    | ++        | ++++
+railscasts           | ++    | +         | +++
+twilight             | +     | +         | ++
+vividchalk           | +     | +         | ++
+candy                | 0     | 0         | 0
+phd                  | +     | 0         | +
+ir_black             | +     | +         | ++
+ir_blue              | +     | +         | ++
+ir_dark              | ++    | +         | ++
+molokai              | ++    | ++        | ++++
+zenburn              | ++    | ++        | +++
+desert               | ++    | 0         | ++
+gentooish            | ++    | +         | +++
+wombat               | +     | +         | ++
+wombat256            | +     | ++        | +++
+lucius               | ++    | ++        | ++++
+solarized            | ++    | -         | +
+
+The schemes that total score is less than `++` will be abandoned, except solarized for gui.
 
 ##Customing Color Schemes
 Sometimes some color scheme does not fit eyes and some modifications should be made.
@@ -95,31 +147,25 @@ Sometimes some color scheme does not fit eyes and some modifications should be m
 ```vim
 "light color schemes
 Bundle 'therubymug/vim-pyte'
-Bundle 'FuDesign2008/eclipse.vim'
 Bundle 'vim-scripts/summerfruit.vim'
 Bundle 'vim-scripts/autumnleaf_modified.vim'
 Bundle 'FuDesign2008/ironman.vim'
-Bundle 'vim-scripts/nuvola.vim'
-Bundle 'vim-scripts/oceanlight'
-Bundle 'FuDesign2008/simpleandfriendly.vim'
-Bundle 'FuDesign2008/buttercream.vim'
-Bundle 'FuDesign2008/github.vim'
 Bundle 'FuDesign2008/proton.vim'
 Bundle 'vim-scripts/mayansmoke.vim'
 "dark color schemes
-Bundle 'alindeman/grb256'
-Bundle 'Lokaltog/vim-distinguished'
-Bundle 'FuDesign2008/guardian.vim'
 Bundle 'FuDesign2008/codeschool.vim'
 Bundle 'Lokaltog/vim-distinguished'
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'jpo/vim-railscasts-theme'
 Bundle 'matthewtodd/vim-twilight'
 Bundle 'tpope/vim-vividchalk'
-Bundle 'FuDesign2008/candy.vim'
-Bundle 'FuDesign2008/phd.vim'
 Bundle 'twerth/ir_black'
 Bundle 'tomasr/molokai'
+Bundle 'jnurmine/Zenburn'
+Bundle 'vim-scripts/desert.vim'
+Bundle 'briancarper/gentooish.vim'
+Bundle 'cschlueter/vim-wombat'
+Bundle 'jonathanfilip/vim-lucius'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'FuDesign2008/GoodColors.vim'
 "color schemes end
