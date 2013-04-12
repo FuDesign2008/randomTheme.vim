@@ -105,7 +105,7 @@ Bundle 'FuDesign2008/simpleandfriendly.vim'
 Bundle 'FuDesign2008/buttercream.vim'
 Bundle 'FuDesign2008/github.vim'
 Bundle 'FuDesign2008/proton.vim'
-Bundle 'FuDesign2008/mayansmoke.vim'
+Bundle 'vim-scripts/mayansmoke.vim'
 "dark color schemes
 Bundle 'alindeman/grb256'
 Bundle 'Lokaltog/vim-distinguished'

@@ -111,7 +111,15 @@ endfunction
 
 call s:RandomColorScheme()
 
+function!  s:EditColorScheme(scheme)
+    let file_path = globpath(&runtimepath, 'colors/' . a:scheme . '.vim')
+    if filereadable(file_path)
+        split file_path
+    endif
+endfunction
+
 command! -nargs=0 RandomColor call s:RandomColorScheme()
+command! -nargs=1 EditColor call s:EditColorScheme('<args>')
 
 
 let &cpo = s:save_cpo
