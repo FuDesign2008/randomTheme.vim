@@ -79,10 +79,10 @@ function! s:RandomColorScheme()
     let isGui = has('gui_running')
     let limit = 10
     let counter = 0
-    while (!isGui && counter < limit && index(g:color_schemes_gui_only, scheme) > -1) {
+    while !isGui && counter < limit && index(g:color_schemes_gui_only, scheme) > -1 
         let scheme = s:GetRandomScheme()
         couter += 1
-    }
+    endwhile
     if strlen(scheme) == 0
         return
     endif
