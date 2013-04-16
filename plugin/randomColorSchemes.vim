@@ -81,7 +81,7 @@ function! s:RandomColorScheme()
     let counter = 0
     while !isGui && counter < limit && index(g:color_schemes_gui_only, scheme) > -1
         let scheme = s:GetRandomScheme()
-        let couter += 1
+        let counter += 1
     endwhile
     if strlen(scheme) == 0
         return
