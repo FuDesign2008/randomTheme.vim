@@ -98,7 +98,7 @@ Good color schemes for vim
 ##Color Schemes Testing
 
 scheme              |gui  |terminal |total
-====================|=====|=========|======
+--------------------|-----|---------|------
 pyte                |++   |0        |++
 eclipse             |0    |0        |0
 summerfruit         |++   |0        |++
