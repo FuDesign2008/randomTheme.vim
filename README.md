@@ -183,20 +183,10 @@ If you want to add/remove [other] colors, yon can put codes like these into
 
 ```vim
 "config which color schemes to random
-let g:random_color_schemes = ['pyte',
-                    \ 'eclipse',
-                    \ 'summerfruit',
-                    \ 'autumnleaf_modified',
-                    \ 'ironman',
-                    \ 'nuvola',
-                    \ 'simpleandfriendly',
-                    \ 'butterscream',
-                    \ 'github',
-                    \ 'proton']
-
-
-"config color schemes that have light and dark background
-let g:random_color_schemes_both = ['solarized']
+let g:random_color_schemes = ['molokai',
+                    \ 'zenburn',
+                    \ 'jellybeans',
+                    \ 'peaksea']
 
 "config to use patch for color schemes or not, default is 1
 let g:random_color_schemes_patch = 0
