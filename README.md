@@ -151,7 +151,7 @@ Bundle 'vim-scripts/summerfruit.vim'
 Bundle 'vim-scripts/autumnleaf_modified.vim'
 Bundle 'FuDesign2008/ironman.vim'
 Bundle 'FuDesign2008/proton.vim'
-Bundle 'vim-scripts/mayansmoke.vim'
+Bundle 'vim-scripts/mayansmoke'
 "dark color schemes
 Bundle 'FuDesign2008/codeschool.vim'
 Bundle 'Lokaltog/vim-distinguished'
