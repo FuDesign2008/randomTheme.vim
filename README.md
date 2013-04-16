@@ -97,41 +97,41 @@ Good color schemes for vim
 
 ##Color Schemes Testing
 
-scheme               | gui   | terminal  | total
-==================== | ===== | ========= | ======
-pyte                 | ++    | 0         | ++
-eclipse              | 0     | 0         | 0
-summerfruit          | ++    | 0         | ++
-autumnleaf_modified  | +     | +         | ++
-ironman              | +     | 0         | +
-nuvola               | +     | --        | -
-oceanlight           | +     | 0         | +
-simpleandfriendly    | -     | -         | --
-butterscream         | 0     | 0         | 0
-github               | +     | 0         | +
-proton               | ++    | 0         | ++
-mayansmoke           | +     | +         | ++
-grb256               | +     | 0         | +
-guardian             | 0     | -         | -
-codeschool           | ++    | +         | +++
-distinguished        | +     | +         | ++
-jellybeans           | ++    | ++        | ++++
-railscasts           | ++    | +         | +++
-twilight             | +     | +         | ++
-vividchalk           | +     | +         | ++
-candy                | 0     | 0         | 0
-phd                  | +     | 0         | +
-ir_black             | +     | +         | ++
-ir_blue              | +     | +         | ++
-ir_dark              | ++    | +         | ++
-molokai              | ++    | ++        | ++++
-zenburn              | ++    | ++        | +++
-desert               | ++    | 0         | ++
-gentooish            | ++    | +         | +++
-wombat               | +     | +         | ++
-wombat256            | +     | ++        | +++
-lucius               | ++    | ++        | ++++
-solarized            | ++    | -         | +
+scheme              |gui  |terminal |total
+====================|=====|=========|======
+pyte                |++   |0        |++
+eclipse             |0    |0        |0
+summerfruit         |++   |0        |++
+autumnleaf_modified |+    |+        |++
+ironman             |+    |0        |+
+nuvola              |+    |--       |-
+oceanlight          |+    |0        |+
+simpleandfriendly   |-    |-        |--
+butterscream        |0    |0        |0
+github              |+    |0        |+
+proton              |++   |0        |++
+mayansmoke          |+    |+        |++
+grb256              |+    |0        |+
+guardian            |0    |-        |-
+codeschool          |++   |+        |+++
+distinguished       |+    |+        |++
+jellybeans          |++   |++       |++++
+railscasts          |++   |+        |+++
+twilight            |+    |+        |++
+vividchalk          |+    |+        |++
+candy               |0    |0        |0
+phd                 |+    |0        |+
+ir_black            |+    |+        |++
+ir_blue             |+    |+        |++
+ir_dark             |++   |+        |++
+molokai             |++   |++       |++++
+zenburn             |++   |++       |+++
+desert              |++   |0        |++
+gentooish           |++   |+        |+++
+wombat              |+    |+        |++
+wombat256           |+    |++       |+++
+lucius              |++   |++       |++++
+solarized           |++   |-        |+
 
 The schemes that total score is less than `++` will be abandoned, except solarized for gui.
 
