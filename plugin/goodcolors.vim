@@ -1,4 +1,4 @@
-"randomColorSchemes.vim
+"goodcolors.vim
 "
 "author: fudesign2008@163.com
 "
@@ -8,11 +8,11 @@
 "
 "
 
-if &cp || exists('g:random_color_schemes_loaded')
+if &cp || exists('g:good_colors_loaded')
     finish
 endif
 
-let g:random_color_schemes_loaded = 1
+let g:good_colors_loaded = 1
 let s:save_cpo = &cpo
 set cpo&vim
 

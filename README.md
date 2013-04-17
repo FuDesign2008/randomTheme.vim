@@ -175,8 +175,8 @@ Bundle 'FuDesign2008/GoodColors.vim'
 Using one single favorite color scheme is good, but sometimes is toneless. More
 than one favorite color schemes are tasteful. Randoming favorites is better.
 
-By default, the `./plugin/randomColorSchemes.vim` will random color schemes in
-`./colors` folder of `GoodColors.vim`.
+By default, the `./plugin/goodcolors.vim` will random the color schemes that
+have scores more that `++`.
 
 If you want to add/remove [other] colors, yon can put codes like these into
 `.vimrc`:
@@ -187,6 +187,9 @@ let g:random_color_schemes = ['molokai',
                     \ 'zenburn',
                     \ 'jellybeans',
                     \ 'peaksea']
+
+"config the color schemes that only support gui mode
+let g:color_schemes_gui_only = ['solarized']
 
 "config to use patch for color schemes or not, default is 1
 let g:random_color_schemes_patch = 0
