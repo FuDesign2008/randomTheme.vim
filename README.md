@@ -49,6 +49,7 @@ Good color schemes for vim
 ###Others
 * [molokai](http://www.github.com/tomasr/molokai)
 * [mayansmoke](https://github.com/vim-scripts/mayansmoke)
+* [peaksea](https://github.com/vim-scripts/peaksea)
 
 ###[Top Color Schemes](http://www.vim.org/scripts/script_search_results.php?keywords=&script_type=color+scheme&order_by=rating&direction=descending&search=search)
 * [zenburn](https://github.com/jnurmine/Zenburn)
@@ -93,6 +94,7 @@ Good color schemes for vim
     * [wombat](https://github.com/cschlueter/vim-wombat)
     * wombat256
     * [lucius](https://github.com/jonathanfilip/vim-lucius)
+    * [peaksea](https://github.com/vim-scripts/peaksea)
 1. Special Schemes
     * [solarized](https://github.com/altercation/vim-colors-solarized)
 
@@ -132,6 +134,7 @@ gentooish           |++   |+        |+++
 wombat              |+    |+        |++
 wombat256           |+    |++       |+++
 lucius              |++   |++       |++++
+peaksea             |++   |++       |++++
 solarized           |++   |-        |+
 
 The schemes that total score is less than `++` will be abandoned, except solarized for gui.
@@ -167,6 +170,7 @@ Bundle 'vim-scripts/desert.vim'
 Bundle 'briancarper/gentooish.vim'
 Bundle 'cschlueter/vim-wombat'
 Bundle 'jonathanfilip/vim-lucius'
+Bundle 'vim-scripts/peaksea'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'FuDesign2008/GoodColors.vim'
 "color schemes end

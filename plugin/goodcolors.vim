@@ -38,6 +38,7 @@ let s:color_schemes = ['pyte',
                     \ 'wombat',
                     \ 'wombat256',
                     \ 'lucius'
+                    \ 'peaksea'
                     \]
 
 let s:color_schemes_gui_only = ['solarized']

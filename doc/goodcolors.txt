@@ -59,6 +59,7 @@ is the only way to support. Add those lines in your configuation of Vundle: >
         Bundle 'briancarper/gentooish.vim'
         Bundle 'cschlueter/vim-wombat'
         Bundle 'jonathanfilip/vim-lucius'
+        Bundle 'vim-scripts/peaksea'
         Bundle 'altercation/vim-colors-solarized'
         Bundle 'FuDesign2008/GoodColors.vim'
         "color schemes end
