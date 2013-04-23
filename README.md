@@ -42,19 +42,19 @@ Good color schemes for vim
 * PhD
 
 ###[ir_black Serials](http://www.github.com/twerth/ir_black)
-    * ir_black
-    * ir_blue
-    * ir_dark
+* ir_black
+* ir_blue
+* ir_dark
 ###Others
-    * [molokai](http://www.github.com/tomasr/molokai)
-    * [mayansmoke](https://github.com/vim-scripts/mayansmoke)
+* [molokai](http://www.github.com/tomasr/molokai)
+* [mayansmoke](https://github.com/vim-scripts/mayansmoke)
 
 ###[Top Color Schemes](http://www.vim.org/scripts/script_search_results.php?keywords=&script_type=color+scheme&order_by=rating&direction=descending&search=search)
-    * [zenburn](https://github.com/jnurmine/Zenburn)
-    * [desert](https://github.com/vim-scripts/desert.vim)
-    * [gentooish](https://github.com/briancarper/gentooish.vim)
-    * [wombat256](https://github.com/FuDesign2008/vim-wombat256i)
-    * [lucius](https://github.com/jonathanfilip/vim-lucius)
+* [zenburn](https://github.com/jnurmine/Zenburn)
+* [desert](https://github.com/vim-scripts/desert.vim)
+* [gentooish](https://github.com/briancarper/gentooish.vim)
+* [wombat256](https://github.com/FuDesign2008/vim-wombat256i)
+* [lucius](https://github.com/jonathanfilip/vim-lucius)
 
 ###Total
 
