@@ -37,7 +37,7 @@ let s:color_schemes = ['pyte',
                     \ 'gentooish',
                     \ 'wombat',
                     \ 'wombat256',
-                    \ 'lucius'
+                    \ 'lucius',
                     \ 'peaksea'
                     \]
 
