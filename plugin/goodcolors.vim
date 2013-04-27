@@ -109,8 +109,9 @@ call s:RandomColorScheme()
 
 function!  s:EditColorScheme(scheme)
     let file_path = globpath(&runtimepath, 'colors/' . a:scheme . '.vim')
+    echo file_path
     if filereadable(file_path)
-        split file_path
+        execute ':split ' . file_path
     endif
 endfunction
 
