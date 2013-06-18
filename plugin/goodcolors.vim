@@ -9,8 +9,10 @@
 "
 
 if &cp || exists('g:good_colors_loaded')
-    call s:RandomColorScheme()
-    finish
+    if exists('s:RandomColorScheme')
+        call s:RandomColorScheme()
+        finish
+    endif
 endif
 
 let g:good_colors_loaded = 1
