@@ -9,6 +9,7 @@
 "
 
 if &cp || exists('g:good_colors_loaded')
+    call s:RandomColorScheme()
     finish
 endif
 
@@ -77,15 +78,18 @@ endfunction
 
 function! s:RandomColorScheme()
     let scheme = s:GetRandomScheme()
-    let isGui = has('gui_running')
-    let limit = 10
-    let counter = 0
-    while !isGui && counter < limit && index(g:color_schemes_gui_only, scheme) > -1
-        let scheme = s:GetRandomScheme()
-        let counter += 1
-    endwhile
-    if strlen(scheme) == 0
-        return
+
+    if has('gui_running')
+        while strlen(scheme) == 0
+            let scheme = s:GetRandomScheme()
+        endwhile
+    else
+        let limit = 20
+        let counter = 0
+        while counter < limit && (strlen(scheme) == 0  || index(g:color_schemes_gui_only, scheme) > -1)
+            let scheme = s:GetRandomScheme()
+            let counter += 1
+        endwhile
     endif
 
     if g:random_color_schemes_patch
@@ -105,7 +109,6 @@ function! s:RandomColorScheme()
 
 endfunction
 
-call s:RandomColorScheme()
 
 function!  s:EditColorScheme(scheme)
     let file_path = globpath(&runtimepath, 'colors/' . a:scheme . '.vim')
@@ -116,7 +119,7 @@ endfunction
 
 command! -nargs=0 RandomColor call s:RandomColorScheme()
 command! -nargs=1 EditColor call s:EditColorScheme('<args>')
-
+call s:RandomColorScheme()
 
 let &cpo = s:save_cpo
 
