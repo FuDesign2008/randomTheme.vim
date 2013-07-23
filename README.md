@@ -196,7 +196,5 @@ let g:random_color_schemes = ['molokai',
 "config the color schemes that only support gui mode
 let g:color_schemes_gui_only = ['solarized']
 
-"config to use patch for color schemes or not, default is 1
-let g:random_color_schemes_patch = 0
 ```
 
