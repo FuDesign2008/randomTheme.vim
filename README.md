@@ -193,8 +193,5 @@ let g:random_color_schemes = ['molokai',
                     \ 'jellybeans',
                     \ 'peaksea']
 
-"config the color schemes that only support gui mode
-let g:color_schemes_gui_only = ['solarized']
-
 ```
 

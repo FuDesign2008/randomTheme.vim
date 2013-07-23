@@ -75,10 +75,6 @@ If you want to add/remove [other] colors, you can set the value of
                             \ 'jellybeans',
                             \ 'peaksea']
 
-There are some colors only good for gui, and you do want you to use them in
-terminal, you can set `g:color_schemes_gui_only`: >
-        let g:color_schemes_gui_only = ['solarized']
-
 
 ==============================================================================
 3: License                                                 *GoodColorsLicense*

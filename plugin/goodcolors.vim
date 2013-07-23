@@ -9,7 +9,7 @@
 "
 
 if &cp || exists('g:good_colors_loaded')
-    if exists('s:RandomColorScheme')
+    if exists('*s:RandomColorScheme')
         call s:RandomColorScheme()
         finish
     endif
@@ -41,22 +41,16 @@ let s:color_schemes = ['pyte',
                     \ 'wombat',
                     \ 'wombat256',
                     \ 'lucius',
-                    \ 'peaksea'
+                    \ 'peaksea',
+                    \ 'solarized'
                     \]
 
-let s:color_schemes_gui_only = ['solarized']
 
 if !exists('g:random_color_schemes')
     let g:random_color_schemes = s:color_schemes
 endif
 
-if !exists('g:color_schemes_gui_only')
-    let g:color_schemes_gui_only = s:color_schemes_gui_only
-endif
-
-
 let s:all_color_schemes = extend([], g:random_color_schemes)
-let s:all_color_schemes = extend(s:all_color_schemes, s:color_schemes_gui_only)
 
 function! s:GetOneOrZero()
     let str_time = localtime() . ''
@@ -65,24 +59,27 @@ function! s:GetOneOrZero()
     return last_int % 2
 endfunction
 
+let s:counter = 0
 function! s:GetRandomScheme()
-    let now = localtime()
+    let s:counter = s:counter + 1
+    let now = localtime() + s:counter
     let remainder = now % len(s:all_color_schemes)
     "To avoid an error for an invalid index use the get() function.
-    let scheme = get(s:all_color_schemes, remainder, 0)
-    return scheme == 0 ? get(s:all_color_schemes, 0) : scheme
+    let scheme = get(s:all_color_schemes, remainder, 'NULL')
+    "echo 'remainder: '  . remainder . ' ' . scheme
+    if scheme == 'NULL'
+        return get(s:all_color_schemes, 0)
+    endif
+    return scheme
 endfunction
 
 function! s:RandomColorScheme()
+    "echo 'run random'
     let randColor = 0
     while !randColor
         let scheme = s:GetRandomScheme()
-        if !has('gui_running')
-            while index(g:color_schemes_gui_only, scheme) != -1
-                let scheme = s:GetRandomScheme()
-            endwhile
-        endif
         let file_path = globpath(&runtimepath, 'colors/' . scheme . '.vim')
+        "echo 'path: ' . file_path
         if filereadable(file_path)
             let randColor = 1
             execute 'colorscheme ' . scheme
@@ -93,7 +90,6 @@ endfunction
 
 function!  s:EditColorScheme(scheme)
     let file_path = globpath(&runtimepath, 'colors/' . a:scheme . '.vim')
-    echo file_path
     if filereadable(file_path)
         execute ':split ' . file_path
     endif
