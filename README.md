@@ -55,7 +55,6 @@ Good color schemes for vim
 * [zenburn](https://github.com/jnurmine/Zenburn)
 * [desert](https://github.com/vim-scripts/desert.vim)
 * [gentooish](https://github.com/briancarper/gentooish.vim)
-* [wombat256](https://github.com/FuDesign2008/vim-wombat256i)
 * [lucius](https://github.com/jonathanfilip/vim-lucius)
 
 ###Total
@@ -70,12 +69,10 @@ Good color schemes for vim
     * [oceanlight](https://github.com/vim-scripts/oceanlight)
     * [simpleandfriendly](https://github.com/vim-scripts/simpleandfriendly.vim)
     * [buttercream](https://github.com/FuDesign2008/buttercream.vim)
-    * [github](https://github.com/FuDesign2008/github.vim)
     * [Proton](https://github.com/FuDesign2008/proton.vim)
     * [mayansmoke](https://github.com/vim-scripts/mayansmoke)
 1. Dark Schemes
     * [RGB256](https://github.com/alindeman/grb256)
-    * [Guardian](https://github.com/FuDesign2008/guardian.vim)
     * [Codeschool](https://github.com/FuDesign2008/codeschool.vim)
     * [Distinguished](https://github.com/Lokaltog/vim-distinguished)
     * [jellybeans](http://www.github.com/nanotech/jellybeans.vim)
@@ -83,7 +80,6 @@ Good color schemes for vim
     * [Twilight](https://github.com/matthewtodd/vim-twilight)
     * [Vividchalk](https://github.com/tpope/vim-vividchalk)
     * [Candy](https://github.com/vim-scripts/candy.vim)
-    * [PhD] (https://github.com/FuDesign2008/phd.vim)
     * [ir_black](http://www.github.com/twerth/ir_black)
     * ir_blue
     * ir_dark

@@ -44,6 +44,20 @@ let s:color_schemes = ['pyte',
                     \ 'peaksea',
                     \ 'solarized'
                     \]
+"lucius color schemes has multiple mode
+let s:lucius_commands = [ 'LuciusBlack',
+                    \ 'LuciusBlackHighContrast',
+                    \ 'LuciusBlackLowContrast',
+                    \ 'LuciusDark',
+                    \ 'LuciusDarkHighContrast',
+                    \ 'LuciusDarkLowContrast',
+                    \ 'LuciusLight',
+                    \ 'LuciusLightHighContrast',
+                    \ 'LuciusLightLowContrast',
+                    \ 'LuciusWhite',
+                    \ 'LuciusWhiteHighContrast',
+                    \ 'LuciusWhiteLowContrast'
+                    \]
 
 
 if !exists('g:random_color_schemes')
@@ -51,6 +65,11 @@ if !exists('g:random_color_schemes')
 endif
 
 let s:all_color_schemes = extend([], g:random_color_schemes)
+let index_lucius = index(s:all_color_schemes, 'lucius')
+if index_lucius > -1
+    call remove(s:all_color_schemes, index_lucius)
+    call extend(s:all_color_schemes, s:lucius_commands)
+endif
 
 function! s:GetOneOrZero()
     let str_time = localtime() . ''
@@ -60,29 +79,38 @@ function! s:GetOneOrZero()
 endfunction
 
 let s:counter = 0
-function! s:GetRandomScheme()
+function! s:ListRandomValue(list)
     let s:counter = s:counter + 1
     let now = localtime() + s:counter
-    let remainder = now % len(s:all_color_schemes)
+    let remainder = now % len(a:list)
     "To avoid an error for an invalid index use the get() function.
-    let scheme = get(s:all_color_schemes, remainder, 'NULL')
+    let value = get(a:list, remainder, 'NULL')
     "echo 'remainder: '  . remainder . ' ' . scheme
-    if scheme == 'NULL'
-        return get(s:all_color_schemes, 0)
+    if value == 'NULL'
+        return get(a:list, 0)
     endif
-    return scheme
+    return value
 endfunction
 
 function! s:RandomColorScheme()
     "echo 'run random'
     let randColor = 0
     while !randColor
-        let scheme = s:GetRandomScheme()
+        let scheme = s:ListRandomValue(s:all_color_schemes)
+        let index_lucius = stridx(scheme, 'Lucius')
+        let cmd = 'NULL'
+        if index_lucius > -1
+            let cmd = scheme
+            let scheme = 'lucius'
+        endif
         let file_path = globpath(&runtimepath, 'colors/' . scheme . '.vim')
         "echo 'path: ' . file_path
         if filereadable(file_path)
             let randColor = 1
             execute 'colorscheme ' . scheme
+            if cmd != 'NULL'
+                execute '' . cmd
+            endif
         endif
     endwhile
 endfunction
