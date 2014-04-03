@@ -125,7 +125,12 @@ endfunction
 
 command! -nargs=0 RandomColor call s:RandomColorScheme()
 command! -nargs=1 EditColor call s:EditColorScheme('<args>')
-call s:RandomColorScheme()
+
+if has('gui_running')
+    call s:RandomColorScheme()
+else
+    execute 'colorscheme molokai'
+endif
 
 let &cpo = s:save_cpo
 
