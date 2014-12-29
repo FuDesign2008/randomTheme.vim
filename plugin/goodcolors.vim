@@ -124,7 +124,7 @@ function!  s:EditColorScheme(scheme)
 endfunction
 
 command! -nargs=0 RandomColor call s:RandomColorScheme()
-command! -nargs=1 EditColor call s:EditColorScheme('<args>')
+command! -nargs=1 EditColor call s:EditColorScheme(<f-args>)
 
 if has('gui_running')
     call s:RandomColorScheme()
