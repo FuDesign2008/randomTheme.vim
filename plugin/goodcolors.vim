@@ -130,8 +130,10 @@ endfunction
 command! -nargs=0 RandomColor call s:RandomColorScheme()
 command! -nargs=1 EditColor call s:EditColorScheme(<f-args>)
 
-if has('gui_running') && exists('g:random_color_start') && g:random_color_start
-    call s:RandomColorScheme()
+if has('gui_running')
+    if exists('g:random_color_start') && g:random_color_start
+        call s:RandomColorScheme()
+    endif
 else
     execute 'colorscheme molokai'
 endif
