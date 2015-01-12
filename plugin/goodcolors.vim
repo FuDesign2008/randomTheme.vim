@@ -10,7 +10,11 @@
 
 if &cp || exists('g:good_colors_loaded')
     if exists('*s:RandomColorScheme')
-        call s:RandomColorScheme()
+
+        if exists('g:random_color_start') && g:random_color_start
+            call s:RandomColorScheme()
+        endif
+
         finish
     endif
 endif
@@ -126,7 +130,7 @@ endfunction
 command! -nargs=0 RandomColor call s:RandomColorScheme()
 command! -nargs=1 EditColor call s:EditColorScheme(<f-args>)
 
-if has('gui_running')
+if has('gui_running') && exists('g:random_color_start') && g:random_color_start
     call s:RandomColorScheme()
 else
     execute 'colorscheme molokai'

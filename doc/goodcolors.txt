@@ -75,6 +75,11 @@ If you want to add/remove [other] colors, you can set the value of
                             \ 'jellybeans',
                             \ 'peaksea']
 
+The plugin will use a random color scheme when vim starting up in default.
+If you want to disable this action, you can set the value of
+'g:random_color_start' in `.vimrc`. For example: >
+        let g:random_color_start = 0
+        colo pyte
 
 ==============================================================================
 3: License                                                 *GoodColorsLicense*
@@ -101,9 +106,11 @@ comments about this plugin.
 ==============================================================================
 5: Changelog                                             *GoodColorsChangelog*
 
+1.0.2
+    - add g:random_color_start option
 
 1.0.1
-    - add help document.
+    - add help document
 
 1.0.0
     - random good colors

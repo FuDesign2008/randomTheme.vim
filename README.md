@@ -191,3 +191,26 @@ let g:random_color_schemes = ['molokai',
 
 ```
 
+
+##Configuration
+
+* `g:random_color_start`  Using a random color scheme when vim starting up or
+not. Default value is `1`, you can set it to `0` in `.vimrc`.
+
+* `g:random_color_schemes`  A list of color schemes that you want to use, see
+`Random Favorite Color Schemes` for more infomation.
+
+##Change Log
+
+
+* 1.0.2
+    - add `g:random_color_start` option
+
+* 1.0.1
+    - add help document
+
+* 1.0.0
+    - random good colors
+    - add good colors
+
+
