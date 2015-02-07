@@ -125,12 +125,24 @@ command! -nargs=0 SolarizedDark  call s:SolarizedColor(0)
 command! -nargs=0 RandomColor call s:RandomColorScheme()
 "------
 
-if has('gui_running')
-    if exists('g:random_color_start') && g:random_color_start
+let s:randomOnStart = 1
+if exists('g:random_color_start')
+    let s:randomOnStart = g:random_color_start
+endif
+
+if s:randomOnStart != 0
+    let guiRunning = has('gui_running')
+    if s:randomOnStart == 2
+        if guiRunning
+            call s:RandomColorScheme()
+        endif
+    elseif s:randomOnStart == 3
+        if !guiRunning
+            call s:RandomColorScheme()
+        endif
+    else
         call s:RandomColorScheme()
     endif
-else
-    execute 'colorscheme molokai'
 endif
 
 let &cpo = s:save_cpo

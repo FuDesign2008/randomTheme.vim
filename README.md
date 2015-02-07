@@ -1,6 +1,6 @@
 RandomColor.vim
 ==============
-A  plugin for random  color schemes!
+A  plugin for random color schemes, even on start up!
 
 ##Install
 
@@ -28,8 +28,18 @@ let g:random_color_schemes = ['molokai',
 
 ###`g:random_color_start`
 
-Using a random color scheme when vim starting up or not.  All available values
-are here:
+The plugin will use a random color scheme when vim starting up by default.
+If you want to disable this action, you can set the value of
+`g:random_color_start` in `.vimrc`. For example:
+
+```vim
+
+let g:random_color_start = 0
+colo pyte
+
+```
+
+Available values are here:
 
 * `0` - Do not use
 * `1` - Use, *default value*
