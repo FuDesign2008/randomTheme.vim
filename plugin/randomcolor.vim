@@ -49,7 +49,7 @@ let s:schemeForCommandPrefix = {
 
 let s:allColorSchemes = []
 
-if !exists('g:random_color_schemes')
+if exists('g:random_color_schemes')
     let s:allColorSchemes = g:random_color_schemes
 else
     let filePaths = globpath(&runtimepath, "colors/*.vim")
