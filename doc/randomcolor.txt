@@ -1,0 +1,58 @@
+*RandomColor.vim*  A  plugin for random  color schemes!
+
+                              Reference Manual
+
+==============================================================================
+CONTENTS                                                 *RandomColor-contents*
+
+    1. Usage ................ |RandomColorUsage|
+    2. Options .............. |RandomColorOptions|
+    3. Changelog ............ |RandomColorChangelog|
+
+==============================================================================
+1: Usage                                                    *RandomColorUsage*
+
+The plugin can use a random color scheme when vim open up and provide a command
+for doing it: >
+        :RandomColor
+
+==============================================================================
+2: Options                                                *RandomColorOptions*
+
+By default, the plugin will try to find all the color schemes in runtime path.
+If want to use your favorite color schemes for random, you can set a list/array
+to 'g:random_color_schemes' in `.vimrc`. For example: >
+        let g:random_color_schemes = ['molokai',
+                            \ 'zenburn',
+                            \ 'jellybeans',
+                            \ 'peaksea']
+
+The plugin will use a random color scheme when vim starting up by default.
+If you want to disable this action, you can set the value of
+'g:random_color_start' in `.vimrc`. For example: >
+        let g:random_color_start = 0
+        colo pyte
+
+The 'g:random_color_start' can be set by following values
+* `0` - Do not use
+* `1` - Use, default value
+* `2` - Use, but only when vim is running in the GUI
+* `3` - Use, but only when vim is NOT runing in the GUI
+
+
+==============================================================================
+3: Changelog                                            *RandomColorChangelog*
+
+2015-02-07
+    - Rename to RandomColor.vim
+
+1.0.2
+    - add g:random_color_start option
+
+1.0.1
+    - add help document
+
+1.0.0
+    - random colors
+    - add good colors
+
