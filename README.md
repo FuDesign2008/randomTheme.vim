@@ -92,9 +92,9 @@ Available values are here:
     * [gentooish](http://github.com/briancarper/gentooish.vim)
     * [wombat](http://github.com/cschlueter/vim-wombat)
     * wombat256
-    * [lucius](http://github.com/jonathanfilip/vim-lucius)
     * [peaksea](http://github.com/vim-scripts/peaksea)
 1. Special Schemes
+    * [lucius](http://github.com/jonathanfilip/vim-lucius)
     * [solarized](http://github.com/altercation/vim-colors-solarized)
     * [base16](http://github.com/chriskempson/base16-vim/)
 
