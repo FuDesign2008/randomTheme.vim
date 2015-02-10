@@ -1,4 +1,4 @@
-*RandomColor.vim*  A  plugin for random  color schemes!
+*randomColor.vim*  A  plugin for random  color schemes!
 
                               Reference Manual
 

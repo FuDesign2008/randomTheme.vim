@@ -1,4 +1,4 @@
-RandomColor.vim
+randomColor.vim
 ==============
 A  plugin for random color schemes, even on start up!
 
@@ -51,7 +51,7 @@ Available values are here:
 ##Change Log
 
 * 2015-02-07
-    - Rename to `RandomColor.vim`
+    - Rename to `randomColor.vim`
 
 * 1.0.2
     - add `g:random_color_start` option
