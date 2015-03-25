@@ -100,7 +100,7 @@ function! s:RandomColorScheme()
             endif
         endfor
 
-        let filePath = globpath(&runtimepath, 'colors/*' . scheme . '*.vim', 1)
+        let filePath = globpath(&runtimepath, 'colors/' . scheme . '.vim')
         if strlen(filePath) > 3
             if cmd != '' && exists(':' . cmd)
                 execute ':' . cmd
