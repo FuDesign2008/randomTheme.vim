@@ -2,31 +2,31 @@ randomColor.vim
 ==============
 A  plugin for random color schemes, even on start up!
 
-##Install
+## Install
 
 1. Install this plugin.
 1. Open vim and execute `:RandomColor` to enjoy!
 
-##Usage
+## Usage
 
 * `:RandomColor` - to set a random color scheme for vim
 
-##Options
+## Options
 
-###`g:random_color_schemes`
+### `g:favorite_color_schemes`
 
 By default, the plugin will try to find all the color schemes in runtime path.
 If want to use your favorite color schemes for random, you can set a list/array
 to this option in `.vimrc`. For example:
 
 ```vim
-let g:random_color_schemes = ['molokai',
+let g:favorite_color_schemes = ['molokai',
                     \ 'zenburn',
                     \ 'jellybeans',
                     \ 'peaksea']
 ```
 
-###`g:random_color_start`
+### `g:random_color_start`
 
 The plugin will use a random color scheme when vim starting up by default.
 If you want to disable this action, you can set the value of
@@ -48,7 +48,11 @@ Available values are here:
 
 
 
-##Change Log
+## Change Log
+
+* 2015-11-03
+    - Rename `g:random_color_schemes` to `g:favorite_color_schemes`
+    - add `:RandomFavorite`, `:RandomAll` commands
 
 * 2015-02-07
     - Rename to `randomColor.vim`
@@ -65,7 +69,7 @@ Available values are here:
 
 
 
-##Recommended Color Schemes
+## Recommended Color Schemes
 
 1. Light Schemes
     * [pyte](http://github.com/therubymug/vim-pyte)
@@ -104,5 +108,10 @@ See the following articles for more infomation
 * [10 Vim Color Schemes You Need to Own](http://www.vimninjas.com/2012/08/26/10-vim-color-schemes-you-need-to-own/)
 * [10 Light Vim Color Schemes That You Should Consider Using](http://www.vimninjas.com/2012/09/14/10-light-colors/)
 * [Top Color Schemes](http://www.vim.org/scripts/script_search_results.php?keywords=&script_type=color+scheme&order_by=rating&direction=descending&search=search)
+
+
+## All Vim Color Schemes
+
+See https://github.com/flazz/vim-colorschemes for all color schemes.
 
 

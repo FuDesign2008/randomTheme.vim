@@ -21,8 +21,8 @@ for doing it: >
 
 By default, the plugin will try to find all the color schemes in runtime path.
 If want to use your favorite color schemes for random, you can set a list/array
-to 'g:random_color_schemes' in `.vimrc`. For example: >
-        let g:random_color_schemes = ['molokai',
+to 'g:favorite_color_schemes' in `.vimrc`. For example: >
+        let g:favorite_color_schemes = ['molokai',
                             \ 'zenburn',
                             \ 'jellybeans',
                             \ 'peaksea']

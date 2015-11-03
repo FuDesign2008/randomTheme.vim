@@ -9,10 +9,10 @@
 "
 
 if &cp || exists('g:random_color_loaded')
-    if exists('*s:RandomColorScheme')
+    if exists('*s:RandomColor')
 
         if exists('g:random_color_start') && g:random_color_start
-            call s:RandomColorScheme()
+            call s:RandomColor()
         endif
 
         finish
@@ -48,17 +48,23 @@ let s:schemeForCommandPrefix = {
 
 
 let s:allColorSchemes = []
+let s:favoriteColorSchemes = []
 
-if exists('g:random_color_schemes')
-    let s:allColorSchemes = g:random_color_schemes
-else
-    let filePaths = globpath(&runtimepath, "colors/*.vim")
-    let filePathList = split(filePaths, '\n')
-    for filePath in filePathList
-        let colorSchemeName = fnamemodify(filePath, ':t:r')
-        call add(s:allColorSchemes, colorSchemeName)
-    endfor
+if exists('g:favorite_color_schemes')
+    let s:favoriteColorSchemes = g:favorite_color_schemes
+elseif exists('g:random_color_schemes')
+    " compatible with old setting
+    let s:favoriteColorSchemes = g:random_color_schemes
 endif
+
+
+
+let filePaths = globpath(&runtimepath, "colors/*.vim")
+let filePathList = split(filePaths, '\n')
+for filePath in filePathList
+    let colorSchemeName = fnamemodify(filePath, ':t:r')
+    call add(s:allColorSchemes, colorSchemeName)
+endfor
 
 for [key, value] in items(s:specialSchemeCommands)
     let nameIndex = index(s:allColorSchemes, key)
@@ -81,16 +87,16 @@ function! s:ListRandomValue(list)
     return value
 endfunction
 
-function! s:RandomColorScheme()
+function! s:RandomColorSchemes(colorSchemes)
 
-    if len(s:allColorSchemes) == 0
+    if empty(a:colorSchemes)
         return
     endif
 
     "echo 'run random'
     let randColor = 0
     while !randColor
-        let scheme = s:ListRandomValue(s:allColorSchemes)
+        let scheme = s:ListRandomValue(a:colorSchemes)
         let cmd = ''
 
         for [commandPrefix, schemeName] in items(s:schemeForCommandPrefix)
@@ -113,6 +119,25 @@ function! s:RandomColorScheme()
 
 endfunction
 
+
+function! s:RandomAll()
+    call s:RandomColorSchemes(s:allColorSchemes)
+endfunction
+
+
+function! s:RandomFavorite()
+    call s:RandomColorSchemes(s:favoriteColorSchemes)
+endfunction
+
+
+function! s:RandomColor()
+    if empty(s:favoriteColorSchemes)
+        call s:RandomAll()
+    else
+        call s:RandomFavorite()
+    endif
+endfunction
+
 "------  create commands for solarized color
 function! s:SolarizedColor(light)
     execute 'set background=' . (a:light ? 'light' : 'dark')
@@ -122,7 +147,9 @@ command! -nargs=0 SolarizedLight call s:SolarizedColor(1)
 command! -nargs=0 SolarizedDark  call s:SolarizedColor(0)
 
 
-command! -nargs=0 RandomColor call s:RandomColorScheme()
+command! -nargs=0 RandomColor call s:RandomColor()
+command! -nargs=0 RandomAll   call s:RandomAll()
+command! -nargs=0 RandomFavorite   call s:RandomFavorite()
 "------
 
 let s:randomOnStart = 1
@@ -134,14 +161,14 @@ if s:randomOnStart != 0
     let guiRunning = has('gui_running')
     if s:randomOnStart == 2
         if guiRunning
-            call s:RandomColorScheme()
+            call s:RandomColor()
         endif
     elseif s:randomOnStart == 3
         if !guiRunning
-            call s:RandomColorScheme()
+            call s:RandomColor()
         endif
     else
-        call s:RandomColorScheme()
+        call s:RandomColor()
     endif
 endif
 
