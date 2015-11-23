@@ -50,6 +50,9 @@ Available values are here:
 
 ## Change Log
 
+* 2015-11-23
+    - Every color scheme will be matched in each round
+
 * 2015-11-03
     - Rename `g:random_color_schemes` to `g:favorite_color_schemes`
     - add `:RandomFavorite`, `:RandomAll` commands

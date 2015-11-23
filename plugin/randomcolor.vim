@@ -47,73 +47,134 @@ let s:schemeForCommandPrefix = {
         \}
 
 
-let s:allColorSchemes = []
-let s:favoriteColorSchemes = []
+"@param {List} schemes
+"@return {List}
+function! s:convertColorSchemes(schemes)
+    let colorSchemes = []
 
-if exists('g:favorite_color_schemes')
-    let s:favoriteColorSchemes = g:favorite_color_schemes
-elseif exists('g:random_color_schemes')
-    " compatible with old setting
-    let s:favoriteColorSchemes = g:random_color_schemes
-endif
+    for name in a:schemes
+        if has_key(s:specialSchemeCommands, name)
+            let commands = get(s:specialSchemeCommands, name)
+            for command in commands
+                call add(colorSchemes, {'matched': 0, 'isCommand': 1, 'value': command})
+            endfor
+        else
+            call add(colorSchemes, {'value': name, 'matched': 0 , 'isCommand': 0})
+        endif
+    endfor
 
+    "echo colorSchemes
 
+    return colorSchemes
+endfunction
 
 let filePaths = globpath(&runtimepath, "colors/*.vim")
 let filePathList = split(filePaths, '\n')
+
+let temp = []
 for filePath in filePathList
     let colorSchemeName = fnamemodify(filePath, ':t:r')
-    call add(s:allColorSchemes, colorSchemeName)
+    call add(temp, colorSchemeName)
 endfor
 
-for [key, value] in items(s:specialSchemeCommands)
-    let nameIndex = index(s:allColorSchemes, key)
-    if nameIndex > -1
-        call remove(s:allColorSchemes, key)
-        call extend(s:allColorSchemes, value)
-    endif
-endfor
+let s:allColorSchemes = s:convertColorSchemes(temp)
+
+if exists('g:favorite_color_schemes')
+    let s:favoriteColorSchemes = s:convertColorSchemes(g:favorite_color_schemes)
+elseif exists('g:random_color_schemes')
+    " compatible with old setting
+    let s:favoriteColorSchemes = s:convertColorSchemes(g:random_color_schemes)
+else
+    let s:favoriteColorSchemes = []
+endif
 
 
-let s:counter = 0
-function! s:ListRandomValue(list)
-    let s:counter = s:counter + 1
-    let now = localtime() + s:counter
-    let remainder = now % len(a:list)
-    let value = get(a:list, remainder, '')
-    if value == ''
-        let value = get(a:list, 0, '')
+"@param {Integer} max
+"@return {Integer} return a integer between [0, max - 1]
+function! s:RandomInt(max)
+    if a:max <= 1
+        return 0
     endif
-    return value
+
+    let now = localtime()
+    let remainder = now % a:max
+    return remainder
 endfunction
 
+"@param {List} colorSchemes
+function! s:CountHasMatched(colorSchemes)
+    let counter = 0
+    for scheme in a:colorSchemes
+        if get(scheme, 'matched')
+            let counter += 1
+        endif
+    endfor
+    return counter
+endfunction
+
+function! s:getColorSchemeItem(colorSchemes, counter)
+    let counter = -1
+
+    for scheme in a:colorSchemes
+        if get(scheme, 'matched') == 0
+            let counter += 1
+        endif
+        if counter == a:counter
+            return scheme
+        endif
+    endfor
+endfunction
+
+function! s:resetColorSchemes(colorSchemes)
+    for scheme in a:colorSchemes
+        let scheme['matched'] = 0
+    endfor
+endfunction
+
+"@param {List} colorSchemes
 function! s:RandomColorSchemes(colorSchemes)
 
     if empty(a:colorSchemes)
         return
     endif
 
-    "echo 'run random'
-    let randColor = 0
-    while !randColor
-        let scheme = s:ListRandomValue(a:colorSchemes)
-        let cmd = ''
+    "echo a:colorSchemes
 
-        for [commandPrefix, schemeName] in items(s:schemeForCommandPrefix)
-            if stridx(scheme, commandPrefix) > -1
-                let cmd = scheme
-                let scheme = schemeName
-            endif
-        endfor
+    let isDone = 0
+    while !isDone
+        let matchedCounter = s:CountHasMatched(a:colorSchemes)
+        let length = len(a:colorSchemes)
+        let notMatchedCounter = length  - matchedCounter
 
-        let filePath = globpath(&runtimepath, 'colors/' . scheme . '.vim')
-        if strlen(filePath) > 3
-            if cmd != '' && exists(':' . cmd)
-                execute ':' . cmd
+        if (notMatchedCounter == 0)
+            call s:resetColorSchemes(a:colorSchemes)
+            let notMatchedCounter = length
+        endif
+
+        let currentIndex = s:RandomInt(notMatchedCounter)
+        let schemeItem = s:getColorSchemeItem(a:colorSchemes, currentIndex)
+
+        let schemeItem['matched'] = 1
+        let value = get(schemeItem, 'value', '')
+
+        if get(schemeItem, 'isCommand')
+            let cmd = ':' . value
+            if exists(cmd)
+                execute cmd
+                let isDone = 1
+                echo 'Executed command: ' .value
             else
-                execute 'colorscheme ' . scheme
+                echo 'has no cmd ' . cmd
             endif
-            let randColor = 1
+        else
+            try
+                execute 'colo ' . value
+                let isDone = 1
+                echo 'Selected color scheme: ' . value
+            catch /.*/
+                echo v:exception
+                let isDone = 0
+            endtry
         endif
     endwhile
 
