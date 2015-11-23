@@ -56,10 +56,10 @@ function! s:convertColorSchemes(schemes)
         if has_key(s:specialSchemeCommands, name)
             let commands = get(s:specialSchemeCommands, name)
             for command in commands
-                call add(colorSchemes, {'matched': 0, 'isCommand': 1, 'value': command})
+                call add(colorSchemes, {'color': name, 'command':command, 'matched': 0})
             endfor
         else
-            call add(colorSchemes, {'value': name, 'matched': 0 , 'isCommand': 0})
+            call add(colorSchemes, {'color': name, 'matched': 0})
         endif
     endfor
 
@@ -131,6 +131,18 @@ function! s:resetColorSchemes(colorSchemes)
     endfor
 endfunction
 
+function! s:setColorScheme(color)
+    let success = 1
+
+    try
+        execute 'colo ' . a:color
+    catch /.*/
+        let success = 0
+    endtry
+
+    return success
+endfunction
+
 "@param {List} colorSchemes
 function! s:RandomColorSchemes(colorSchemes)
 
@@ -155,31 +167,30 @@ function! s:RandomColorSchemes(colorSchemes)
         let schemeItem = s:getColorSchemeItem(a:colorSchemes, currentIndex)
 
         let schemeItem['matched'] = 1
-        let value = get(schemeItem, 'value', '')
+        let color = get(schemeItem, 'color')
+        let command = get(schemeItem, 'command')
 
-        if get(schemeItem, 'isCommand')
-            let cmd = ':' . value
+        if command
+            let cmd = ':' . command
+            if !exists(cmd)
+                call s:setColorScheme(color)
+            endif
             if exists(cmd)
                 execute cmd
                 let isDone = 1
             else
-                echo 'has no cmd ' . cmd
+                echo 'Failed to execute command `' . cmd . '`'
             endif
         else
-            let isDone = 1
-            try
-                execute 'colo ' . value
-            catch /.*/
-                let isDone = 0
-                echo v:exception
-            endtry
+            let isDone = s:setColorScheme(color)
+            if !isDone
+                echo "Failed to set color: " . color
+            endif
         endif
     endwhile
 
     if isDone
         execute ':colo'
-    else
-        echo "Failed to random color"
     endif
 
 endfunction
