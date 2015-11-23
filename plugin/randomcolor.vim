@@ -9,10 +9,10 @@
 "
 
 if &cp || exists('g:random_color_loaded')
-    if exists('*s:RandomColor')
+    if exists(':RandomColor')
 
         if exists('g:random_color_start') && g:random_color_start
-            call s:RandomColor()
+            execute ':silent RandomColor'
         endif
 
         finish
@@ -162,21 +162,25 @@ function! s:RandomColorSchemes(colorSchemes)
             if exists(cmd)
                 execute cmd
                 let isDone = 1
-                echo 'Executed command: ' .value
             else
                 echo 'has no cmd ' . cmd
             endif
         else
+            let isDone = 1
             try
                 execute 'colo ' . value
-                let isDone = 1
-                echo 'Selected color scheme: ' . value
             catch /.*/
-                echo v:exception
                 let isDone = 0
+                echo v:exception
             endtry
         endif
     endwhile
+
+    if isDone
+        execute ':colo'
+    else
+        echo "Failed to random color"
+    endif
 
 endfunction
 
@@ -222,14 +226,14 @@ if s:randomOnStart != 0
     let guiRunning = has('gui_running')
     if s:randomOnStart == 2
         if guiRunning
-            call s:RandomColor()
+            execute ':silent RandomColor'
         endif
     elseif s:randomOnStart == 3
         if !guiRunning
-            call s:RandomColor()
+            execute ':silent RandomColor'
         endif
     else
-        call s:RandomColor()
+        execute ':silent RandomColor'
     endif
 endif
 
