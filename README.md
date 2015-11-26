@@ -75,35 +75,15 @@ Available values are here:
 ## Recommended Color Schemes
 
 1. Light Schemes
-    * [pyte](http://github.com/therubymug/vim-pyte)
-    * [eclipse](http://github.com/vim-scripts/eclipse.vim)
-    * [summerfruit](http://github.com/vim-scripts/summerfruit.vim)
-    * [AutumnLeaf](http://github.com/vim-scripts/autumnleaf_modified.vim)
-    * [ironman](http://github.com/vim-scripts/ironman.vim)
-    * [nuvola](http://github.com/vim-scripts/nuvola.vim)
-    * [oceanlight](http://github.com/vim-scripts/oceanlight)
-    * [simpleandfriendly](http://github.com/vim-scripts/simpleandfriendly.vim)
-    * [mayansmoke](http://github.com/vim-scripts/mayansmoke)
+    * pyte
+    * simpleandfriendly
 1. Dark Schemes
-    * [RGB256](http://github.com/alindeman/grb256)
-    * [Distinguished](http://github.com/Lokaltog/vim-distinguished)
-    * [jellybeans](http://www.github.com/nanotech/jellybeans.vim)
-    * [Railscasts](http://github.com/jpo/vim-railscasts-theme)
-    * [Twilight](http://github.com/matthewtodd/vim-twilight)
-    * [Vividchalk](http://github.com/tpope/vim-vividchalk)
-    * [Candy](http://github.com/vim-scripts/candy.vim)
-    * [ir_black](http://www.github.com/twerth/ir_black)
-    * [molokai](http://www.github.com/tomasr/molokai)
-    * [zenburn](http://github.com/jnurmine/Zenburn)
-    * [desert](http://github.com/vim-scripts/desert.vim)
-    * [gentooish](http://github.com/briancarper/gentooish.vim)
-    * [wombat](http://github.com/cschlueter/vim-wombat)
-    * wombat256
-    * [peaksea](http://github.com/vim-scripts/peaksea)
+    * jellybeans
+    * molokai
 1. Special Schemes
-    * [lucius](http://github.com/jonathanfilip/vim-lucius)
-    * [solarized](http://github.com/altercation/vim-colors-solarized)
-    * [base16](http://github.com/chriskempson/base16-vim/)
+    * lucius
+    * solarized
+    * base16
 
 
 See the following articles for more infomation
@@ -113,8 +93,6 @@ See the following articles for more infomation
 * [Top Color Schemes](http://www.vim.org/scripts/script_search_results.php?keywords=&script_type=color+scheme&order_by=rating&direction=descending&search=search)
 
 
-## All Vim Color Schemes
-
-See https://github.com/flazz/vim-colorschemes for all color schemes.
+You can install almost all vim color shemes from [vim-colorschemes](https://github.com/flazz/vim-colorschemes).
 
 
