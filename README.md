@@ -2,16 +2,15 @@ randomColor.vim
 ==============
 A  plugin for random color schemes, even on start up!
 
-## Install
+## Install & Usage
+
+Before install this plugin, you can install almost all the vim color schemes from
+[vim-colorschemes](https://github.com/flazz/vim-colorschemes).
 
 1. Install this plugin.
 1. Open vim and execute `:RandomColor` to enjoy!
 
-## Usage
-
-* `:RandomColor` - to set a random color scheme for vim
-
-## Options
+## Configuration
 
 ### `g:favorite_color_schemes`
 
@@ -46,6 +45,11 @@ Available values are here:
 * `2` - Use, but only when vim is running in the GUI
 * `3` - Use, but only when vim is NOT runing in the GUI
 
+## Commands
+
+* `:RandomFavorite` - Select a color scheme from the schemes in `g:favorite_color_schemes`
+* `:RandomAll` - Select a color scheme from all available schemes
+* `:RandomColor` - If `g:favorite_color_schemes` exists, `:RandomFavorite` will be executed, or else `:RandomAll` will be executed
 
 
 ## Change Log
@@ -93,6 +97,5 @@ See the following articles for more infomation
 * [Top Color Schemes](http://www.vim.org/scripts/script_search_results.php?keywords=&script_type=color+scheme&order_by=rating&direction=descending&search=search)
 
 
-You can install almost all vim color shemes from [vim-colorschemes](https://github.com/flazz/vim-colorschemes).
 
 
