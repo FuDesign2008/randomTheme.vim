@@ -38,7 +38,10 @@ let s:specialSchemeCommands = {
                     \ 'LuciusWhiteHighContrast',
                     \ 'LuciusWhiteLowContrast'
                 \],
-            \ 'solarized': ['SolarizedDark', 'SolarizedLight']
+            \ 'solarized': [
+                    \ 'SolarizedDark',
+                    \ 'SolarizedLight'
+                \]
         \}
 
 let s:schemeForCommandPrefix = {
