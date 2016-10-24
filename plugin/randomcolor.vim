@@ -68,7 +68,7 @@ function! s:convertColorSchemes(schemes)
     return colorSchemes
 endfunction
 
-let filePaths = globpath(&runtimepath, "colors/*.vim")
+let filePaths = globpath(&runtimepath, 'colors/*.vim')
 let filePathList = split(filePaths, '\n')
 
 let temp = []
@@ -184,7 +184,7 @@ function! s:RandomColorSchemes(colorSchemes)
         else
             let isDone = s:setColorScheme(color)
             if !isDone
-                echo "Failed to set color: " . color
+                echo 'Failed to set color: ' . color
             endif
         endif
     endwhile
