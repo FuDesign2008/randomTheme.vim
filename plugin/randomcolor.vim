@@ -25,7 +25,8 @@ set cpo&vim
 
 " commands for special color schemes
 let s:specialSchemeCommands = {
-            \ 'lucius': [ 'LuciusBlack',
+            \ 'lucius': [
+                    \ 'LuciusBlack',
                     \ 'LuciusBlackHighContrast',
                     \ 'LuciusBlackLowContrast',
                     \ 'LuciusDark',
@@ -41,12 +42,19 @@ let s:specialSchemeCommands = {
             \ 'solarized': [
                     \ 'SolarizedDark',
                     \ 'SolarizedLight'
+                \],
+            \ 'gruvbox': [
+                    \ 'GruvboxDark',
+                    \ 'GruvboxDarkHighContrast',
+                    \ 'GruvboxDarkLowContrast',
+                    \ 'GruvboxLight',
+                    \ 'GruvboxLightHighContrast',
+                    \ 'GruvboxLightLowContrast'
+                \],
+            \ 'hybrid': [
+                    \ 'HybridDark',
+                    \ 'HybridDarkLowContrast'
                 \]
-        \}
-
-let s:schemeForCommandPrefix = {
-            \ 'Lucius': 'lucius',
-            \ 'Solarized': 'solarized'
         \}
 
 
@@ -217,19 +225,62 @@ function! s:RandomColor()
     endif
 endfunction
 
-"------  create commands for solarized color
+"------  create commands for solarized
 function! s:SolarizedColor(light)
     execute 'set background=' . (a:light ? 'light' : 'dark')
-    execute 'colo solarized'
+    colo solarized
 endfunction
 command! -nargs=0 SolarizedLight call s:SolarizedColor(1)
 command! -nargs=0 SolarizedDark  call s:SolarizedColor(0)
+"------
+
+
+"------  create commands for gruvbox
+"@ {String} contrast `soft`, `medium`, `hard`
+function! s:GruvboxColor(contrast, light)
+
+    if a:contrast ==? 'soft' || a:contrast ==? 'hard'
+        let contrast = a:contrast
+    else
+        let contrast = 'medium'
+    endif
+
+    if a:light
+        let g:gruvbox_contrast_light = contrast
+    else
+        let g:gruvbox_contrast_dark = contrast
+    endif
+
+    execute 'set background=' . (a:light ? 'light' : 'dark')
+    colo gruvbox
+endfunction
+
+command! -nargs=0 GruvboxLight call s:GruvboxColor('' , 1)
+command! -nargs=0 GruvboxLightLowContrast call s:GruvboxColor('soft' , 1)
+command! -nargs=0 GruvboxLightHighContrast call s:GruvboxColor('hard' , 1)
+command! -nargs=0 GruvboxDark call s:GruvboxColor('' , 0)
+command! -nargs=0 GruvboxDarkLowContrast call s:GruvboxColor('soft' , 0)
+command! -nargs=0 GruvboxDarkHighContrast call s:GruvboxColor('hard' , 0)
+"------
+
+"------  create commands for hybrid
+function! s:HybridColor(lowContrast, light)
+    execute 'set background=' . (a:light ? 'light' : 'dark')
+    let g:hybrid_reduced_contrast = a:lowContrast ? 1 : 0
+    colo hybrid
+endfunction
+
+command! -nargs=0 HybridDark call s:HybridDark(0 , 0)
+command! -nargs=0 HybridDarkLowContrast call s:HybridDark(1 , 0)
+
+"------
+
+
 
 
 command! -nargs=0 RandomColor call s:RandomColor()
 command! -nargs=0 RandomAll   call s:RandomAll()
 command! -nargs=0 RandomFavorite   call s:RandomFavorite()
-"------
 
 let s:randomOnStart = 1
 if exists('g:random_color_start')
