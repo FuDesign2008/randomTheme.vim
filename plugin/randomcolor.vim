@@ -67,14 +67,12 @@ function! s:convertColorSchemes(schemes)
         if has_key(s:specialSchemeCommands, name)
             let commands = get(s:specialSchemeCommands, name)
             for command in commands
-                call add(colorSchemes, {'color': name, 'command':command, 'matched': 0})
+                call add(colorSchemes, {'color': name, 'command':command})
             endfor
         else
-            call add(colorSchemes, {'color': name, 'matched': 0})
+            call add(colorSchemes, {'color': name})
         endif
     endfor
-
-    "echo colorSchemes
 
     return colorSchemes
 endfunction
@@ -100,59 +98,36 @@ else
 endif
 
 
+"==============================================================================
+" RandomNumber is taken from
+" https://github.com/dahu/vim-rng/blob/master/plugin/rng.vim
+"==============================================================================
+let s:m_w = 1 + getpid()
+let s:m_z = localtime()
+
+" not sure of the wisdom of generating a full 32-bit RN here
+" and then using abs() on the sucker. Feedback welcome.
+function! s:RandomNumber(...)
+  if a:0 == 0
+    let s:m_z = (36969 * and(s:m_z, 0xffff)) + (s:m_z / 65536)
+    let s:m_w = (18000 * and(s:m_w, 0xffff)) + (s:m_w / 65536)
+    return (s:m_z * 65536) + s:m_w      " 32-bit result
+  elseif a:0 == 1 " We return a number in [0, a:1] or [a:1, 0]
+    return a:1 < 0 ? s:RandomNumber(a:1,0) : s:RandomNumber(0,a:1)
+  else " if a:2 >= 2
+    return abs(s:RandomNumber()) % (abs(a:2 - a:1) + 1) + a:1
+  endif
+endfunction
+" end RNG }}}
+"============
+
+
 "@param {Integer} max
 "@return {Integer} return a integer between [0, max - 1]
 function! s:RandomInt(max)
-    if a:max <= 1
-        return 0
-    endif
-
-    let now = localtime()
-    let remainder = now % a:max
-    return remainder
+    return s:RandomNumber(a:max)
 endfunction
 
-"@param {List} colorSchemes
-function! s:CountHasMatched(colorSchemes)
-    let counter = 0
-    for scheme in a:colorSchemes
-        if get(scheme, 'matched')
-            let counter += 1
-        endif
-    endfor
-    return counter
-endfunction
-
-function! s:getColorSchemeItem(colorSchemes, counter)
-    let counter = -1
-
-    for scheme in a:colorSchemes
-        if get(scheme, 'matched') == 0
-            let counter += 1
-        endif
-        if counter == a:counter
-            return scheme
-        endif
-    endfor
-endfunction
-
-function! s:resetColorSchemes(colorSchemes)
-    for scheme in a:colorSchemes
-        let scheme['matched'] = 0
-    endfor
-endfunction
-
-function! s:setColorScheme(color)
-    let success = 1
-
-    try
-        execute 'colo ' . a:color
-    catch /.*/
-        let success = 0
-    endtry
-
-    return success
-endfunction
 
 "@param {List} colorSchemes
 function! s:RandomColorSchemes(colorSchemes)
@@ -161,59 +136,58 @@ function! s:RandomColorSchemes(colorSchemes)
         return
     endif
 
-    "echo a:colorSchemes
+    let item = remove(a:colorSchemes, 0)
+    let color = get(item, 'color')
+    let command = get(item, 'command')
 
-    let isDone = 0
-    while !isDone
-        let matchedCounter = s:CountHasMatched(a:colorSchemes)
-        let length = len(a:colorSchemes)
-        let notMatchedCounter = length  - matchedCounter
-
-        if (notMatchedCounter == 0)
-            call s:resetColorSchemes(a:colorSchemes)
-            let notMatchedCounter = length
-        endif
-
-        let currentIndex = s:RandomInt(notMatchedCounter)
-        let schemeItem = s:getColorSchemeItem(a:colorSchemes, currentIndex)
-
-        let schemeItem['matched'] = 1
-        let color = get(schemeItem, 'color')
-        let command = get(schemeItem, 'command')
-
-        if command
-            let cmd = ':' . command
-            if !exists(cmd)
-                call s:setColorScheme(color)
-            endif
-            if exists(cmd)
-                execute cmd
-                let isDone = 1
-            else
-                echo 'Failed to execute command `' . cmd . '`'
-            endif
-        else
-            let isDone = s:setColorScheme(color)
-            if !isDone
-                echo 'Failed to set color: ' . color
-            endif
-        endif
-    endwhile
-
-    if isDone
-        execute ':colo'
+    if command
+        execute ':' . command
+    else
+        execute 'colo ' . color
     endif
 
 endfunction
 
+"@param {List}
+"@return {List}
+function! s:RandomOrder(theList)
+    let length = len(a:theList)
+    let newList = []
+    let counter = 0
 
-function! s:RandomAll()
-    call s:RandomColorSchemes(s:allColorSchemes)
+    while counter < length
+        let index = s:RandomInt(length)
+        let item = get(a:theList, index)
+
+        while index(newList, item) != -1
+            let index = s:RandomInt(length)
+            let item = get(a:theList, index)
+        endwhile
+
+        call add(newList, item)
+        let counter = counter + 1
+    endwhile
+
+    return newList
 endfunction
 
 
+let s:allColorSchemesWithRandom = []
+function! s:RandomAll()
+    if empty(s:allColorSchemesWithRandom)
+        let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes)
+    endif
+
+    call s:RandomColorSchemes(s:allColorSchemesWithRandom)
+endfunction
+
+
+let s:favoriteColorSchemesWithRandom = []
 function! s:RandomFavorite()
-    call s:RandomColorSchemes(s:favoriteColorSchemes)
+    if empty(s:favoriteColorSchemesWithRandom)
+        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes)
+    endif
+    call s:RandomColorSchemes(s:favoriteColorSchemesWithRandom)
 endfunction
 
 
@@ -274,8 +248,6 @@ command! -nargs=0 HybridDark call s:HybridDark(0 , 0)
 command! -nargs=0 HybridDarkLowContrast call s:HybridDark(1 , 0)
 
 "------
-
-
 
 
 command! -nargs=0 RandomColor call s:RandomColor()
