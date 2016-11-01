@@ -57,6 +57,15 @@ let s:specialSchemeCommands = {
                 \]
         \}
 
+let s:specialSchemeCommandsList = []
+
+let commandListList = values(s:specialSchemeCommands)
+for commandList in commandListList
+    for commandName in commandList
+        call add(s:specialSchemeCommandsList, commandName)
+    endfor
+endfor
+
 
 "@param {List} schemes
 "@return {List}
@@ -67,10 +76,14 @@ function! s:convertColorSchemes(schemes)
         if has_key(s:specialSchemeCommands, name)
             let commands = get(s:specialSchemeCommands, name)
             for command in commands
-                call add(colorSchemes, {'color': name, 'command':command})
+                if index(colorSchemes, command) == -1
+                    call add(colorSchemes, command)
+                endif
             endfor
         else
-            call add(colorSchemes, {'color': name})
+            if index(colorSchemes, name) == -1
+                call add(colorSchemes, name)
+            endif
         endif
     endfor
 
@@ -137,18 +150,16 @@ function! s:RandomColorSchemes(colorSchemes)
     endif
 
     let item = remove(a:colorSchemes, 0)
-    let color = get(item, 'color')
-    let command = get(item, 'command')
 
-    if command
-        execute ':' . command
+    if index(s:specialSchemeCommandsList, item) != -1
+        execute ':' . item
     else
-        execute 'colo ' . color
+        execute 'colo ' . item
     endif
 
 endfunction
 
-"@param {List}
+"@param {List} theList should be unique
 "@return {List}
 function! s:RandomOrder(theList)
     let length = len(a:theList)
