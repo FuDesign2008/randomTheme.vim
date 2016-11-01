@@ -57,14 +57,6 @@ let s:specialSchemeCommands = {
                 \]
         \}
 
-let s:specialSchemeCommandsList = []
-
-let commandListList = values(s:specialSchemeCommands)
-for commandList in commandListList
-    for commandName in commandList
-        call add(s:specialSchemeCommandsList, commandName)
-    endfor
-endfor
 
 
 "@param {List} schemes
@@ -150,13 +142,24 @@ function! s:RandomColorSchemes(colorSchemes)
     endif
 
     let item = remove(a:colorSchemes, 0)
+    let color = item
+    let command = ''
 
-    if index(s:specialSchemeCommandsList, item) != -1
-        execute ':' . item
-    else
-        execute 'colo ' . item
+    let specialColorNames = keys(s:specialSchemeCommands)
+
+    for name in specialColorNames
+        let commandList = get(s:specialSchemeCommands, name, [])
+        if index(commandList, item) > -1
+            let color = name
+            let command = item
+            break
+        endif
+    endfor
+
+    execute 'colo ' . color
+    if len(command) > 1
+        execute ':' . command
     endif
-
 endfunction
 
 "@param {List} theList should be unique
