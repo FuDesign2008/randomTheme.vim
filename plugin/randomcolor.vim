@@ -174,7 +174,7 @@ function! s:uniqueList(list)
     return newList
 endfunction
 
-"@param {List} theList should be unique
+"@param {List} theList
 "@return {List}
 function! s:RandomOrder(theList)
 
