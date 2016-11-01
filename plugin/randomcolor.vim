@@ -273,8 +273,8 @@ function! s:HybridColor(lowContrast, light)
     colo hybrid
 endfunction
 
-command! -nargs=0 HybridDark call s:HybridDark(0 , 0)
-command! -nargs=0 HybridDarkLowContrast call s:HybridDark(1 , 0)
+command! -nargs=0 HybridDark call s:HybridColor(0 , 0)
+command! -nargs=0 HybridDarkLowContrast call s:HybridColor(1 , 0)
 
 "------
 
