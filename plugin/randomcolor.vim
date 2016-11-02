@@ -82,16 +82,21 @@ function! s:convertColorSchemes(schemes)
     return colorSchemes
 endfunction
 
-let filePaths = globpath(&runtimepath, 'colors/*.vim')
-let filePathList = split(filePaths, '\n')
 
-let temp = []
-for filePath in filePathList
-    let colorSchemeName = fnamemodify(filePath, ':t:r')
-    call add(temp, colorSchemeName)
-endfor
+"@return {List}
+function! s:getAllColorSchemes()
+    let filePaths = globpath(&runtimepath, 'colors/*.vim')
+    let filePathList = split(filePaths, '\n')
+    let fileNames = []
 
-let s:allColorSchemes = s:convertColorSchemes(temp)
+    for filePath in filePathList
+        let colorSchemeName = fnamemodify(filePath, ':t:r')
+        call add(fileNames, colorSchemeName)
+    endfor
+
+    let colorSchemes = s:convertColorSchemes(fileNames)
+    return colorSchemes
+endfunction
 
 if exists('g:favorite_color_schemes')
     let s:favoriteColorSchemes = s:convertColorSchemes(g:favorite_color_schemes)
@@ -176,9 +181,12 @@ endfunction
 
 "@param {List} theList
 "@return {List}
-function! s:RandomOrder(theList)
-
-    let uniqueArr = s:uniqueList(a:theList)
+function! s:RandomOrder(theList, isUnique)
+    if a:isUnique
+        let uniqueArr = a:theList
+    else
+        let uniqueArr = s:uniqueList(a:theList)
+    endif
 
     let length = len(uniqueArr)
     let newList = []
@@ -203,8 +211,12 @@ endfunction
 
 let s:allColorSchemesWithRandom = []
 function! s:RandomAll()
+    if !exists('s:allColorSchemes')
+        let s:allColorSchemes = s:getAllColorSchemes()
+    endif
+
     if empty(s:allColorSchemesWithRandom)
-        let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes)
+        let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes, 1)
     endif
 
     call s:RandomColorSchemes(s:allColorSchemesWithRandom)
@@ -214,7 +226,7 @@ endfunction
 let s:favoriteColorSchemesWithRandom = []
 function! s:RandomFavorite()
     if empty(s:favoriteColorSchemesWithRandom)
-        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes)
+        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes, 1)
     endif
     call s:RandomColorSchemes(s:favoriteColorSchemesWithRandom)
 endfunction
