@@ -210,19 +210,13 @@ endfunction
 
 
 let s:allColorSchemesWithRandom = []
-let s:randomAllFirstTime = 1
 function! s:RandomAll()
     if !exists('s:allColorSchemes')
         let s:allColorSchemes = s:getAllColorSchemes()
     endif
 
     if empty(s:allColorSchemesWithRandom)
-        if s:randomAllFirstTime
-            let s:randomAllFirstTime = 0
-            let s:allColorSchemesWithRandom = copy(s:allColorSchemes)
-        else
-            let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes, 1)
-        endif
+        let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes, 1)
     endif
 
     call s:RandomColorSchemes(s:allColorSchemesWithRandom)
@@ -230,15 +224,9 @@ endfunction
 
 
 let s:favoriteColorSchemesWithRandom = []
-let s:randomFavoriteFirstTime = 1
 function! s:RandomFavorite()
     if empty(s:favoriteColorSchemesWithRandom)
-        if s:randomFavoriteFirstTime
-            let s:randomFavoriteFirstTime = 0
-            let s:favoriteColorSchemesWithRandom = copy(s:favoriteColorSchemes)
-        else
-            let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes, 1)
-        endif
+        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes, 1)
     endif
     call s:RandomColorSchemes(s:favoriteColorSchemesWithRandom)
 endfunction
