@@ -67,9 +67,9 @@ function! s:convertColorSchemes(schemes)
     for name in a:schemes
         if has_key(s:specialSchemeCommands, name)
             let commands = get(s:specialSchemeCommands, name)
-            for command in commands
-                if index(colorSchemes, command) == -1
-                    call add(colorSchemes, command)
+            for cmdStr in commands
+                if index(colorSchemes, cmdStr) == -1
+                    call add(colorSchemes, cmdStr)
                 endif
             endfor
         else
@@ -135,7 +135,13 @@ endfunction
 "@param {Integer} max
 "@return {Integer} return a integer between [0, max - 1]
 function! s:RandomInt(max)
-    return s:RandomNumber(a:max)
+    let max = a:max - 1
+
+    if max > 0
+        return s:RandomNumber(max)
+    endif
+
+    return 0
 endfunction
 
 
@@ -304,14 +310,14 @@ if s:randomOnStart != 0
     let guiRunning = has('gui_running')
     if s:randomOnStart == 2
         if guiRunning
-            execute ':silent RandomColor'
+            execute ':RandomColor'
         endif
     elseif s:randomOnStart == 3
         if !guiRunning
-            execute ':silent RandomColor'
+            execute ':RandomColor'
         endif
     else
-        execute ':silent RandomColor'
+        execute ':RandomColor'
     endif
 endif
 
