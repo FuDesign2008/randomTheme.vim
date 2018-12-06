@@ -24,21 +24,21 @@ let s:save_cpo = &cpotions
 set cpotions&vim
 
 " commands for special color schemes
-            " \ 'lucius': [
-                    " \ 'LuciusBlack',
-                    " \ 'LuciusBlackHighContrast',
-                    " \ 'LuciusBlackLowContrast',
-                    " \ 'LuciusDark',
-                    " \ 'LuciusDarkHighContrast',
-                    " \ 'LuciusDarkLowContrast',
-                    " \ 'LuciusLight',
-                    " \ 'LuciusLightHighContrast',
-                    " \ 'LuciusLightLowContrast',
-                    " \ 'LuciusWhite',
-                    " \ 'LuciusWhiteHighContrast',
-                    " \ 'LuciusWhiteLowContrast'
-                " \],
 let s:specialSchemeCommands = {
+            \ 'lucius': [
+                    \ 'LuciusBlack',
+                    \ 'LuciusBlackHighContrast',
+                    \ 'LuciusBlackLowContrast',
+                    \ 'LuciusDark',
+                    \ 'LuciusDarkHighContrast',
+                    \ 'LuciusDarkLowContrast',
+                    \ 'LuciusLight',
+                    \ 'LuciusLightHighContrast',
+                    \ 'LuciusLightLowContrast',
+                    \ 'LuciusWhite',
+                    \ 'LuciusWhiteHighContrast',
+                    \ 'LuciusWhiteLowContrast'
+                \],
             \ 'solarized': [
                     \ 'SolarizedDark',
                     \ 'SolarizedLight'
@@ -168,8 +168,9 @@ function! s:RandomColorSchemes(colorSchemes)
     endfor
 
     execute 'colo ' . color
-    if len(command) > 1
-        execute ':' . command
+    let execCommand = ':' . command
+    if len(command) > 1 && exists(execCommand)
+        execute execCommand
     endif
 endfunction
 
