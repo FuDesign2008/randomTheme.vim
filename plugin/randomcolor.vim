@@ -8,7 +8,7 @@
 "
 "
 
-if &cp || exists('g:random_color_loaded')
+if &compatible || exists('g:random_color_loaded')
     if exists(':RandomColor')
 
         if exists('g:random_color_start') && g:random_color_start
@@ -20,25 +20,25 @@ if &cp || exists('g:random_color_loaded')
 endif
 
 let g:random_color_loaded = 1
-let s:save_cpo = &cpo
-set cpo&vim
+let s:save_cpo = &cpotions
+set cpotions&vim
 
 " commands for special color schemes
+            " \ 'lucius': [
+                    " \ 'LuciusBlack',
+                    " \ 'LuciusBlackHighContrast',
+                    " \ 'LuciusBlackLowContrast',
+                    " \ 'LuciusDark',
+                    " \ 'LuciusDarkHighContrast',
+                    " \ 'LuciusDarkLowContrast',
+                    " \ 'LuciusLight',
+                    " \ 'LuciusLightHighContrast',
+                    " \ 'LuciusLightLowContrast',
+                    " \ 'LuciusWhite',
+                    " \ 'LuciusWhiteHighContrast',
+                    " \ 'LuciusWhiteLowContrast'
+                " \],
 let s:specialSchemeCommands = {
-            \ 'lucius': [
-                    \ 'LuciusBlack',
-                    \ 'LuciusBlackHighContrast',
-                    \ 'LuciusBlackLowContrast',
-                    \ 'LuciusDark',
-                    \ 'LuciusDarkHighContrast',
-                    \ 'LuciusDarkLowContrast',
-                    \ 'LuciusLight',
-                    \ 'LuciusLightHighContrast',
-                    \ 'LuciusLightLowContrast',
-                    \ 'LuciusWhite',
-                    \ 'LuciusWhiteHighContrast',
-                    \ 'LuciusWhiteLowContrast'
-                \],
             \ 'solarized': [
                     \ 'SolarizedDark',
                     \ 'SolarizedLight'
@@ -321,6 +321,6 @@ if s:randomOnStart != 0
     endif
 endif
 
-let &cpo = s:save_cpo
+let &cpotions = s:save_cpo
 
 
