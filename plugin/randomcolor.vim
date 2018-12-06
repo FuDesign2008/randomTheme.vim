@@ -20,8 +20,8 @@ if &compatible || exists('g:random_color_loaded')
 endif
 
 let g:random_color_loaded = 1
-let s:save_cpo = &cpotions
-set cpotions&vim
+let s:save_cpo = &cpoptions
+set cpoptions&vim
 
 " commands for special color schemes
 let s:specialSchemeCommands = {
@@ -322,6 +322,6 @@ if s:randomOnStart != 0
     endif
 endif
 
-let &cpotions = s:save_cpo
+let &cpoptions = s:save_cpo
 
 
