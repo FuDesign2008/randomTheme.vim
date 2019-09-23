@@ -3,23 +3,23 @@
 "author: fudesign2008@163.com
 "
 " This plugin will set random color scheme when the vim starts up.
-" Use `:RandomColor` command to random scheme manually
+" Use `:RandomTheme` command to random scheme manually
 "
 "
 "
 
-if &compatible || exists('g:random_color_loaded')
-    if exists(':RandomColor')
+if &compatible || exists('g:random_theme_loaded')
+    if exists(':RandomTheme')
 
-        if exists('g:random_color_start') && g:random_color_start
-            execute ':silent RandomColor'
+        if exists('g:random_theme_start') && g:random_theme_start
+            execute ':silent RandomTheme'
         endif
 
         finish
     endif
 endif
 
-let g:random_color_loaded = 1
+let g:random_theme_loaded = 1
 let s:save_cpo = &cpoptions
 set cpoptions&vim
 
@@ -298,27 +298,58 @@ command! -nargs=0 HybridDarkLowContrast call s:HybridColor(1 , 0)
 "------
 
 
+if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
+    let g:favorite_gui_fonts = [
+                \ 'Monaco:h12',
+                \ 'Fira Code:h12',
+                \ 'Cascadia Code:h12',
+                \ 'Iosevka Medium:h12',
+                \ 'Victor Mono:h12',
+                \ 'Ubuntu Mono:h14',
+                \ 'Consolas:h13'
+                \]
+endif
+
+
+let s:fontSwitchIndex = 0
+function! s:SwitchFont()
+    if exists('g:favorite_gui_fonts') == 0 ||  empty('g:favorite_gui_fonts')
+        return
+    endif
+    let length = len(g:favorite_color_schemes)
+    let index = s:fontSwitchIndex % length
+    let guifont = get(g:favorite_gui_fonts, index)
+    let s:fontSwitchIndex = index + 1
+endfunction
+
+
+function s:RandomTheme()
+    call s:RandomColor()
+    call s:SwitchFont()
+endfunction
+
+
 command! -nargs=0 RandomColor call s:RandomColor()
-command! -nargs=0 RandomAll   call s:RandomAll()
-command! -nargs=0 RandomFavorite   call s:RandomFavorite()
+command! -nargs=0 RandomFont  call s:SwitchFont()
+command! -nargs=0 RandomTheme call s:RandomTheme()
 
 let s:randomOnStart = 1
-if exists('g:random_color_start')
-    let s:randomOnStart = g:random_color_start
+if exists('g:random_theme_start')
+    let s:randomOnStart = g:random_theme_start
 endif
 
 if s:randomOnStart != 0
     let guiRunning = has('gui_running')
     if s:randomOnStart == 2
         if guiRunning
-            execute ':RandomColor'
+            execute ':RandomTheme'
         endif
     elseif s:randomOnStart == 3
         if !guiRunning
-            execute ':RandomColor'
+            execute ':RandomTheme'
         endif
     else
-        execute ':RandomColor'
+        execute ':RandomTheme'
     endif
 endif
 

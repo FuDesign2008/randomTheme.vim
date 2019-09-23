@@ -1,14 +1,19 @@
-randomColor.vim
-==============
-A  plugin for random color schemes, even on start up!
+# randomTheme.vim
+
+A plugin for switch color scheme and font, even on start up!
 
 ## Install & Usage
 
-Before install this plugin, you can install almost all the vim color schemes from
-[vim-colorschemes](https://github.com/flazz/vim-colorschemes).
+Before install this plugin, you can install
+
+-   almost all the vim color schemes from
+    [vim-colorschemes](https://github.com/flazz/vim-colorschemes).
+-   [Top 10 Coding Fonts for Developers](https://scotch.io/bar-talk/top-10-monospace-fonts-for-developers)
+
+Then,
 
 1. Install this plugin.
-1. Open vim and execute `:RandomColor` to enjoy!
+1. Open vim and execute `:RandomTheme` to enjoy!
 
 ## Configuration
 
@@ -25,77 +30,101 @@ let g:favorite_color_schemes = ['molokai',
                     \ 'peaksea']
 ```
 
-### `g:random_color_start`
+### `g:favorite_gui_fonts`
 
-The plugin will use a random color scheme when vim starting up by default.
-If you want to disable this action, you can set the value of
-`g:random_color_start` in `.vimrc`. For example:
+The plugin will try to use default setting.
+
+Note: Before using a font, you should install font on system by yourself.
 
 ```vim
 
-let g:random_color_start = 0
+let g:favorite_gui_fonts = [
+    \ 'Monaco:h12',
+    \ 'Fira Code:h12',
+    \ 'Cascadia Code:h12',
+    \ 'Iosevka Medium:h12',
+    \ 'Victor Mono:h12',
+    \ 'Ubuntu Mono:h14',
+    \ 'Consolas:h13'
+    \]
+
+```
+
+### `g:random_theme_start`
+
+The plugin will use a random color scheme and font when vim starting up by default.
+If you want to disable this action, you can set the value of
+`g:random_theme_start` in `.vimrc`. For example:
+
+```vim
+
+let g:random_theme_start = 0
 colo pyte
 
 ```
 
 Available values are here:
 
-* `0` - Do not use
-* `1` - Use, *default value*
-* `2` - Use, but only when vim is running in the GUI
-* `3` - Use, but only when vim is NOT runing in the GUI
+-   `0` - Do not use
+-   `1` - Use, _default value_
+-   `2` - Use, but only when vim is running in the GUI
+-   `3` - Use, but only when vim is NOT runing in the GUI
 
 ## Commands
 
-* `:RandomFavorite` - Select a color scheme from the schemes in `g:favorite_color_schemes`
-* `:RandomAll` - Select a color scheme from all available schemes
-* `:RandomColor` - If `g:favorite_color_schemes` exists, `:RandomFavorite` will be executed, or else `:RandomAll` will be executed
-
+-   `:RandomColor` - Select a color scheme from the schemes in `g:favorite_color_schemes` or all available schemes.
+-   `:RandomFont` - Select a font from `g:favorite_gui_fonts`
+-   `:RandomTheme` - call `:RandomColor` and `:RandomFont`
 
 ## Change Log
 
-* 2015-11-23
-    - Every color scheme will be matched in each round
+-   2019-09-23
 
-* 2015-11-03
-    - Rename `g:random_color_schemes` to `g:favorite_color_schemes`
-    - add `:RandomFavorite`, `:RandomAll` commands
+    -   Rename to `randomTheme.vim`
+    -   add `:RandomTheme` command
+    -   add `g:favorite_gui_fonts`
+    -   remove `:RandomAll`, `:RandomFavorite` commands
 
-* 2015-02-07
-    - Rename to `randomColor.vim`
+-   2015-11-23
 
-* 1.0.2
-    - add `g:random_color_start` option
+    -   Every color scheme will be matched in each round
 
-* 1.0.1
-    - add help document
+-   2015-11-03
 
-* 1.0.0
-    - random colors
-    - add good colors
+    -   Rename `g:random_color_schemes` to `g:favorite_color_schemes`
+    -   add `:RandomFavorite`, `:RandomAll` commands
 
+-   2015-02-07
 
+    -   Rename to `randomColor.vim`
+
+-   1.0.2
+
+    -   add `g:random_theme_start` option
+
+-   1.0.1
+
+    -   add help document
+
+-   1.0.0
+    -   random colors
+    -   add good colors
 
 ## Recommended Color Schemes
 
 1. Light Schemes
-    * pyte
-    * simpleandfriendly
+    - pyte
+    - simpleandfriendly
 1. Dark Schemes
-    * jellybeans
-    * molokai
+    - jellybeans
+    - molokai
 1. Special Schemes
-    * lucius
-    * solarized
-    * base16
-
+    - lucius
+    - solarized
+    - base16
 
 See the following articles for more infomation
 
-* [10 Vim Color Schemes You Need to Own](http://www.vimninjas.com/2012/08/26/10-vim-color-schemes-you-need-to-own/)
-* [10 Light Vim Color Schemes That You Should Consider Using](http://www.vimninjas.com/2012/09/14/10-light-colors/)
-* [Top Color Schemes](http://www.vim.org/scripts/script_search_results.php?keywords=&script_type=color+scheme&order_by=rating&direction=descending&search=search)
-
-
-
-
+-   [10 Vim Color Schemes You Need to Own](http://www.vimninjas.com/2012/08/26/10-vim-color-schemes-you-need-to-own/)
+-   [10 Light Vim Color Schemes That You Should Consider Using](http://www.vimninjas.com/2012/09/14/10-light-colors/)
+-   [Top Color Schemes](http://www.vim.org/scripts/script_search_results.php?keywords=&script_type=color+scheme&order_by=rating&direction=descending&search=search)
