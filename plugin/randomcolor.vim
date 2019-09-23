@@ -320,6 +320,7 @@ function! s:SwitchFont()
     let index = s:fontSwitchIndex % length
     let guifont = get(g:favorite_gui_fonts, index)
     let s:fontSwitchIndex = index + 1
+    execute 'set guifont=' . guifont
 endfunction
 
 
