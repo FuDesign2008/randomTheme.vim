@@ -311,7 +311,7 @@ if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
 endif
 
 
-let s:fontSwitchIndex = 0
+let s:fontSwitchIndex = s:RandomInt(len(g:favorite_gui_fonts))
 function! s:SwitchFont()
     if exists('g:favorite_gui_fonts') == 0 ||  empty('g:favorite_gui_fonts')
         return
