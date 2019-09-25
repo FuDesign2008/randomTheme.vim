@@ -3,21 +3,21 @@
                               Reference Manual
 
 ==============================================================================
-CONTENTS                                                 *RandomColor-contents*
+CONTENTS                                                 *RandomTheme-contents*
 
-    1. Usage ................ |RandomColorUsage|
-    2. Options .............. |RandomColorOptions|
-    3. Changelog ............ |RandomColorChangelog|
+    1. Usage ................ |RandomThemeUsage|
+    2. Options .............. |RandomThemeOptions|
+    3. Changelog ............ |RandomThemeChangelog|
 
 ==============================================================================
-1: Usage                                                    *RandomColorUsage*
+1: Usage                                                    *RandomThemeUsage*
 
 The plugin can use a random color scheme when vim open up and provide a command
 for doing it: >
-        :RandomColor
+        :RandomTheme
 
 ==============================================================================
-2: Options                                                *RandomColorOptions*
+2: Options                                                *RandomThemeOptions*
 
 By default, the plugin will try to find all the color schemes in runtime path.
 If want to use your favorite color schemes for random, you can set a list/array
@@ -27,13 +27,25 @@ to 'g:favorite_color_schemes' in `.vimrc`. For example: >
                             \ 'jellybeans',
                             \ 'peaksea']
 
-The plugin will use a random color scheme when vim starting up by default.
-If you want to disable this action, you can set the value of
-'g:random_color_start' in `.vimrc`. For example: >
-        let g:random_color_start = 0
+By default, the plugin will try to use default setting for
+'g:favorite_gui_fonts' >
+        let g:favorite_gui_fonts = [
+            \ 'Monaco:h12',
+            \ 'Fira Code:h12',
+            \ 'Cascadia Code:h12',
+            \ 'Iosevka Medium:h12',
+            \ 'Victor Mono:h12',
+            \ 'Ubuntu Mono:h14',
+            \ 'Consolas:h13'
+            \]
+
+The plugin will use a random color scheme and font when vim starting up by
+default.  If you want to disable this action, you can set the value of
+'g:random_theme_start' in `.vimrc`. For example: >
+        let g:random_theme_start = 0
         colo pyte
 
-The 'g:random_color_start' can be set by following values
+The 'g:random_theme_start' can be set by following values
 * `0` - Do not use
 * `1` - Use, default value
 * `2` - Use, but only when vim is running in the GUI
@@ -41,7 +53,20 @@ The 'g:random_color_start' can be set by following values
 
 
 ==============================================================================
-3: Changelog                                            *RandomColorChangelog*
+3: Changelog                                            *RandomThemeChangelog*
+
+2019-09-23
+    -   Rename to `randomTheme.vim`
+    -   add `:RandomTheme` command
+    -   add `g:favorite_gui_fonts`
+    -   remove `:RandomAll`, `:RandomFavorite` commands
+
+2015-11-23
+    -   Every color scheme will be matched in each round
+
+2015-11-03
+    -   Rename `g:random_color_schemes` to `g:favorite_color_schemes`
+    -   add `:RandomFavorite`, `:RandomAll` commands
 
 2015-02-07
     - Rename to RandomColor.vim
