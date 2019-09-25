@@ -316,7 +316,7 @@ function! s:SwitchFont()
     if exists('g:favorite_gui_fonts') == 0 ||  empty('g:favorite_gui_fonts')
         return
     endif
-    let length = len(g:favorite_color_schemes)
+    let length = len(g:favorite_gui_fonts)
     let index = s:fontSwitchIndex % length
     let guifont = get(g:favorite_gui_fonts, index)
     let s:fontSwitchIndex = index + 1
