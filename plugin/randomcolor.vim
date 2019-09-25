@@ -303,7 +303,7 @@ if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
                 \ 'Monaco:h12',
                 \ 'Fira\ Code:h12',
                 \ 'Cascadia\ Code:h12',
-                \ 'Iosevka Medium:h12',
+                \ 'Iosevka\ Medium:h12',
                 \ 'Victor\ Mono:h12',
                 \ 'Ubuntu\ Mono:h14',
                 \ 'Consolas:h13'
