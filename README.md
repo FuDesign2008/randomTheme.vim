@@ -9,6 +9,7 @@ Before install this plugin, you can install
 -   almost all the vim color schemes from
     [vim-colorschemes](https://github.com/flazz/vim-colorschemes).
 -   [Top 10 Coding Fonts for Developers](https://scotch.io/bar-talk/top-10-monospace-fonts-for-developers)
+    -   Some fonts is put in `./fonts` folder
 
 Then,
 
