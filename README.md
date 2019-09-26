@@ -40,14 +40,14 @@ Note: Before using a font, you should install font on system by yourself.
 ```vim
 
 let g:favorite_gui_fonts = [
-    \ 'Monaco:h12',
-    \ 'Fira Code:h12',
-    \ 'Cascadia Code:h12',
-    \ 'Iosevka Medium:h12',
-    \ 'Victor Mono:h12',
-    \ 'Ubuntu Mono:h14',
-    \ 'Consolas:h13'
-    \]
+            \ 'Monaco:h12',
+            \ 'Fira\ Code:h12',
+            \ 'Cascadia\ Code:h12',
+            \ 'Iosevka\ Medium:h12',
+            \ 'Victor\ Mono:h12',
+            \ 'Ubuntu\ Mono:h14',
+            \ 'Consolas:h13'
+            \]
 
 ```
 

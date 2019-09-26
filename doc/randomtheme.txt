@@ -30,14 +30,14 @@ to 'g:favorite_color_schemes' in `.vimrc`. For example: >
 By default, the plugin will try to use default setting for
 'g:favorite_gui_fonts' >
         let g:favorite_gui_fonts = [
-            \ 'Monaco:h12',
-            \ 'Fira Code:h12',
-            \ 'Cascadia Code:h12',
-            \ 'Iosevka Medium:h12',
-            \ 'Victor Mono:h12',
-            \ 'Ubuntu Mono:h14',
-            \ 'Consolas:h13'
-            \]
+                    \ 'Monaco:h12',
+                    \ 'Fira\ Code:h12',
+                    \ 'Cascadia\ Code:h12',
+                    \ 'Iosevka\ Medium:h12',
+                    \ 'Victor\ Mono:h12',
+                    \ 'Ubuntu\ Mono:h14',
+                    \ 'Consolas:h13'
+                    \]
 
 The plugin will use a random color scheme and font when vim starting up by
 default.  If you want to disable this action, you can set the value of
