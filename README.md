@@ -44,7 +44,6 @@ let g:favorite_gui_fonts = [
             \ 'Fira\ Code:h12',
             \ 'Cascadia\ Code:h12',
             \ 'Iosevka\ Medium:h12',
-            \ 'Victor\ Mono:h12',
             \ 'Ubuntu\ Mono:h14',
             \ 'Consolas:h13'
             \]

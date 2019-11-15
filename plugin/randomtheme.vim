@@ -304,8 +304,9 @@ if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
                 \ 'Fira\ Code:h12',
                 \ 'Cascadia\ Code:h12',
                 \ 'Iosevka\ Medium:h12',
-                \ 'Victor\ Mono:h12',
                 \ 'Ubuntu\ Mono:h14',
+                \ 'Inconsolata:h12',
+                \ 'Source\ Code\ Variable:h12',
                 \ 'Consolas:h13'
                 \]
 endif
