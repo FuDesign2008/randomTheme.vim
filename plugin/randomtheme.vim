@@ -135,13 +135,13 @@ endfunction
 "@param {Integer} max
 "@return {Integer} return a integer between [0, max - 1]
 function! s:RandomInt(max)
-    let max = a:max - 1
+    let randomInt = 0
 
-    if max > 0
-        return s:RandomNumber(max)
+    if a:max > 0
+        let randomInt = s:RandomNumber(a:max) % a:max
     endif
 
-    return 0
+    return randomInt
 endfunction
 
 
@@ -174,7 +174,7 @@ function! s:RandomColorSchemes(colorSchemes)
     endif
 endfunction
 
-function! s:uniqueList(list)
+function! s:UniqueList(list)
     let newList = []
 
     for item in a:list
@@ -192,7 +192,7 @@ function! s:RandomOrder(theList, isUnique)
     if a:isUnique
         let uniqueArr = a:theList
     else
-        let uniqueArr = s:uniqueList(a:theList)
+        let uniqueArr = s:UniqueList(a:theList)
     endif
 
     let length = len(uniqueArr)
