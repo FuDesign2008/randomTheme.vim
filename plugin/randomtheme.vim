@@ -305,7 +305,7 @@ if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
                 \ 'Cascadia\ Code:h12',
                 \ 'Iosevka\ Medium:h12',
                 \ 'Ubuntu\ Mono:h14',
-                \ 'Inconsolata:h12',
+                \ 'Inconsolata:h13',
                 \ 'Source\ Code\ Variable:h12',
                 \ 'Consolas:h13'
                 \]
