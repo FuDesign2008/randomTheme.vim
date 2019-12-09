@@ -138,7 +138,7 @@ function! s:RandomInt(max)
     let randomInt = 0
 
     if a:max > 0
-        let randomInt = s:RandomNumber(a:max) % a:max
+        let randomInt = s:RandomNumber(a:max * 8) % a:max
     endif
 
     return randomInt
