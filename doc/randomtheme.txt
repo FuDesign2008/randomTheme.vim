@@ -33,7 +33,6 @@ By default, the plugin will try to use default setting for
                     \ 'Monaco:h12',
                     \ 'Fira\ Code:h12',
                     \ 'Cascadia\ Code:h12',
-                    \ 'Iosevka\ Medium:h12',
                     \ 'Ubuntu\ Mono:h14',
                     \ 'Inconsolata:h12',
                     \ 'Source\ Code\ Variable:h12',
@@ -55,6 +54,9 @@ The 'g:random_theme_start' can be set by following values
 
 ==============================================================================
 3: Changelog                                            *RandomThemeChangelog*
+
+2019-12-09
+    - Remove font `Iosevka`
 
 2019-09-23
     -   Rename to `randomTheme.vim`

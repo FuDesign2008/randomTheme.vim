@@ -43,7 +43,6 @@ let g:favorite_gui_fonts = [
             \ 'Monaco:h12',
             \ 'Fira\ Code:h12',
             \ 'Cascadia\ Code:h12',
-            \ 'Iosevka\ Medium:h12',
             \ 'Ubuntu\ Mono:h14',
             \ 'Consolas:h13'
             \]
@@ -78,34 +77,24 @@ Available values are here:
 
 ## Change Log
 
+-   2019-12-09
+    -   Remove font `Iosevka`
 -   2019-09-23
-
     -   Rename to `randomTheme.vim`
     -   add `:RandomTheme` command
     -   add `g:favorite_gui_fonts`
     -   remove `:RandomAll`, `:RandomFavorite` commands
-
 -   2015-11-23
-
     -   Every color scheme will be matched in each round
-
 -   2015-11-03
-
     -   Rename `g:random_color_schemes` to `g:favorite_color_schemes`
     -   add `:RandomFavorite`, `:RandomAll` commands
-
 -   2015-02-07
-
     -   Rename to `randomColor.vim`
-
 -   1.0.2
-
     -   add `g:random_theme_start` option
-
 -   1.0.1
-
     -   add help document
-
 -   1.0.0
     -   random colors
     -   add good colors
