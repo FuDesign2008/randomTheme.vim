@@ -387,14 +387,14 @@ if s:randomOnStart != 0
     let guiRunning = has('gui_running')
     if s:randomOnStart == 2
         if guiRunning
-            execute ':RandomTheme'
+            execute ':RandomThemeFavorite'
         endif
     elseif s:randomOnStart == 3
         if !guiRunning
-            execute ':RandomTheme'
+            execute ':RandomThemeFavorite'
         endif
     else
-        execute ':RandomTheme'
+        execute ':RandomThemeFavorite'
     endif
 endif
 
