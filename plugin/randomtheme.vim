@@ -91,11 +91,7 @@ function s:ReadColorSchemesData()
     let jsonFile = scriptPath . '/colorschemes.json'
     if filereadable(jsonFile)
         let lines = readfile(jsonFile)
-
-        let content = ''
-        for line in lines
-            let content = content . trim(line)
-        endfor
+        let content = join(lines, '')
         let schemeList = json_decode(content)
         return schemeList
     else
