@@ -83,18 +83,46 @@ function! s:convertColorSchemes(schemes)
 endfunction
 
 
+" @return {0|1}
+function s:IsLightMode(content)
+    let lightModes = ['set background=light', 'set bg=light']
+    for item in lightModes
+        if stridx(a:content, item) > -1
+            return 1
+        endif
+    endfor
+    return 0
+endfunction
+
+
+" @return {0|1}
+function s:IsLightColorMode(filePath)
+    if filereadable(a:filePath)
+        let lines = readfile(a:filePath)
+        let content = join(lines, ' ')
+        let isLight = s:IsLightMode(content)
+        return isLight
+    endif
+    return 0
+endfunction
+
+
 "@return {List}
 function! s:getAllColorSchemes()
     let filePaths = globpath(&runtimepath, 'colors/*.vim')
     let filePathList = split(filePaths, '\n')
-    let fileNames = []
+    let colorSchemes = []
 
     for filePath in filePathList
         let colorSchemeName = fnamemodify(filePath, ':t:r')
-        call add(fileNames, colorSchemeName)
+        let isLight = s:IsLightColorMode(filePath)
+        let scheme = {
+                    \'name': colorSchemeName,
+                    \'isLight': isLight
+                    \ }
+        call add(colorSchemes, scheme)
     endfor
 
-    let colorSchemes = s:convertColorSchemes(fileNames)
     return colorSchemes
 endfunction
 
@@ -217,7 +245,11 @@ endfunction
 
 
 let s:allColorSchemesWithRandom = []
-function! s:RandomAll()
+let s:allColorSchemeIndex = 0
+
+" @param mode {string} 'light'/'dark'/''
+" @return {string}
+function! s:RandomAll(mode)
     if !exists('s:allColorSchemes')
         let s:allColorSchemes = s:getAllColorSchemes()
     endif
@@ -226,76 +258,52 @@ function! s:RandomAll()
         let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes, 1)
     endif
 
-    call s:RandomColorSchemes(s:allColorSchemesWithRandom)
+    let length = len(s:allColorSchemesWithRandom)
+    let found = -1
+
+    let loopCount = 0
+
+    while found == -1 && loopCount < length
+        let loopCount += 1
+
+        let index = (s:allColorSchemeIndex + length) % length
+        let item = get(s:allColorSchemesWithRandom, index)
+        let name = get(item, 'name', '')
+        let isLight = get(item, 'isLight', 0)
+
+        if a:mode ==# 'light'
+            if isLight
+                let found = name
+            else
+                let s:allColorSchemeIndex += 1
+            endif
+        elseif a:mode ==# 'dark'
+            if isLight
+                let s:allColorSchemeIndex += 1
+            else
+                let found = name
+            endif
+        else
+            let found = name
+        endif
+
+    endwhile
+
+    return found == -1 ? '' : found
 endfunction
 
 
 let s:favoriteColorSchemesWithRandom = []
 function! s:RandomFavorite()
+    if empty(s:favoriteColorSchemes)
+        return
+    endif
     if empty(s:favoriteColorSchemesWithRandom)
-        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes, 1)
+        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes, 0)
     endif
     call s:RandomColorSchemes(s:favoriteColorSchemesWithRandom)
 endfunction
 
-
-function! s:RandomColor()
-    if empty(s:favoriteColorSchemes)
-        call s:RandomAll()
-    else
-        call s:RandomFavorite()
-    endif
-endfunction
-
-"------  create commands for solarized
-function! s:SolarizedColor(light)
-    execute 'set background=' . (a:light ? 'light' : 'dark')
-    colo solarized
-endfunction
-command! -nargs=0 SolarizedLight call s:SolarizedColor(1)
-command! -nargs=0 SolarizedDark  call s:SolarizedColor(0)
-"------
-
-
-"------  create commands for gruvbox
-"@ {String} contrast `soft`, `medium`, `hard`
-function! s:GruvboxColor(contrast, light)
-
-    if a:contrast ==? 'soft' || a:contrast ==? 'hard'
-        let contrast = a:contrast
-    else
-        let contrast = 'medium'
-    endif
-
-    if a:light
-        let g:gruvbox_contrast_light = contrast
-    else
-        let g:gruvbox_contrast_dark = contrast
-    endif
-
-    execute 'set background=' . (a:light ? 'light' : 'dark')
-    colo gruvbox
-endfunction
-
-command! -nargs=0 GruvboxLight call s:GruvboxColor('' , 1)
-command! -nargs=0 GruvboxLightLowContrast call s:GruvboxColor('soft' , 1)
-command! -nargs=0 GruvboxLightHighContrast call s:GruvboxColor('hard' , 1)
-command! -nargs=0 GruvboxDark call s:GruvboxColor('' , 0)
-command! -nargs=0 GruvboxDarkLowContrast call s:GruvboxColor('soft' , 0)
-command! -nargs=0 GruvboxDarkHighContrast call s:GruvboxColor('hard' , 0)
-"------
-
-"------  create commands for hybrid
-function! s:HybridColor(lowContrast, light)
-    execute 'set background=' . (a:light ? 'light' : 'dark')
-    let g:hybrid_reduced_contrast = a:lowContrast ? 1 : 0
-    colo hybrid
-endfunction
-
-command! -nargs=0 HybridDark call s:HybridColor(0 , 0)
-command! -nargs=0 HybridDarkLowContrast call s:HybridColor(1 , 0)
-
-"------
 
 
 if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
@@ -324,15 +332,47 @@ function! s:SwitchFont()
 endfunction
 
 
-function s:RandomTheme()
-    call s:RandomColor()
+function s:RandomTheme(...)
+    let mode = ''
+
+    if a:0 == 1
+        let mode = a:1
+    endif
+
+    call s:RandomAll(mode)
     call s:SwitchFont()
 endfunction
 
+function s:RandomFavoriteTheme()
+    if empty(s:favoriteColorSchemes)
+        return
+    endif
+    call s:RandomFavorite()
+    call s:SwitchFont()
+endfunction
 
-command! -nargs=0 RandomColor call s:RandomColor()
-command! -nargs=0 RandomFont  call s:SwitchFont()
-command! -nargs=0 RandomTheme call s:RandomTheme()
+function RandomThemeCompleter(A, L, P)
+    let modes = ['dark', 'light']
+    let trimed = trim(a:A)
+    let length = len(trimed)
+
+    if length == 0
+        return modes
+    else
+        for item in modes
+            if stridx(item, trimed) > -1 && len(item) > length
+                return [item]
+            endif
+        endfor
+    endif
+
+    return []
+endfunction
+
+command! -nargs=0 RandomFont call s:SwitchFont()
+command! -nargs=? -complete=customlist,RandomThemeCompleter RandomTheme call s:RandomTheme(<args>)
+command! -nargs=0 RandomThemeFavorite call s:RandomFavoriteTheme()
+
 
 let s:randomOnStart = 1
 if exists('g:random_theme_start')
