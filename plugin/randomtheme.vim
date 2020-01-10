@@ -248,7 +248,6 @@ let s:allColorSchemesWithRandom = []
 let s:allColorSchemeIndex = 0
 
 " @param mode {string} 'light'/'dark'/''
-" @return {string}
 function! s:RandomAll(mode)
     if !exists('s:allColorSchemes')
         let s:allColorSchemes = s:getAllColorSchemes()
@@ -289,7 +288,12 @@ function! s:RandomAll(mode)
 
     endwhile
 
-    return found == -1 ? '' : found
+    if found == -1 || found ==# ''
+        echomsg 'Failed to find a matched scheme'
+    else
+        execute 'colo ' . found
+    endif
+
 endfunction
 
 
