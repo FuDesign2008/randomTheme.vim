@@ -85,10 +85,10 @@ endfunction
 
 
 
+let s:scriptPath = expand('<sfile>:p:h')
 " @return {list}  <{name: 'string', light: 0|1}>
 function s:ReadColorSchemesData()
-    let scriptPath = expand('<sfile>:p:h')
-    let jsonFile = scriptPath . '/colorschemes.json'
+    let jsonFile = s:scriptPath . '/colorschemes.json'
     if filereadable(jsonFile)
         let lines = readfile(jsonFile)
         let content = join(lines, '')
