@@ -83,48 +83,21 @@ function! s:convertColorSchemes(schemes)
 endfunction
 
 
-" @return {0|1}
-function s:IsLightMode(content)
-    let lightModes = ['set background=light', 'set bg=light']
-    for item in lightModes
-        if stridx(a:content, item) > -1
-            return 1
-        endif
-    endfor
-    return 0
-endfunction
 
 
-" @return {0|1}
-function s:IsLightColorMode(filePath)
-    if filereadable(a:filePath)
-        let lines = readfile(a:filePath)
-        let content = join(lines, ' ')
-        let isLight = s:IsLightMode(content)
-        return isLight
+" @return {list}  <{name: 'string', light: 0|1}>
+function s:ReadColorSchemesData()
+    let scriptPath = expand('<sfile>:p:h')
+    let jsonFile = scriptPath . 'colorschemes.json'
+    if filereadable(jsonFile)
+        let lines = readfile(jsonFile)
+        let content = join(lines, '')
+        let schemeList = json_decode(content)
     endif
-    return 0
+    return []
 endfunction
 
 
-"@return {List}
-function! s:getAllColorSchemes()
-    let filePaths = globpath(&runtimepath, 'colors/*.vim')
-    let filePathList = split(filePaths, '\n')
-    let colorSchemes = []
-
-    for filePath in filePathList
-        let colorSchemeName = fnamemodify(filePath, ':t:r')
-        let isLight = s:IsLightColorMode(filePath)
-        let scheme = {
-                    \'name': colorSchemeName,
-                    \'isLight': isLight
-                    \ }
-        call add(colorSchemes, scheme)
-    endfor
-
-    return colorSchemes
-endfunction
 
 if exists('g:favorite_color_schemes')
     let s:favoriteColorSchemes = s:convertColorSchemes(g:favorite_color_schemes)
@@ -250,7 +223,11 @@ let s:allColorSchemeIndex = 0
 " @param mode {string} 'light'/'dark'/''
 function! s:RandomAll(mode)
     if !exists('s:allColorSchemes')
-        let s:allColorSchemes = s:getAllColorSchemes()
+        let s:allColorSchemes = s:ReadColorSchemesData()
+    endif
+
+    if empty(s:allColorSchemes)
+      return
     endif
 
     if empty(s:allColorSchemesWithRandom)
@@ -268,7 +245,7 @@ function! s:RandomAll(mode)
         let index = (s:allColorSchemeIndex + length) % length
         let item = get(s:allColorSchemesWithRandom, index)
         let name = get(item, 'name', '')
-        let isLight = get(item, 'isLight', 0)
+        let isLight = get(item, 'light', 0)
 
         if a:mode ==# 'light'
             if isLight
