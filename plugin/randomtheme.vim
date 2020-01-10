@@ -9,10 +9,10 @@
 "
 
 if &compatible || exists('g:random_theme_loaded')
-    if exists(':RandomTheme')
+    if exists(':RandomThemeFavorite')
 
         if exists('g:random_theme_start') && g:random_theme_start
-            execute ':silent RandomTheme'
+            execute ':silent RandomThemeFavorite'
         endif
 
         finish
@@ -88,11 +88,18 @@ endfunction
 " @return {list}  <{name: 'string', light: 0|1}>
 function s:ReadColorSchemesData()
     let scriptPath = expand('<sfile>:p:h')
-    let jsonFile = scriptPath . 'colorschemes.json'
+    let jsonFile = scriptPath . '/colorschemes.json'
     if filereadable(jsonFile)
         let lines = readfile(jsonFile)
-        let content = join(lines, '')
+
+        let content = ''
+        for line in lines
+            let content = content . trim(line)
+        endfor
         let schemeList = json_decode(content)
+        return schemeList
+    else
+        echo 'file not filereadable'
     endif
     return []
 endfunction
@@ -250,19 +257,16 @@ function! s:RandomAll(mode)
         if a:mode ==# 'light'
             if isLight
                 let found = name
-            else
-                let s:allColorSchemeIndex += 1
             endif
         elseif a:mode ==# 'dark'
-            if isLight
-                let s:allColorSchemeIndex += 1
-            else
+            if !isLight
                 let found = name
             endif
         else
             let found = name
         endif
 
+        let s:allColorSchemeIndex = index + 1
     endwhile
 
     if found == -1 || found ==# ''
@@ -351,7 +355,7 @@ function RandomThemeCompleter(A, L, P)
 endfunction
 
 command! -nargs=0 RandomFont call s:SwitchFont()
-command! -nargs=? -complete=customlist,RandomThemeCompleter RandomTheme call s:RandomTheme(<args>)
+command! -nargs=? -complete=customlist,RandomThemeCompleter RandomTheme call s:RandomTheme(<f-args>)
 command! -nargs=0 RandomThemeFavorite call s:RandomFavoriteTheme()
 
 
