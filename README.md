@@ -71,12 +71,18 @@ Available values are here:
 
 ## Commands
 
--   `:RandomColor` - Select a color scheme from the schemes in `g:favorite_color_schemes` or all available schemes.
--   `:RandomFont` - Select a font from `g:favorite_gui_fonts`
--   `:RandomTheme` - call `:RandomColor` and `:RandomFont`
+-   `:RandomFont` - select a font from `g:favorite_gui_fonts`
+-   `:RandomTheme` - select a color scheme from all available schemes and run `:RandomFont`
+    -   `:RandomTheme` select a color scheme
+    -   `:RandomTheme dark` select a dark color scheme
+    -   `:RandomTheme light` select a light color scheme
+-   `:RandomThemeFavorite` - select a color scheme from the schemes in `g:favorite_color_schemes` and run `:RandomFont`
 
 ## Change Log
 
+-   2020-01-10
+    -   add `:RandomThemeFavorite` command
+    -   remove `:RandomColor` command
 -   2019-12-09
     -   Remove font `Iosevka`
 -   2019-09-23
