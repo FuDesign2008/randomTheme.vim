@@ -9,10 +9,10 @@
 "
 
 if &compatible || exists('g:random_theme_loaded')
-    if exists(':RandomThemeFavorite')
+    if exists(':RandomTheme')
 
         if exists('g:random_theme_start') && g:random_theme_start
-            execute ':silent RandomThemeFavorite'
+            execute ':silent RandomTheme'
         endif
 
         finish
@@ -364,14 +364,14 @@ if s:randomOnStart != 0
     let guiRunning = has('gui_running')
     if s:randomOnStart == 2
         if guiRunning
-            execute ':RandomThemeFavorite'
+            execute ':RandomTheme'
         endif
     elseif s:randomOnStart == 3
         if !guiRunning
-            execute ':RandomThemeFavorite'
+            execute ':RandomTheme'
         endif
     else
-        execute ':RandomThemeFavorite'
+        execute ':RandomTheme'
     endif
 endif
 
