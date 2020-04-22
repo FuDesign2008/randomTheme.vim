@@ -44,6 +44,9 @@ let g:favorite_gui_fonts = [
             \ 'Fira\ Code:h12',
             \ 'Cascadia\ Code:h12',
             \ 'Ubuntu\ Mono:h14',
+            \ 'Inconsolata:h13',
+            \ 'Source\ Code\ Variable:h12',
+            \ 'JetBrains\ Mono:h13',
             \ 'Consolas:h13'
             \]
 
@@ -80,6 +83,8 @@ Available values are here:
 
 ## Change Log
 
+-   2020-04-22
+    -   add `JetBrains Mono` font
 -   2020-01-10
     -   add `:RandomThemeFavorite` command
     -   remove `:RandomColor` command

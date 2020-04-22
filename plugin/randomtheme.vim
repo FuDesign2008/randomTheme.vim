@@ -295,6 +295,7 @@ if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
                 \ 'Ubuntu\ Mono:h14',
                 \ 'Inconsolata:h13',
                 \ 'Source\ Code\ Variable:h12',
+                \ 'JetBrains\ Mono:h13',
                 \ 'Consolas:h13'
                 \]
 endif
