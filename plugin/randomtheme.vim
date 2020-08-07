@@ -306,7 +306,7 @@ endif
 " @params {string} guifont  font:h14 格式
 function! s:SetGuiFont(guifont)
     if has('gui_running')
-        let splitted = split(a:guifont)
+        let splitted = split(a:guifont, ':h')
         if len(splitted) != 2
             return
         endif
