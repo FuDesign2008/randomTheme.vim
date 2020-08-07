@@ -317,7 +317,7 @@ function! s:SetGuiFont(guifont)
             let commandStr = 'set guifont=' . font . '\ ' . size
             execute commandStr
         else
-            let commandStr = 'set guifont=font' . ':h' . size
+            let commandStr = 'set guifont=' . font . ':h' . size
             execute commandStr
         endif
     endif
