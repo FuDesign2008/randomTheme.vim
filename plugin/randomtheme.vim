@@ -301,6 +301,30 @@ if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
 endif
 
 
+" @see https://forum.ubuntu.com.cn/viewtopic.php?t=45358
+" @see :help setting-guifont
+" @params {string} guifont  font:h14 格式
+function! s:SetGuiFont(guifont)
+    if has('gui_running')
+        let splitted = split(a:guifont)
+        if len(splitted) != 2
+            return
+        endif
+        let font = splitted[0]
+        let size= splitted[1]
+        " for ubuntu vim-gonme
+        if has('x11')
+            let commandStr = 'set guifont=' . font . '\ ' . size
+            execute commandStr
+        else
+            let commandStr = 'set guifont=font' . ':h' . size
+            execute commandStr
+        endif
+    endif
+endfunction
+
+
+
 let s:fontSwitchIndex = s:RandomInt(len(g:favorite_gui_fonts))
 function! s:SwitchFont()
     if exists('g:favorite_gui_fonts') == 0 ||  empty('g:favorite_gui_fonts')
@@ -310,7 +334,7 @@ function! s:SwitchFont()
     let index = s:fontSwitchIndex % length
     let guifont = get(g:favorite_gui_fonts, index)
     let s:fontSwitchIndex = index + 1
-    execute 'set guifont=' . guifont
+    call s:SetGuiFont(guifont)
 endfunction
 
 
