@@ -23,90 +23,33 @@ let g:random_theme_loaded = 1
 let s:save_cpo = &cpoptions
 set cpoptions&vim
 
-" commands for special color schemes
-let s:specialSchemeCommands = {
-            \ 'lucius': [
-                    \ 'LuciusBlack',
-                    \ 'LuciusBlackHighContrast',
-                    \ 'LuciusBlackLowContrast',
-                    \ 'LuciusDark',
-                    \ 'LuciusDarkHighContrast',
-                    \ 'LuciusDarkLowContrast',
-                    \ 'LuciusLight',
-                    \ 'LuciusLightHighContrast',
-                    \ 'LuciusLightLowContrast',
-                    \ 'LuciusWhite',
-                    \ 'LuciusWhiteHighContrast',
-                    \ 'LuciusWhiteLowContrast'
-                \],
-            \ 'solarized': [
-                    \ 'SolarizedDark',
-                    \ 'SolarizedLight'
-                \],
-            \ 'gruvbox': [
-                    \ 'GruvboxDark',
-                    \ 'GruvboxDarkHighContrast',
-                    \ 'GruvboxDarkLowContrast',
-                    \ 'GruvboxLight',
-                    \ 'GruvboxLightHighContrast',
-                    \ 'GruvboxLightLowContrast'
-                \],
-            \ 'hybrid': [
-                    \ 'HybridDark',
-                    \ 'HybridDarkLowContrast'
-                \]
-        \}
-
-
-
-"@param {List} schemes
-"@return {List}
-function! s:convertColorSchemes(schemes)
-    let colorSchemes = []
-
-    for name in a:schemes
-        if has_key(s:specialSchemeCommands, name)
-            let commands = get(s:specialSchemeCommands, name)
-            for cmdStr in commands
-                if index(colorSchemes, cmdStr) == -1
-                    call add(colorSchemes, cmdStr)
-                endif
-            endfor
-        else
-            if index(colorSchemes, name) == -1
-                call add(colorSchemes, name)
-            endif
-        endif
-    endfor
-
-    return colorSchemes
-endfunction
-
-
-
 
 let s:scriptPath = expand('<sfile>:p:h')
-" @return {list}  <{name: 'string', light: 0|1}>
+
+"  s:allColorSchemes {list}  <{name: 'string', light: 0|1}>
 function s:ReadColorSchemesData()
+    if !exists('s:allColorSchemes')
+        return
+    endif
     let jsonFile = s:scriptPath . '/colorschemes.json'
     if filereadable(jsonFile)
         let lines = readfile(jsonFile)
         let content = join(lines, '')
         let schemeList = json_decode(content)
-        return schemeList
+        let s:allColorSchemes = schemeList
     else
         echo 'file not filereadable'
     endif
-    return []
+    let s:allColorSchemes = []
 endfunction
 
 
 
 if exists('g:favorite_color_schemes')
-    let s:favoriteColorSchemes = s:convertColorSchemes(g:favorite_color_schemes)
+    let s:favoriteColorSchemes = g:favorite_color_schemes
 elseif exists('g:random_color_schemes')
     " compatible with old setting
-    let s:favoriteColorSchemes = s:convertColorSchemes(g:random_color_schemes)
+    let s:favoriteColorSchemes = g:random_color_schemes
 else
     let s:favoriteColorSchemes = []
 endif
@@ -158,24 +101,8 @@ function! s:RandomColorSchemes(colorSchemes)
 
     let item = remove(a:colorSchemes, 0)
     let color = item
-    let command = ''
-
-    let specialColorNames = keys(s:specialSchemeCommands)
-
-    for name in specialColorNames
-        let commandList = get(s:specialSchemeCommands, name, [])
-        if index(commandList, item) > -1
-            let color = name
-            let command = item
-            break
-        endif
-    endfor
 
     execute 'colo ' . color
-    let execCommand = ':' . command
-    if len(command) > 1 && exists(execCommand)
-        execute execCommand
-    endif
 endfunction
 
 function! s:UniqueList(list)
@@ -225,9 +152,7 @@ let s:allColorSchemeIndex = 0
 
 " @param mode {string} 'light'/'dark'/''
 function! s:RandomAll(mode)
-    if !exists('s:allColorSchemes')
-        let s:allColorSchemes = s:ReadColorSchemesData()
-    endif
+    call s:ReadColorSchemesData()
 
     if empty(s:allColorSchemes)
       return
@@ -275,7 +200,9 @@ endfunction
 
 
 let s:favoriteColorSchemesWithRandom = []
-function! s:RandomFavorite()
+
+" @param mode {string} 'light'/'dark'/''
+function! s:RandomFavorite(mode)
     if empty(s:favoriteColorSchemes)
         return
     endif
