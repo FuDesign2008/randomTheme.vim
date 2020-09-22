@@ -10,11 +10,9 @@
 
 if &compatible || exists('g:random_theme_loaded')
     if exists(':RandomTheme')
-
-        if exists('g:random_theme_start') && g:random_theme_start
-            execute ':silent RandomTheme'
-        endif
-
+        " if exists('g:random_theme_start') && g:random_theme_start
+            " execute ':silent RandomTheme'
+        " endif
         finish
     endif
 endif
@@ -345,7 +343,7 @@ function s:RandomFavoriteTheme(...)
     call s:SwitchFont()
 endfunction
 
-function RandomThemeCompleter(A, L, P)
+function! RandomThemeCompleter(A, L, P)
     let modes = ['dark', 'light']
     let trimed = trim(a:A)
     let length = len(trimed)
@@ -368,24 +366,23 @@ command! -nargs=? -complete=customlist,RandomThemeCompleter RandomTheme call s:R
 command! -nargs=? -complete=customlist,RandomThemeCompleter RandomThemeFavorite call s:RandomFavoriteTheme(<f-args>)
 
 
-let s:randomOnStart = 1
+let s:randomOnStart = 'all'
 if exists('g:random_theme_start')
     let s:randomOnStart = g:random_theme_start
 endif
 
-if s:randomOnStart != 0
-    let guiRunning = has('gui_running')
-    if s:randomOnStart == 2
-        if guiRunning
-            execute ':RandomTheme'
-        endif
-    elseif s:randomOnStart == 3
-        if !guiRunning
-            execute ':RandomTheme'
-        endif
-    else
-        execute ':RandomTheme'
-    endif
+if s:randomOnStart ==? 'all'
+    execute ':RandomTheme'
+elseif s:randomOnStart ==? 'all:light'
+    execute ':RandomTheme light'
+elseif s:randomOnStart ==? 'all:dark'
+    execute ':RandomTheme dark'
+elseif s:randomOnStart ==? 'favorite'
+    execute ':RandomFavorite'
+elseif s:randomOnStart ==? 'favorite:light'
+    execute ':RandomFavorite light'
+elseif s:randomOnStart ==? 'favorite:dark'
+    execute ':RandomFavorite dark'
 endif
 
 let &cpoptions = s:save_cpo

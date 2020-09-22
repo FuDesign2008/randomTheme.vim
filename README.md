@@ -68,9 +68,12 @@ colo pyte
 Available values are here:
 
 -   `0` - Do not use
--   `1` - Use, _default value_
--   `2` - Use, but only when vim is running in the GUI
--   `3` - Use, but only when vim is NOT runing in the GUI
+-   `'all'` - Use a random color scheme in all, _default value_
+-   `'all:light'` - Use a random light color scheme in all
+-   `'all:dark'` - Use a random dark color scheme in all
+-   `'favorite'` - Use a random color scheme in favorite
+-   `'favorite:light'` - Use a random light color scheme in favorite
+-   `'favorite:dark'` - Use a random dark color scheme in favorite
 
 ## Commands
 
