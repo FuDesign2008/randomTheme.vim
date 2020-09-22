@@ -83,9 +83,14 @@ Available values are here:
     -   `:RandomTheme dark` select a dark color scheme
     -   `:RandomTheme light` select a light color scheme
 -   `:RandomThemeFavorite` - select a color scheme from the schemes in `g:favorite_color_schemes` and run `:RandomFont`
+    -   `:RandomThemeFavorite` select a color scheme
+    -   `:RandomThemeFavorite dark` select a favorite dark color scheme
+    -   `:RandomThemeFavorite light` select a favorite light color scheme
 
 ## Change Log
 
+-   2020-09-22
+    -   update `:RandomFavorite` command
 -   2020-04-22
     -   add `JetBrains Mono` font
 -   2020-01-10
