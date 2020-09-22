@@ -92,18 +92,6 @@ function! s:RandomInt(max)
 endfunction
 
 
-"@param {List} colorSchemes
-function! s:RandomColorSchemes(colorSchemes)
-
-    if empty(a:colorSchemes)
-        return
-    endif
-
-    let item = remove(a:colorSchemes, 0)
-    let color = item
-
-    execute 'colo ' . color
-endfunction
 
 function! s:UniqueList(list)
     let newList = []
@@ -147,31 +135,25 @@ function! s:RandomOrder(theList, isUnique)
 endfunction
 
 
-let s:allColorSchemesWithRandom = []
-let s:allColorSchemeIndex = 0
-
+" @param schemesInRandom {Array}
+" @param start {number}
 " @param mode {string} 'light'/'dark'/''
-function! s:RandomAll(mode)
-    call s:ReadColorSchemesData()
-
-    if empty(s:allColorSchemes)
-      return
+" @return {number}
+function! s:GetNextColorScheme(schemesInRandom, start, mode)
+    if empty(a:schemesInRandom)
+      return -1
     endif
 
-    if empty(s:allColorSchemesWithRandom)
-        let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes, 1)
-    endif
-
-    let length = len(s:allColorSchemesWithRandom)
+    let length = len(a:schemesInRandom)
     let found = -1
-
     let loopCount = 0
+    let theIndex = a:start
 
     while found == -1 && loopCount < length
         let loopCount += 1
 
-        let index = (s:allColorSchemeIndex + length) % length
-        let item = get(s:allColorSchemesWithRandom, index)
+        let index = (theIndex + length) % length
+        let item = get(a:schemesInRandom, index)
         let name = get(item, 'name', '')
         let isLight = get(item, 'light', 0)
 
@@ -187,29 +169,102 @@ function! s:RandomAll(mode)
             let found = name
         endif
 
-        let s:allColorSchemeIndex = index + 1
+        let theIndex = index + 1
     endwhile
+
+    return found
+endfunction
+
+
+let s:allColorSchemesWithRandom = []
+let s:allColorSchemeIndex = 0
+" @param mode {string} 'light'/'dark'/''
+function! s:RandomAll(mode)
+    call s:ReadColorSchemesData()
+
+    if empty(s:allColorSchemes)
+      return
+    endif
+
+    if empty(s:allColorSchemesWithRandom)
+        let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes, 1)
+    endif
+
+    let found = s:GetNextColorScheme(s:allColorSchemesWithRandom, s:allColorSchemeIndex, a:mode)
 
     if found == -1 || found ==# ''
         echomsg 'Failed to find a matched scheme'
     else
+        let s:allColorSchemeIndex = found
         execute 'colo ' . found
     endif
-
 endfunction
 
 
-let s:favoriteColorSchemesWithRandom = []
+" @params {string} name
+" @return {object}
+function! s:FindColorSchemesInAll(name)
+    let index = -1
+    let length = len(s:allColorSchemes)
+    while index < length
+        let item = get(s:allColorSchemes, {})
+        let itemName = get(item, 'name', '')
+        if a:name == itemName
+            return { 'name': a:name, 'light': item.light  }
+        endif
+        let index = index + 1
+    endwhile
+    return {}
+endfunction
 
+
+let s:favoriteColorSchemesWithMode = []
+let s:isAddModeToFavorite = 0
+function! s:AddModeToFavoriteColorSchemes()
+    if s:isAddModeToFavorite
+        return
+    endif
+    call s:ReadColorSchemesData()
+    if empty(s:favoriteColorSchemes)
+        return
+    endif
+    let index = 0
+    let length = len(s:favoriteColorSchemes)
+    while index < length
+        let name = get(index)
+        let light = 0
+        let found = s:FindColorSchemesInAll(name)
+        if !empty(found)
+            let light = 1
+        endif
+        call add(s:favoriteColorSchemesWithMode, {'name': name, 'light': light})
+        let index = index + 1
+    endwhile
+    let s:isAddModeToFavorite = 1
+endfunction
+
+
+
+let s:favoriteColorSchemesWithRandom = []
+let s:favoriteColorSchemeIndex = 0
 " @param mode {string} 'light'/'dark'/''
 function! s:RandomFavorite(mode)
-    if empty(s:favoriteColorSchemes)
+    call s:AddModeToFavoriteColorSchemes()
+    if empty(s:favoriteColorSchemesWithMode)
         return
     endif
     if empty(s:favoriteColorSchemesWithRandom)
         let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes, 0)
     endif
-    call s:RandomColorSchemes(s:favoriteColorSchemesWithRandom)
+
+    let found = s:GetNextColorScheme(s:favoriteColorSchemesWithRandom, s:favoriteColorSchemeIndex, a:mode)
+
+    if found == -1 || found ==# ''
+        echomsg 'Failed to find a matched scheme'
+    else
+        let s:favoriteColorSchemeIndex = found
+        execute 'colo ' . found
+    endif
 endfunction
 
 
@@ -276,11 +331,17 @@ function s:RandomTheme(...)
     call s:SwitchFont()
 endfunction
 
-function s:RandomFavoriteTheme()
+function s:RandomFavoriteTheme(...)
+    let mode = ''
+    if a:0 == 1
+        let mode = a:1
+    endif
+
     if empty(s:favoriteColorSchemes)
         return
     endif
-    call s:RandomFavorite()
+
+    call s:RandomFavorite(mode)
     call s:SwitchFont()
 endfunction
 
@@ -304,7 +365,7 @@ endfunction
 
 command! -nargs=0 RandomFont call s:SwitchFont()
 command! -nargs=? -complete=customlist,RandomThemeCompleter RandomTheme call s:RandomTheme(<f-args>)
-command! -nargs=0 RandomThemeFavorite call s:RandomFavoriteTheme()
+command! -nargs=? -complete=customlist,RandomThemeCompleter RandomThemeFavorite call s:RandomFavoriteTheme(<f-args>)
 
 
 let s:randomOnStart = 1
