@@ -10,11 +10,9 @@
 
 if &compatible || exists('g:random_theme_loaded')
     if exists(':RandomTheme')
-
-        if exists('g:random_theme_start') && g:random_theme_start
-            execute ':silent RandomTheme'
-        endif
-
+        " if exists('g:random_theme_start') && g:random_theme_start
+            " execute ':silent RandomTheme'
+        " endif
         finish
     endif
 endif
@@ -23,90 +21,34 @@ let g:random_theme_loaded = 1
 let s:save_cpo = &cpoptions
 set cpoptions&vim
 
-" commands for special color schemes
-let s:specialSchemeCommands = {
-            \ 'lucius': [
-                    \ 'LuciusBlack',
-                    \ 'LuciusBlackHighContrast',
-                    \ 'LuciusBlackLowContrast',
-                    \ 'LuciusDark',
-                    \ 'LuciusDarkHighContrast',
-                    \ 'LuciusDarkLowContrast',
-                    \ 'LuciusLight',
-                    \ 'LuciusLightHighContrast',
-                    \ 'LuciusLightLowContrast',
-                    \ 'LuciusWhite',
-                    \ 'LuciusWhiteHighContrast',
-                    \ 'LuciusWhiteLowContrast'
-                \],
-            \ 'solarized': [
-                    \ 'SolarizedDark',
-                    \ 'SolarizedLight'
-                \],
-            \ 'gruvbox': [
-                    \ 'GruvboxDark',
-                    \ 'GruvboxDarkHighContrast',
-                    \ 'GruvboxDarkLowContrast',
-                    \ 'GruvboxLight',
-                    \ 'GruvboxLightHighContrast',
-                    \ 'GruvboxLightLowContrast'
-                \],
-            \ 'hybrid': [
-                    \ 'HybridDark',
-                    \ 'HybridDarkLowContrast'
-                \]
-        \}
-
-
-
-"@param {List} schemes
-"@return {List}
-function! s:convertColorSchemes(schemes)
-    let colorSchemes = []
-
-    for name in a:schemes
-        if has_key(s:specialSchemeCommands, name)
-            let commands = get(s:specialSchemeCommands, name)
-            for cmdStr in commands
-                if index(colorSchemes, cmdStr) == -1
-                    call add(colorSchemes, cmdStr)
-                endif
-            endfor
-        else
-            if index(colorSchemes, name) == -1
-                call add(colorSchemes, name)
-            endif
-        endif
-    endfor
-
-    return colorSchemes
-endfunction
-
-
-
 
 let s:scriptPath = expand('<sfile>:p:h')
-" @return {list}  <{name: 'string', light: 0|1}>
+
+"  s:allColorSchemes {list}  <{name: 'string', light: 0|1}>
 function s:ReadColorSchemesData()
+    if exists('s:allColorSchemes')
+        return
+    endif
     let jsonFile = s:scriptPath . '/colorschemes.json'
+    " echo "jsonFile: " . jsonFile
     if filereadable(jsonFile)
         let lines = readfile(jsonFile)
         let content = join(lines, '')
         let schemeList = json_decode(content)
-        return schemeList
+        let s:allColorSchemes = schemeList
     else
+        let s:allColorSchemes = []
         echo 'file not filereadable'
     endif
-    return []
 endfunction
 
 
 
 if exists('g:favorite_color_schemes')
-    let s:favoriteColorSchemes = s:convertColorSchemes(g:favorite_color_schemes)
+    let s:favoriteColorSchemes = g:favorite_color_schemes
 elseif exists('g:random_color_schemes')
     " compatible with old setting
-    let s:favoriteColorSchemes = s:convertColorSchemes(g:random_color_schemes)
+    let s:favoriteColorSchemes = g:random_color_schemes
 else
     let s:favoriteColorSchemes = []
 endif
@@ -149,34 +91,6 @@ function! s:RandomInt(max)
 endfunction
 
 
-"@param {List} colorSchemes
-function! s:RandomColorSchemes(colorSchemes)
-
-    if empty(a:colorSchemes)
-        return
-    endif
-
-    let item = remove(a:colorSchemes, 0)
-    let color = item
-    let command = ''
-
-    let specialColorNames = keys(s:specialSchemeCommands)
-
-    for name in specialColorNames
-        let commandList = get(s:specialSchemeCommands, name, [])
-        if index(commandList, item) > -1
-            let color = name
-            let command = item
-            break
-        endif
-    endfor
-
-    execute 'colo ' . color
-    let execCommand = ':' . command
-    if len(command) > 1 && exists(execCommand)
-        execute execCommand
-    endif
-endfunction
 
 function! s:UniqueList(list)
     let newList = []
@@ -220,33 +134,27 @@ function! s:RandomOrder(theList, isUnique)
 endfunction
 
 
-let s:allColorSchemesWithRandom = []
-let s:allColorSchemeIndex = 0
-
+" @param schemesInRandom {Array}
+" @param start {number}
 " @param mode {string} 'light'/'dark'/''
-function! s:RandomAll(mode)
-    if !exists('s:allColorSchemes')
-        let s:allColorSchemes = s:ReadColorSchemesData()
+" @return {number}
+function! s:GetNextColorScheme(schemesInRandom, start, mode)
+    " echo 's:GetNextColorScheme'
+    " echo a:schemesInRandom
+    if empty(a:schemesInRandom)
+      return -1
     endif
 
-    if empty(s:allColorSchemes)
-      return
-    endif
-
-    if empty(s:allColorSchemesWithRandom)
-        let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes, 1)
-    endif
-
-    let length = len(s:allColorSchemesWithRandom)
+    let length = len(a:schemesInRandom)
     let found = -1
-
     let loopCount = 0
+    let theIndex = a:start
 
     while found == -1 && loopCount < length
         let loopCount += 1
 
-        let index = (s:allColorSchemeIndex + length) % length
-        let item = get(s:allColorSchemesWithRandom, index)
+        let index = (theIndex + length) % length
+        let item = get(a:schemesInRandom, index, {})
         let name = get(item, 'name', '')
         let isLight = get(item, 'light', 0)
 
@@ -262,27 +170,105 @@ function! s:RandomAll(mode)
             let found = name
         endif
 
-        let s:allColorSchemeIndex = index + 1
+        let theIndex = index + 1
     endwhile
+
+    return found
+endfunction
+
+
+let s:allColorSchemesWithRandom = []
+let s:allColorSchemeIndex = 0
+" @param mode {string} 'light'/'dark'/''
+function! s:RandomAll(mode)
+    call s:ReadColorSchemesData()
+    " echo s:allColorSchemes
+
+    if empty(s:allColorSchemes)
+      return
+    endif
+
+    if empty(s:allColorSchemesWithRandom)
+        let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes, 1)
+    endif
+
+    let found = s:GetNextColorScheme(s:allColorSchemesWithRandom, s:allColorSchemeIndex, a:mode)
+    " echo 'RandomAll found'
+    " echo found
 
     if found == -1 || found ==# ''
         echomsg 'Failed to find a matched scheme'
     else
+        let s:allColorSchemeIndex = found
         execute 'colo ' . found
     endif
-
 endfunction
 
 
-let s:favoriteColorSchemesWithRandom = []
-function! s:RandomFavorite()
+" @params {string} name
+" @return {object}
+function! s:FindColorSchemesInAll(name)
+    let index = -1
+    let length = len(s:allColorSchemes)
+    while index < length
+        let item = get(s:allColorSchemes, index, {})
+        let itemName = get(item, 'name', '')
+        if a:name == itemName
+            return { 'name': a:name, 'light': item.light  }
+        endif
+        let index = index + 1
+    endwhile
+    return {}
+endfunction
+
+
+let s:favoriteColorSchemesWithMode = []
+let s:isAddModeToFavorite = 0
+function! s:AddModeToFavoriteColorSchemes()
+    if s:isAddModeToFavorite
+        return
+    endif
+    call s:ReadColorSchemesData()
     if empty(s:favoriteColorSchemes)
         return
     endif
-    if empty(s:favoriteColorSchemesWithRandom)
-        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes, 0)
+    let index = 0
+    let length = len(s:favoriteColorSchemes)
+    while index < length
+        let name = get(s:favoriteColorSchemes, index)
+        let light = 0
+        let found = s:FindColorSchemesInAll(name)
+        if !empty(found)
+            let light = 1
+        endif
+        call add(s:favoriteColorSchemesWithMode, {'name': name, 'light': light})
+        let index = index + 1
+    endwhile
+    let s:isAddModeToFavorite = 1
+endfunction
+
+
+
+let s:favoriteColorSchemesWithRandom = []
+let s:favoriteColorSchemeIndex = 0
+" @param mode {string} 'light'/'dark'/''
+function! s:RandomFavorite(mode)
+    call s:AddModeToFavoriteColorSchemes()
+    if empty(s:favoriteColorSchemesWithMode)
+        return
     endif
-    call s:RandomColorSchemes(s:favoriteColorSchemesWithRandom)
+    if empty(s:favoriteColorSchemesWithRandom)
+        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemesWithMode, 0)
+    endif
+
+    let found = s:GetNextColorScheme(s:favoriteColorSchemesWithRandom, s:favoriteColorSchemeIndex, a:mode)
+
+    if found == -1 || found ==# ''
+        echomsg 'Failed to find a matched scheme'
+    else
+        let s:favoriteColorSchemeIndex = found
+        execute 'colo ' . found
+    endif
 endfunction
 
 
@@ -349,15 +335,21 @@ function s:RandomTheme(...)
     call s:SwitchFont()
 endfunction
 
-function s:RandomFavoriteTheme()
+function s:RandomFavoriteTheme(...)
+    let mode = ''
+    if a:0 == 1
+        let mode = a:1
+    endif
+
     if empty(s:favoriteColorSchemes)
         return
     endif
-    call s:RandomFavorite()
+
+    call s:RandomFavorite(mode)
     call s:SwitchFont()
 endfunction
 
-function RandomThemeCompleter(A, L, P)
+function! RandomThemeCompleter(A, L, P)
     let modes = ['dark', 'light']
     let trimed = trim(a:A)
     let length = len(trimed)
@@ -377,27 +369,26 @@ endfunction
 
 command! -nargs=0 RandomFont call s:SwitchFont()
 command! -nargs=? -complete=customlist,RandomThemeCompleter RandomTheme call s:RandomTheme(<f-args>)
-command! -nargs=0 RandomThemeFavorite call s:RandomFavoriteTheme()
+command! -nargs=? -complete=customlist,RandomThemeCompleter RandomThemeFavorite call s:RandomFavoriteTheme(<f-args>)
 
 
-let s:randomOnStart = 1
+let s:randomOnStart = 'all'
 if exists('g:random_theme_start')
     let s:randomOnStart = g:random_theme_start
 endif
 
-if s:randomOnStart != 0
-    let guiRunning = has('gui_running')
-    if s:randomOnStart == 2
-        if guiRunning
-            execute ':RandomTheme'
-        endif
-    elseif s:randomOnStart == 3
-        if !guiRunning
-            execute ':RandomTheme'
-        endif
-    else
-        execute ':RandomTheme'
-    endif
+if s:randomOnStart ==? 'all'
+    execute ':RandomTheme'
+elseif s:randomOnStart ==? 'all:light'
+    execute ':RandomTheme light'
+elseif s:randomOnStart ==? 'all:dark'
+    execute ':RandomTheme dark'
+elseif s:randomOnStart ==? 'favorite'
+    execute ':RandomThemeFavorite'
+elseif s:randomOnStart ==? 'favorite:light'
+    execute ':RandomThemeFavorite light'
+elseif s:randomOnStart ==? 'favorite:dark'
+    execute ':RandomThemeFavorite dark'
 endif
 
 let &cpoptions = s:save_cpo
