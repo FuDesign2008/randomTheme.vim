@@ -26,19 +26,20 @@ let s:scriptPath = expand('<sfile>:p:h')
 
 "  s:allColorSchemes {list}  <{name: 'string', light: 0|1}>
 function s:ReadColorSchemesData()
-    if !exists('s:allColorSchemes')
+    if exists('s:allColorSchemes')
         return
     endif
     let jsonFile = s:scriptPath . '/colorschemes.json'
+    " echo "jsonFile: " . jsonFile
     if filereadable(jsonFile)
         let lines = readfile(jsonFile)
         let content = join(lines, '')
         let schemeList = json_decode(content)
         let s:allColorSchemes = schemeList
     else
+        let s:allColorSchemes = []
         echo 'file not filereadable'
     endif
-    let s:allColorSchemes = []
 endfunction
 
 
@@ -138,6 +139,8 @@ endfunction
 " @param mode {string} 'light'/'dark'/''
 " @return {number}
 function! s:GetNextColorScheme(schemesInRandom, start, mode)
+    " echo 's:GetNextColorScheme'
+    " echo a:schemesInRandom
     if empty(a:schemesInRandom)
       return -1
     endif
@@ -151,7 +154,7 @@ function! s:GetNextColorScheme(schemesInRandom, start, mode)
         let loopCount += 1
 
         let index = (theIndex + length) % length
-        let item = get(a:schemesInRandom, index)
+        let item = get(a:schemesInRandom, index, {})
         let name = get(item, 'name', '')
         let isLight = get(item, 'light', 0)
 
@@ -179,6 +182,7 @@ let s:allColorSchemeIndex = 0
 " @param mode {string} 'light'/'dark'/''
 function! s:RandomAll(mode)
     call s:ReadColorSchemesData()
+    " echo s:allColorSchemes
 
     if empty(s:allColorSchemes)
       return
@@ -189,6 +193,8 @@ function! s:RandomAll(mode)
     endif
 
     let found = s:GetNextColorScheme(s:allColorSchemesWithRandom, s:allColorSchemeIndex, a:mode)
+    " echo 'RandomAll found'
+    " echo found
 
     if found == -1 || found ==# ''
         echomsg 'Failed to find a matched scheme'
@@ -205,7 +211,7 @@ function! s:FindColorSchemesInAll(name)
     let index = -1
     let length = len(s:allColorSchemes)
     while index < length
-        let item = get(s:allColorSchemes, {})
+        let item = get(s:allColorSchemes, index, {})
         let itemName = get(item, 'name', '')
         if a:name == itemName
             return { 'name': a:name, 'light': item.light  }
@@ -229,7 +235,7 @@ function! s:AddModeToFavoriteColorSchemes()
     let index = 0
     let length = len(s:favoriteColorSchemes)
     while index < length
-        let name = get(index)
+        let name = get(s:favoriteColorSchemes, index)
         let light = 0
         let found = s:FindColorSchemesInAll(name)
         if !empty(found)
@@ -252,7 +258,7 @@ function! s:RandomFavorite(mode)
         return
     endif
     if empty(s:favoriteColorSchemesWithRandom)
-        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemes, 0)
+        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemesWithMode, 0)
     endif
 
     let found = s:GetNextColorScheme(s:favoriteColorSchemesWithRandom, s:favoriteColorSchemeIndex, a:mode)
@@ -378,11 +384,11 @@ elseif s:randomOnStart ==? 'all:light'
 elseif s:randomOnStart ==? 'all:dark'
     execute ':RandomTheme dark'
 elseif s:randomOnStart ==? 'favorite'
-    execute ':RandomFavorite'
+    execute ':RandomThemeFavorite'
 elseif s:randomOnStart ==? 'favorite:light'
-    execute ':RandomFavorite light'
+    execute ':RandomThemeFavorite light'
 elseif s:randomOnStart ==? 'favorite:dark'
-    execute ':RandomFavorite dark'
+    execute ':RandomThemeFavorite dark'
 endif
 
 let &cpoptions = s:save_cpo
