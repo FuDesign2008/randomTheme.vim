@@ -137,20 +137,21 @@ endfunction
 " @param schemesInRandom {Array}
 " @param start {number}
 " @param mode {string} 'light'/'dark'/''
-" @return {number}
+" @return {object}
 function! s:GetNextColorScheme(schemesInRandom, start, mode)
     " echo 's:GetNextColorScheme'
     " echo a:schemesInRandom
     if empty(a:schemesInRandom)
-      return -1
+        return {'index': -1}
     endif
 
     let length = len(a:schemesInRandom)
-    let found = -1
+    let foundName = ''
+    let foundIndex = -1
     let loopCount = 0
     let theIndex = a:start
 
-    while found == -1 && loopCount < length
+    while foundIndex == -1 && loopCount < length
         let loopCount += 1
 
         let index = (theIndex + length) % length
@@ -160,20 +161,23 @@ function! s:GetNextColorScheme(schemesInRandom, start, mode)
 
         if a:mode ==# 'light'
             if isLight
-                let found = name
+                let foundIndex = index
+                let foundName = name
             endif
         elseif a:mode ==# 'dark'
             if !isLight
-                let found = name
+                let foundIndex = index
+                let foundName = name
             endif
         else
-            let found = name
+            let foundIndex = index
+            let foundName = name
         endif
 
         let theIndex = index + 1
     endwhile
 
-    return found
+    return {'name': foundName, 'index': foundIndex}
 endfunction
 
 
@@ -193,14 +197,16 @@ function! s:RandomAll(mode)
     endif
 
     let found = s:GetNextColorScheme(s:allColorSchemesWithRandom, s:allColorSchemeIndex, a:mode)
+    let foundIndex = get(found, 'index')
+    let foundName = get(found, 'name', '')
     " echo 'RandomAll found'
     " echo found
 
-    if found == -1 || found ==# ''
+    if foundIndex == -1 || foundName ==# ''
         echomsg 'Failed to find a matched scheme'
     else
-        let s:allColorSchemeIndex = found
-        execute 'colo ' . found
+        let s:allColorSchemeIndex = foundIndex + 1
+        execute 'colo ' . foundName
     endif
 endfunction
 
@@ -262,12 +268,14 @@ function! s:RandomFavorite(mode)
     endif
 
     let found = s:GetNextColorScheme(s:favoriteColorSchemesWithRandom, s:favoriteColorSchemeIndex, a:mode)
+    let foundIndex = get(found, 'index')
+    let foundName = get(found, 'name', '')
 
-    if found == -1 || found ==# ''
+    if foundIndex == -1 || foundName ==# ''
         echomsg 'Failed to find a matched scheme'
     else
-        let s:favoriteColorSchemeIndex = found
-        execute 'colo ' . found
+        let s:favoriteColorSchemeIndex = foundIndex + 1
+        execute 'colo ' . foundName
     endif
 endfunction
 
