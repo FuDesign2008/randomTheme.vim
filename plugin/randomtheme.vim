@@ -245,7 +245,7 @@ function! s:AddModeToFavoriteColorSchemes()
         let light = 0
         let found = s:FindColorSchemesInAll(name)
         if !empty(found)
-            let light = 1
+            let light = found.light
         endif
         call add(s:favoriteColorSchemesWithMode, {'name': name, 'light': light})
         let index = index + 1
@@ -266,6 +266,8 @@ function! s:RandomFavorite(mode)
     if empty(s:favoriteColorSchemesWithRandom)
         let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemesWithMode, 0)
     endif
+    " echo "RandomFavorite: " . a:mode
+    " echo s:favoriteColorSchemesWithMode
 
     let found = s:GetNextColorScheme(s:favoriteColorSchemesWithRandom, s:favoriteColorSchemeIndex, a:mode)
     let foundIndex = get(found, 'index')
