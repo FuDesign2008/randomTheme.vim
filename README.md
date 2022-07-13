@@ -6,10 +6,10 @@ A plugin for switch color scheme and font, even on start up!
 
 Before install this plugin, you should install
 
-- https://github.com/rafi/awesome-vim-colorschemes
-- Some coding Fonts
-  - Some fonts is put in `./fonts` folder, just install the fonts.
-  - [Top 10 Coding Fonts for Developers](https://scotch.io/bar-talk/top-10-monospace-fonts-for-developers)
+1. https://github.com/rafi/awesome-vim-colorschemes
+1. Some coding Fonts
+   - Some fonts is put in `./fonts` folder, just install the fonts.
+   - [Top 10 Coding Fonts for Developers](https://scotch.io/bar-talk/top-10-monospace-fonts-for-developers)
 
 Then,
 
@@ -77,23 +77,24 @@ Available values are here:
 
 ## Commands
 
-- `:RandomFont` - select a font from `g:favorite_gui_fonts`
-- `:RandomTheme` - select a color scheme from all available schemes and run `:RandomFont`
-  - `:RandomTheme` select a color scheme
-  - `:RandomTheme dark` select a dark color scheme
-  - `:RandomTheme light` select a light color scheme
-  - `:RandomTheme $shemeName` select a special color scheme
-- `:RandomThemeFavorite` - select a color scheme from the schemes in `g:favorite_color_schemes` and run `:RandomFont`
-  - `:RandomThemeFavorite` select a color scheme
-  - `:RandomThemeFavorite dark` select a favorite dark color scheme
-  - `:RandomThemeFavorite light` select a favorite light color scheme
-  - `:RandomThemeFavorite $schemeName` select a special favorite color scheme
+1. `:RandomFont` - select a font from `g:favorite_gui_fonts`
+1. `:RandomTheme` - select a color scheme from all available schemes and run `:RandomFont`
+   - `:RandomTheme` select a color scheme
+   - `:RandomTheme dark` select a dark color scheme
+   - `:RandomTheme light` select a light color scheme
+   - `:RandomTheme $shemeName` select a special color scheme
+1. `:RandomThemeFavorite` - select a color scheme from the schemes in `g:favorite_color_schemes` and run `:RandomFont`
+   - `:RandomThemeFavorite` select a color scheme
+   - `:RandomThemeFavorite dark` select a favorite dark color scheme
+   - `:RandomThemeFavorite light` select a favorite light color scheme
+   - `:RandomThemeFavorite $schemeName` select a special favorite color scheme
 
 ## Change Log
 
 - 2022-07-14
-  - Use https://github.com/rafi/awesome-vim-colorschemes
-  - `:RandomTheme ${schemeName}` /`:RandomFavorite ${schemeName}`
+  - use https://github.com/rafi/awesome-vim-colorschemes
+  - add support for `:RandomTheme ${schemeName}` /`:RandomFavorite ${schemeName}`
+  - change airline theme when run `:RandomTheme` / `:RandomFavorite`
 - 2020-09-22
   - update `:RandomFavorite` command
 - 2020-04-22
