@@ -157,15 +157,16 @@ function! s:GetNextColorScheme(schemesInRandom, start, mode)
         let index = (theIndex + length) % length
         let item = get(a:schemesInRandom, index, {})
         let name = get(item, 'name', '')
-        let isLight = get(item, 'light', 0)
+        let light = get(item, 'light', 0)
+        let dark = get(item, 'dark', 0)
 
         if a:mode ==# 'light'
-            if isLight
+            if light
                 let foundIndex = index
                 let foundName = name
             endif
         elseif a:mode ==# 'dark'
-            if !isLight
+            if dark
                 let foundIndex = index
                 let foundName = name
             endif
@@ -177,7 +178,7 @@ function! s:GetNextColorScheme(schemesInRandom, start, mode)
         let theIndex = index + 1
     endwhile
 
-    return {'name': foundName, 'index': foundIndex}
+    return {'name': foundName, 'index': foundIndex, 'mode': a:mode}
 endfunction
 
 
@@ -206,6 +207,11 @@ function! s:RandomAll(mode)
         echomsg 'Failed to find a matched scheme'
     else
         let s:allColorSchemeIndex = foundIndex + 1
+
+        if a:mode ==# 'light' || a:mode ==# 'dark'
+          execute 'set background=' . a:mode
+        endif
+
         execute 'colo ' . foundName
         let airlineTheme=get(found, 'airlineTheme', '')
         let airlineCommand=get(found, 'airlineCommand', '')
@@ -255,8 +261,9 @@ function! s:AddModeToFavoriteColorSchemes()
         let found = s:FindColorSchemesInAll(name)
         if !empty(found)
             let light = found.light
+            let dark = found.dark
+            call add(s:favoriteColorSchemesWithMode, {'name': name, 'light': light, 'dark': dark})
         endif
-        call add(s:favoriteColorSchemesWithMode, {'name': name, 'light': light})
         let index = index + 1
     endwhile
     let s:isAddModeToFavorite = 1
