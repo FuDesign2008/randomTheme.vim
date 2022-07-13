@@ -217,7 +217,7 @@ function! s:RandomAll(mode)
         let airlineCommand=get(found, 'airlineCommand', '')
         if airlineCommand ==# ''
           if airlineTheme !=# ''
-            execute 'let g:airline_theme="'. airlineTheme .'"'
+            execute ':AirlineTheme '. airlineTheme
           endif
         else
           execute '' . airlineCommand
