@@ -207,7 +207,15 @@ function! s:RandomAll(mode)
     else
         let s:allColorSchemeIndex = foundIndex + 1
         execute 'colo ' . foundName
-        " execute 'let g:airline_theme="'. foundName .'"'
+        let airlineTheme=get(found, 'airlineTheme', '')
+        let airlineCommand=get(found, 'airlineCommand', '')
+        if airlineCommand ==# ''
+          if airlineTheme !=# ''
+            execute 'let g:airline_theme="'. airlineTheme .'"'
+          endif
+        else
+          execute '' . airlineCommand
+        endif
     endif
 endfunction
 
