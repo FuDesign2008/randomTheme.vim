@@ -5,13 +5,13 @@ export interface ColorScheme {
 }
 
 export interface ColorTheme extends ColorScheme {
-  airlineTheme: string
-  airlineCommand: string
+  airline: string
+  // before run colorschemes command
+  commandBeforeColo: string
 }
 
 export interface SpecialColorTheme extends ColorTheme {
-  overrideName: string
-  overrideAirline: string
+  override: string
 }
 
 export type MixedColorTheme = ColorTheme | SpecialColorTheme

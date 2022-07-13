@@ -204,6 +204,9 @@ function! s:SetTheme(name, mode)
 
   let foundIndex = get(found, 'index')
   let foundName = get(found, 'name', '')
+  let airlineTheme=get(found, 'airline', '')
+  let commandBeforeColo=get(found, 'commandBeforeColo', '')
+  let override=get(found, 'override', '')
 
   if foundIndex == -1 || foundName ==# ''
       echomsg 'Failed to find a matched scheme'
@@ -213,15 +216,18 @@ function! s:SetTheme(name, mode)
         execute 'set background=' . a:mode
       endif
 
-      execute 'colo ' . foundName
-      let airlineTheme=get(found, 'airlineTheme', '')
-      let airlineCommand=get(found, 'airlineCommand', '')
-      if airlineCommand ==# ''
-        if airlineTheme !=# ''
-          execute ':AirlineTheme '. airlineTheme
-        endif
+      if commandBeforeColo !=# ''
+        execute '' . commandBeforeColo
+      endif
+
+      if override ==# ''
+        execute 'colo ' . foundName
       else
-        execute '' . airlineCommand
+        execute 'colo ' . override
+      endif
+
+      if airlineTheme !=# ''
+        execute ':AirlineTheme '. airlineTheme
       endif
   endif
 endfunction

@@ -45,7 +45,7 @@ function detectColorScheme(filePath: string): ColorScheme {
   const light = isLight(content)
   const dark = isDark(content)
   const parsed = path.parse(fullPath)
-  const name = parsed.name.toLowerCase()
+  const name = parsed.name
 
   if (!dark && !light) {
     return {
@@ -75,7 +75,7 @@ function getColorSchemes(): ColorScheme[] {
 //  fileName:  afterglow.vim
 function detectAirlineTheme(fileName: string): string {
   console.log('detectAirlineTheme fileName:', fileName)
-  const name = fileName.toLowerCase().replace(/\.vim$/, '')
+  const name = fileName.replace(/\.vim$/, '')
   return name
 }
 
@@ -95,22 +95,20 @@ function createData(): void {
   const schemes = getColorSchemes()
   const airlineThemes = getAirlineThemes()
   schemes.forEach((scheme) => {
-    const found = specialThemes.find(
-      (item) => item.overrideName === scheme.name,
-    )
+    const found = specialThemes.find((item) => item.override === scheme.name)
     let theme: ColorTheme | null = null
     if (found) {
       theme = {
         ...found,
       }
     } else {
-      const airlineTheme = airlineThemes.includes(scheme.name)
-        ? scheme.name
-        : ''
+      const airline = airlineThemes.find(
+        (theme) => theme.toLowerCase() === scheme.name.toLowerCase(),
+      )
       theme = {
         ...scheme,
-        airlineTheme,
-        airlineCommand: '',
+        commandBeforeColo: '',
+        airline: airline ? airline : '',
       }
     }
     if (!theme) {
