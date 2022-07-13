@@ -8,7 +8,7 @@ export const specialThemes: SpecialColorTheme[] = [
     light: 1,
     dark: 0,
     airline: 'ayu',
-    commandBeforeColo: 'let ayucolor="light"',
+    commandBeforeColo: 'let g:ayucolor="light"',
   },
   {
     name: 'ayu_mirage',
@@ -16,7 +16,7 @@ export const specialThemes: SpecialColorTheme[] = [
     light: 1,
     dark: 1,
     airline: 'ayu',
-    commandBeforeColo: 'let ayucolor="mirage"',
+    commandBeforeColo: 'let g:ayucolor="mirage"',
   },
   {
     name: 'ayu_dark',
@@ -24,6 +24,6 @@ export const specialThemes: SpecialColorTheme[] = [
     light: 0,
     dark: 1,
     airline: 'ayu',
-    commandBeforeColo: 'let ayucolor="dark"',
+    commandBeforeColo: 'let g:ayucolor="dark"',
   },
 ]
