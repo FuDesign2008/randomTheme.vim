@@ -235,7 +235,7 @@ function! s:FindColorSchemesInAll(name)
         let item = get(s:allColorSchemes, index, {})
         let itemName = get(item, 'name', '')
         if a:name == itemName
-            return { 'name': a:name, 'light': item.light  }
+            return item
         endif
         let index = index + 1
     endwhile
@@ -262,7 +262,7 @@ function! s:AddModeToFavoriteColorSchemes()
         if !empty(found)
             let light = found.light
             let dark = found.dark
-            call add(s:favoriteColorSchemesWithMode, {'name': name, 'light': light, 'dark': dark})
+            call add(s:favoriteColorSchemesWithMode, found)
         endif
         let index = index + 1
     endwhile
