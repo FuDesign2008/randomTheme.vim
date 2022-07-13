@@ -207,8 +207,7 @@ function! s:RandomAll(mode)
     else
         let s:allColorSchemeIndex = foundIndex + 1
         execute 'colo ' . foundName
-        execute 'let g:airline_theme="'. foundName .'"'
-        execute 'let g:lightline = { "colorscheme": "' . foundName .'" }'
+        " execute 'let g:airline_theme="'. foundName .'"'
     endif
 endfunction
 
