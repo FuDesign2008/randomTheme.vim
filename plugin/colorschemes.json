@@ -3,7 +3,7 @@
     "name": "256_noir",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "256_noir",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -24,7 +24,7 @@
     "name": "papercolor",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "papercolor",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -52,21 +52,21 @@
     "name": "anderson",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "anderson",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "angr",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "angr",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "apprentice",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "apprentice",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -80,7 +80,7 @@
     "name": "atom",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "atom",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -94,14 +94,14 @@
     "name": "carbonized-dark",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "carbonized-dark",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "carbonized-light",
     "light": 1,
     "dark": 0,
-    "airlineTheme": "carbonized-light",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -115,63 +115,63 @@
     "name": "deep-space",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "deep-space",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "deus",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "deus",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "dogrun",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "dogrun",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "flattened_dark",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "flattened_dark",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "flattened_light",
     "light": 1,
     "dark": 0,
-    "airlineTheme": "flattened_light",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "focuspoint",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "focuspoint",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "fogbell",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "fogbell",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "fogbell_light",
     "light": 1,
     "dark": 0,
-    "airlineTheme": "fogbell_light",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "fogbell_lite",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "fogbell_lite",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -206,28 +206,28 @@
     "name": "happy_hacking",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "happy_hacking",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "hybrid",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "hybrid",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "hybrid_material",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "hybrid_material",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "hybrid_reverse",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "hybrid_reverse",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -241,28 +241,28 @@
     "name": "jellybeans",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "jellybeans",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "lightning",
     "light": 1,
     "dark": 0,
-    "airlineTheme": "lightning",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "lucid",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "lucid",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "lucius",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "lucius",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -276,7 +276,7 @@
     "name": "meta5",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "meta5",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -290,35 +290,35 @@
     "name": "molokai",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "molokai",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "molokayo",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "molokayo",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "mountaineer-grey",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "mountaineer-grey",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "mountaineer-light",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "mountaineer-light",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "mountaineer",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "mountaineer",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -332,14 +332,14 @@
     "name": "oceanic_material",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "oceanic_material",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "one-dark",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "one-dark",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -374,7 +374,7 @@
     "name": "orange-moon",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "orange-moon",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -388,21 +388,21 @@
     "name": "paramount",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "paramount",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "parsec",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "parsec",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "pink-moon",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "pink-moon",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -416,42 +416,42 @@
     "name": "pyte",
     "light": 1,
     "dark": 0,
-    "airlineTheme": "pyte",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "rakr",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "rakr",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "rdark-terminal2",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "rdark-terminal2",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "scheakur",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "scheakur",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "seoul256-light",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "seoul256-light",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "seoul256",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "seoul256",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -465,35 +465,35 @@
     "name": "snow",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "snow",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "solarized8",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "solarized8",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "solarized8_flat",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "solarized8_flat",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "solarized8_high",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "solarized8_high",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "solarized8_low",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "solarized8_low",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -507,35 +507,35 @@
     "name": "space-vim-dark",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "space-vim-dark",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "spacecamp",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "spacecamp",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "spacecamp_lite",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "spacecamp_lite",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "stellarized",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "stellarized",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "sunbather",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "sunbather",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
@@ -549,35 +549,35 @@
     "name": "termschool",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "termschool",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "twilight256",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "twilight256",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "two-firewatch",
     "light": 1,
     "dark": 1,
-    "airlineTheme": "two-firewatch",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "wombat256mod",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "wombat256mod",
+    "airlineTheme": "",
     "airlineCommand": ""
   },
   {
     "name": "yellow-moon",
     "light": 0,
     "dark": 1,
-    "airlineTheme": "yellow-moon",
+    "airlineTheme": "",
     "airlineCommand": ""
   }
 ]

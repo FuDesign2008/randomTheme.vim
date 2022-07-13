@@ -12,7 +12,7 @@ import { specialThemes } from './specialColorSchemes'
 
 const colorSchemePath =
   '/Users/fuyg/.vim/bundle/awesome-vim-colorschemes/colors'
-const airlineThemPath =
+const airlineThemePath =
   '/Users/fuyg/.vim/bundle/awesome-vim-colorschemes/autoload/airline/themes'
 const colorSchemeJson = './plugin/colors.json'
 const airlineThemeJson = './plugin/airline.json'
@@ -80,7 +80,7 @@ function detectAirlineTheme(fileName: string): string {
 }
 
 function getAirlineThemes(): string[] {
-  const files = getFilesOfDir(colorSchemePath)
+  const files = getFilesOfDir(airlineThemePath)
   const themes = files.map((file) => {
     return detectAirlineTheme(file)
   })
