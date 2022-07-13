@@ -40,6 +40,11 @@ function s:ReadColorSchemesData()
         let s:allColorSchemes = []
         echo 'file not filereadable'
     endif
+
+    let s:allColorSchemeNames = []
+    for item in s:allColorSchemes
+      call add(s:allColorSchemes, item.name)
+    endfor
 endfunction
 
 
@@ -376,18 +381,20 @@ function s:RandomFavoriteTheme(...)
 endfunction
 
 function! RandomThemeCompleter(A, L, P)
-    let modes = ['dark', 'light']
+    let modes = extend(['dark', 'light'], s:allColorSchemeNames)
     let trimed = trim(a:A)
     let length = len(trimed)
 
     if length == 0
         return modes
     else
+        let matchModes = []
         for item in modes
             if stridx(item, trimed) > -1 && len(item) > length
-                return [item]
+                call add(matchModes, item)
             endif
         endfor
+        return matchModes
     endif
 
     return []
