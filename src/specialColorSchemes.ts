@@ -13,8 +13,8 @@ export const specialThemes: SpecialColorTheme[] = [
   {
     name: 'ayu_mirage',
     override: 'ayu',
-    light: 0,
-    dark: 0,
+    light: 1,
+    dark: 1,
     airline: 'ayu',
     commandBeforeColo: 'let ayucolor="mirage"',
   },

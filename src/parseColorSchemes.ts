@@ -96,20 +96,16 @@ function createData(): void {
   const airlineThemes = getAirlineThemes()
   schemes.forEach((scheme) => {
     const found = specialThemes.find((item) => item.override === scheme.name)
-    let theme: ColorTheme | null = null
     if (found) {
-      theme = {
-        ...found,
-      }
-    } else {
-      const airline = airlineThemes.find(
-        (theme) => theme.toLowerCase() === scheme.name.toLowerCase(),
-      )
-      theme = {
-        ...scheme,
-        commandBeforeColo: '',
-        airline: airline ? airline : '',
-      }
+      return
+    }
+    const airline = airlineThemes.find(
+      (themeItem) => themeItem.toLowerCase() === scheme.name.toLowerCase(),
+    )
+    const theme: ColorTheme = {
+      ...scheme,
+      commandBeforeColo: '',
+      airline: airline ? airline : '',
     }
     if (!theme) {
       return
@@ -120,6 +116,15 @@ function createData(): void {
       return
     }
     colorThemes.push(theme)
+  })
+
+  specialThemes.forEach((special) => {
+    const themeName = special.name
+    const foundTheme = colorThemes.find((item) => item.name === themeName)
+    if (foundTheme) {
+      return
+    }
+    colorThemes.push(special)
   })
 
   writeJsonFile(colorThemeJson, colorThemes)
