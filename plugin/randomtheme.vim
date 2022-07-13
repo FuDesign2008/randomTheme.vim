@@ -24,9 +24,9 @@ set cpoptions&vim
 
 let s:scriptPath = expand('<sfile>:p:h')
 
-"  s:allColorSchemes {list}  <{name: 'string', light: 0|1}>
-function s:ReadColorSchemesData()
-    if exists('s:allColorSchemes')
+"  s:allColorThemes {list}  <{name: 'string', light: 0|1}>
+function s:ReadDBIfNeeded()
+    if exists('s:allColorThemes')
         return
     endif
     let jsonFile = s:scriptPath . '/colorschemes.json'
@@ -35,14 +35,14 @@ function s:ReadColorSchemesData()
         let lines = readfile(jsonFile)
         let content = join(lines, '')
         let schemeList = json_decode(content)
-        let s:allColorSchemes = schemeList
+        let s:allColorThemes = schemeList
     else
-        let s:allColorSchemes = []
+        let s:allColorThemes = []
         echo 'file not filereadable'
     endif
 
     let s:allColorSchemeNames = []
-    for item in s:allColorSchemes
+    for item in s:allColorThemes
       call add(s:allColorSchemeNames, item.name)
     endfor
 endfunction
@@ -187,22 +187,62 @@ function! s:GetNextColorScheme(schemesInRandom, start, mode)
 endfunction
 
 
-let s:allColorSchemesWithRandom = []
-let s:allColorSchemeIndex = 0
-" @param mode {string} 'light'/'dark'/''
-function! s:RandomAll(mode)
-    call s:ReadColorSchemesData()
-    " echo s:allColorSchemes
+" @param {string} name
+" @param {'light'|'dark'|''} mode
+function! s:SetTheme(name, mode)
+  let found = {}
+  for item in s:allColorThemes
+    if item.name ==# a:name
+      let found = item
+      break
+    endif
+  endfor
 
-    if empty(s:allColorSchemes)
+  if empty(found)
+    return
+  endif
+
+  let foundIndex = get(found, 'index')
+  let foundName = get(found, 'name', '')
+
+  if foundIndex == -1 || foundName ==# ''
+      echomsg 'Failed to find a matched scheme'
+  else
+
+      if a:mode ==# 'light' || a:mode ==# 'dark'
+        execute 'set background=' . a:mode
+      endif
+
+      execute 'colo ' . foundName
+      let airlineTheme=get(found, 'airlineTheme', '')
+      let airlineCommand=get(found, 'airlineCommand', '')
+      if airlineCommand ==# ''
+        if airlineTheme !=# ''
+          execute ':AirlineTheme '. airlineTheme
+        endif
+      else
+        execute '' . airlineCommand
+      endif
+  endif
+endfunction
+
+let s:allColorThemesInRandom = []
+let s:allColorThemeIndex = 0
+
+" @param  {'light'|'dark'|''} mode
+function! s:RandomAll(mode)
+    call s:ReadDBIfNeeded()
+    " echo s:allColorThemes
+
+    if empty(s:allColorThemes)
       return
     endif
 
-    if empty(s:allColorSchemesWithRandom)
-        let s:allColorSchemesWithRandom = s:RandomOrder(s:allColorSchemes, 1)
+    if empty(s:allColorThemesInRandom)
+        let s:allColorThemesInRandom = s:RandomOrder(s:allColorThemes, 1)
     endif
 
-    let found = s:GetNextColorScheme(s:allColorSchemesWithRandom, s:allColorSchemeIndex, a:mode)
+    let found = s:GetNextColorScheme(s:allColorThemesInRandom, s:allColorThemeIndex, a:mode)
     let foundIndex = get(found, 'index')
     let foundName = get(found, 'name', '')
     " echo 'RandomAll found'
@@ -211,22 +251,8 @@ function! s:RandomAll(mode)
     if foundIndex == -1 || foundName ==# ''
         echomsg 'Failed to find a matched scheme'
     else
-        let s:allColorSchemeIndex = foundIndex + 1
-
-        if a:mode ==# 'light' || a:mode ==# 'dark'
-          execute 'set background=' . a:mode
-        endif
-
-        execute 'colo ' . foundName
-        let airlineTheme=get(found, 'airlineTheme', '')
-        let airlineCommand=get(found, 'airlineCommand', '')
-        if airlineCommand ==# ''
-          if airlineTheme !=# ''
-            execute ':AirlineTheme '. airlineTheme
-          endif
-        else
-          execute '' . airlineCommand
-        endif
+        let s:allColorThemeIndex = foundIndex + 1
+        call s:SetTheme(foundName, a:mode)
     endif
 endfunction
 
@@ -234,70 +260,63 @@ endfunction
 " @params {string} name
 " @return {object}
 function! s:FindColorSchemesInAll(name)
-    let index = -1
-    let length = len(s:allColorSchemes)
-    while index < length
-        let item = get(s:allColorSchemes, index, {})
+    for item in s:allColorThemes
         let itemName = get(item, 'name', '')
         if a:name == itemName
             return item
         endif
-        let index = index + 1
-    endwhile
+    endfor
     return {}
 endfunction
 
 
-let s:favoriteColorSchemesWithMode = []
-let s:isAddModeToFavorite = 0
-function! s:AddModeToFavoriteColorSchemes()
-    if s:isAddModeToFavorite
+let s:favoriteColorThemes = []
+let s:favoriteColorThemeNames = []
+let s:hasSetupFavoriteColorThemes = 0
+function! s:SetupFavoriteColorThemesIfNeeded()
+    if s:hasSetupFavoriteColorThemes
         return
     endif
-    call s:ReadColorSchemesData()
+    call s:ReadDBIfNeeded()
     if empty(s:favoriteColorSchemes)
         return
     endif
-    let index = 0
-    let length = len(s:favoriteColorSchemes)
-    while index < length
-        let name = get(s:favoriteColorSchemes, index)
-        let light = 0
+
+    for name in s:favoriteColorSchemes
         let found = s:FindColorSchemesInAll(name)
         if !empty(found)
-            let light = found.light
-            let dark = found.dark
-            call add(s:favoriteColorSchemesWithMode, found)
+            call add(s:favoriteColorThemes, found)
+            call add(s:favoriteColorThemeNames, name)
         endif
-        let index = index + 1
-    endwhile
-    let s:isAddModeToFavorite = 1
+    endfor
+
+    let s:hasSetupFavoriteColorThemes = 1
 endfunction
 
 
 
-let s:favoriteColorSchemesWithRandom = []
-let s:favoriteColorSchemeIndex = 0
+let s:favoriteColorThemesInRandom = []
+let s:favoriteColorThemeIndex = 0
 " @param mode {string} 'light'/'dark'/''
 function! s:RandomFavorite(mode)
-    call s:AddModeToFavoriteColorSchemes()
-    if empty(s:favoriteColorSchemesWithMode)
+    call s:SetupFavoriteColorThemesIfNeeded()
+    if empty(s:favoriteColorThemes)
         return
     endif
-    if empty(s:favoriteColorSchemesWithRandom)
-        let s:favoriteColorSchemesWithRandom = s:RandomOrder(s:favoriteColorSchemesWithMode, 0)
+    if empty(s:favoriteColorThemesInRandom)
+        let s:favoriteColorThemesInRandom = s:RandomOrder(s:favoriteColorThemes, 0)
     endif
     " echo "RandomFavorite: " . a:mode
-    " echo s:favoriteColorSchemesWithMode
+    " echo s:favoriteColorThemes
 
-    let found = s:GetNextColorScheme(s:favoriteColorSchemesWithRandom, s:favoriteColorSchemeIndex, a:mode)
+    let found = s:GetNextColorScheme(s:favoriteColorThemesInRandom, s:favoriteColorThemeIndex, a:mode)
     let foundIndex = get(found, 'index')
     let foundName = get(found, 'name', '')
 
     if foundIndex == -1 || foundName ==# ''
         echomsg 'Failed to find a matched scheme'
     else
-        let s:favoriteColorSchemeIndex = foundIndex + 1
+        let s:favoriteColorThemeIndex = foundIndex + 1
         execute 'colo ' . foundName
     endif
 endfunction
@@ -362,8 +381,19 @@ function s:RandomTheme(...)
         let mode = a:1
     endif
 
-    call s:RandomAll(mode)
-    call s:SwitchFont()
+    if mode ==# 'dark' || mode ==# 'light' || mode ==# ''
+      call s:RandomAll(mode)
+      call s:SwitchFont()
+    else
+      call s:ReadDBIfNeeded()
+      if index(s:allColorSchemeNames, mode) > -1
+        call s:SetTheme(mode, '')
+        call s:SwitchFont()
+      else
+        echo 'Failed to find color scheme: ' . mode
+      endif
+    endif
+
 endfunction
 
 function s:RandomFavoriteTheme(...)
@@ -372,12 +402,23 @@ function s:RandomFavoriteTheme(...)
         let mode = a:1
     endif
 
+    call s:SetupFavoriteColorThemesIfNeeded()
     if empty(s:favoriteColorSchemes)
         return
     endif
 
-    call s:RandomFavorite(mode)
-    call s:SwitchFont()
+    if mode ==# 'dark' || mode ==# 'light' || mode ==# ''
+      call s:RandomFavorite(mode)
+      call s:SwitchFont()
+    else
+      if index(s:favoriteColorThemeNames, mode) > -1
+        call s:SetTheme(mode, '')
+        call s:SwitchFont()
+      else
+        echo 'Failed to find color scheme in favorite: ' . mode
+      endif
+    endif
+
 endfunction
 
 function! RandomThemeCompleter(A, L, P)
@@ -398,9 +439,27 @@ function! RandomThemeCompleter(A, L, P)
     endif
 endfunction
 
+function! RandomThemeFavoriteCompleter(A, L, P)
+    let modes = extend(['dark', 'light'], s:favoriteColorThemeNames)
+    let trimed = trim(a:A)
+    let length = len(trimed)
+
+    if length == 0
+        return modes
+    else
+        let matchModes = []
+        for item in modes
+            if stridx(item, trimed) > -1 && len(item) > length
+                call add(matchModes, item)
+            endif
+        endfor
+        return matchModes
+    endif
+endfunction
+
 command! -nargs=0 RandomFont call s:SwitchFont()
 command! -nargs=? -complete=customlist,RandomThemeCompleter RandomTheme call s:RandomTheme(<f-args>)
-command! -nargs=? -complete=customlist,RandomThemeCompleter RandomThemeFavorite call s:RandomFavoriteTheme(<f-args>)
+command! -nargs=? -complete=customlist,RandomThemeFavoriteCompleter RandomThemeFavorite call s:RandomFavoriteTheme(<f-args>)
 
 
 let s:randomOnStart = 'all'
