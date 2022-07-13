@@ -43,7 +43,7 @@ function s:ReadColorSchemesData()
 
     let s:allColorSchemeNames = []
     for item in s:allColorSchemes
-      call add(s:allColorSchemes, item.name)
+      call add(s:allColorSchemeNames, item.name)
     endfor
 endfunction
 
@@ -396,8 +396,6 @@ function! RandomThemeCompleter(A, L, P)
         endfor
         return matchModes
     endif
-
-    return []
 endfunction
 
 command! -nargs=0 RandomFont call s:SwitchFont()
