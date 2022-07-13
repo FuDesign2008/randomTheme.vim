@@ -1,0 +1,30 @@
+{
+  "name": "randomtheme.vim",
+  "version": "1.0.0",
+  "description": "A plugin for switch color scheme and font, even on start up!",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FuDesign2008/randomTheme.vim.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FuDesign2008/randomTheme.vim/issues"
+  },
+  "homepage": "https://github.com/FuDesign2008/randomTheme.vim#readme",
+  "devDependencies": {
+    "@types/node": "^18.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "eslint": "^8.19.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  }
+}
