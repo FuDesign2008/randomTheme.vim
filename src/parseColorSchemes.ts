@@ -14,8 +14,11 @@ const colorSchemePath =
   '/Users/fuyg/.vim/bundle/awesome-vim-colorschemes/colors'
 const airlineThemePath =
   '/Users/fuyg/.vim/bundle/awesome-vim-colorschemes/autoload/airline/themes'
+const airlineThemePath2 =
+  '/Users/fuyg/.vim/bundle/vim-airline-themes/autoload/airline/themes'
 const colorSchemeJson = './plugin/colors.json'
 const airlineThemeJson = './plugin/airline.json'
+const airlineThemeJson2 = './plugin/airline2.json'
 const colorThemeJson = './plugin/colorschemes.json'
 
 function writeJsonFile(filePath: string, data: any): void {
@@ -79,13 +82,13 @@ function detectAirlineTheme(fileName: string): string {
   return name
 }
 
-function getAirlineThemes(): string[] {
-  const files = getFilesOfDir(airlineThemePath)
+function getAirlineThemes(path: string, jsonPath: string): string[] {
+  const files = getFilesOfDir(path)
   const themes = files.map((file) => {
     return detectAirlineTheme(file)
   })
+  writeJsonFile(jsonPath, themes)
 
-  writeJsonFile(airlineThemeJson, themes)
   return themes
 }
 
@@ -93,7 +96,8 @@ function createData(): void {
   const colorThemes: ColorTheme[] = []
 
   const schemes = getColorSchemes()
-  const airlineThemes = getAirlineThemes()
+  const airlineThemes = getAirlineThemes(airlineThemePath, airlineThemeJson)
+  const airlineThemes2 = getAirlineThemes(airlineThemePath2, airlineThemeJson2)
   schemes.forEach((scheme) => {
     const found = specialThemes.find((item) => item.override === scheme.name)
     if (found) {
@@ -102,10 +106,13 @@ function createData(): void {
     const airline = airlineThemes.find(
       (themeItem) => themeItem.toLowerCase() === scheme.name.toLowerCase(),
     )
+    const airline2 = airlineThemes2.find(
+      (themeItem) => themeItem.toLowerCase() === scheme.name.toLowerCase(),
+    )
     const theme: ColorTheme = {
       ...scheme,
       commandBeforeColo: '',
-      airline: airline ? airline : '',
+      airline: airline ? airline : airline2 ? airline2 : '',
     }
     if (!theme) {
       return
