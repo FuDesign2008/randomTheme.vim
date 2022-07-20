@@ -1,5 +1,6 @@
 import { SpecialColorTheme } from './colorSchemes'
 
+// 特殊的处理
 export const specialThemes: SpecialColorTheme[] = [
   // ayu
   {
@@ -27,3 +28,6 @@ export const specialThemes: SpecialColorTheme[] = [
     commandBeforeColo: 'let g:ayucolor="dark"',
   },
 ]
+
+// 在实际使用中遇到了问题， 禁用之
+export const disabledColorSchemes: string[] = ['rakr']

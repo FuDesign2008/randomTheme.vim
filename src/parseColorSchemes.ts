@@ -8,7 +8,7 @@ const fs = require('fs')
 const path = require('path')
 
 import { ColorScheme, ColorTheme } from './colorSchemes'
-import { specialThemes } from './specialColorSchemes'
+import { specialThemes, disabledColorSchemes } from './specialColorSchemes'
 
 const colorSchemePath =
   '/Users/fuyg/.vim/bundle/awesome-vim-colorschemes/colors'
@@ -22,7 +22,7 @@ const airlineThemeJson2 = './plugin/airline2.json'
 const colorThemeJson = './plugin/colorschemes.json'
 
 function writeJsonFile(filePath: string, data: any): void {
-  const jsonDataAsString = JSON.stringify(data)
+  const jsonDataAsString = JSON.stringify(data, null, 2)
   fs.writeFileSync(filePath, jsonDataAsString)
 }
 
@@ -93,7 +93,7 @@ function getAirlineThemes(path: string, jsonPath: string): string[] {
 }
 
 function createData(): void {
-  const colorThemes: ColorTheme[] = []
+  let colorThemes: ColorTheme[] = []
 
   const schemes = getColorSchemes()
   const airlineThemes = getAirlineThemes(airlineThemePath, airlineThemeJson)
@@ -132,6 +132,10 @@ function createData(): void {
       return
     }
     colorThemes.push(special)
+  })
+
+  colorThemes = colorThemes.filter((theme) => {
+    return disabledColorSchemes.includes(theme.name) ? false : true
   })
 
   writeJsonFile(colorThemeJson, colorThemes)
