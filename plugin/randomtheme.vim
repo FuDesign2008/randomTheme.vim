@@ -384,7 +384,7 @@ function s:RandomTheme(...)
     let mode = ''
 
     if a:0 == 1
-        let mode = a:1
+        let mode = trim(a:1)
     endif
 
     if mode ==# 'dark' || mode ==# 'light' || mode ==# ''
@@ -405,7 +405,7 @@ endfunction
 function s:RandomFavoriteTheme(...)
     let mode = ''
     if a:0 == 1
-        let mode = a:1
+        let mode = trim(a:1)
     endif
 
     call s:SetupFavoriteColorThemesIfNeeded()
