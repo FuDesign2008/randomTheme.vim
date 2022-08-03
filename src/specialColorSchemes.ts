@@ -14,7 +14,7 @@ export const specialThemes: SpecialColorTheme[] = [
   {
     name: 'ayu_mirage',
     override: 'ayu',
-    light: 1,
+    light: 0,
     dark: 1,
     airline: 'ayu',
     commandBeforeColo: 'let g:ayucolor="mirage"',
