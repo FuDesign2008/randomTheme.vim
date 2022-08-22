@@ -2,3 +2,4 @@ node_modules
 plugin/airline.json
 plugin/airline2.json
 plugin/colors.json
+*.temp.html
