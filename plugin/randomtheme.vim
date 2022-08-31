@@ -331,14 +331,15 @@ endfunction
 
 if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
     let g:favorite_gui_fonts = [
-                \ 'Monaco:h12',
-                \ 'Fira\ Code:h12',
                 \ 'Cascadia\ Code:h12',
-                \ 'Ubuntu\ Mono:h14',
+                \ 'Consolas:h13',
+                \ 'Fira\ Code:h12',
+                \ 'Hack:h14',
+                \ 'IBM\ Plex\ Mono:h14',
                 \ 'Inconsolata:h13',
-                \ 'Source\ Code\ Variable:h12',
-                \ 'JetBrains\ Mono:h13',
-                \ 'Consolas:h13'
+                \ 'Monaco:h12',
+                \ 'Roboto\ Mono:h14',
+                \ 'Source\ Code\ Pro:h12'
                 \]
 endif
 
