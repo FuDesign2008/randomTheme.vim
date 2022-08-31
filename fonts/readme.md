@@ -10,6 +10,8 @@
    - https://github.com/googlefonts/Inconsolata/releases
 1. IBM Plex Mono(`./IBM-Plex-Mono`)
    - https://github.com/IBM/plex/releases/tag/v6.1.0
+1. Roboto Mono ('./RobotoMono')
+   - https://github.com/googlefonts/RobotoMono
 1. Source Code Pro (`./SourceCodePro`)
    - https://github.com/adobe-fonts/source-code-pro/releases
    - https://github.com/adobe-fonts/source-code-pro/releases/download/2.038R-ro%2F1.058R-it%2F1.018R-VAR/TTF-source-code-pro-2.038R-ro-1.058R-it.zip
