@@ -9,8 +9,8 @@ Before install this plugin, you should install
 1. https://github.com/rafi/awesome-vim-colorschemes
 1. (optional) https://github.com/vim-airline/vim-airline-themes
 1. Some coding Fonts
-   - Some fonts is put in `./fonts` folder, just install the fonts.
-   - [Top 10 Coding Fonts for Developers](https://scotch.io/bar-talk/top-10-monospace-fonts-for-developers)
+   - Fonts are put in `./fonts` folder, just install the fonts.
+   - see [./fonts/readme.md](./fonts/readme.md) for more
 
 Then,
 
