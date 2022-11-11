@@ -381,6 +381,12 @@ function! s:SwitchFont()
 endfunction
 
 
+function! s:RedrawAsyntaxHighlight()
+  execute 'syntax on'
+  "@see https://vim.fandom.com/wiki/Fix_syntax_highlighting
+  execute 'syntax sync fromstart'
+endfunction
+
 function s:RandomTheme(...)
     let mode = ''
 
@@ -391,11 +397,13 @@ function s:RandomTheme(...)
     if mode ==# 'dark' || mode ==# 'light' || mode ==# ''
       call s:RandomAll(mode)
       call s:SwitchFont()
+      call s:RedrawAsyntaxHighlight()
     else
       call s:ReadDBIfNeeded()
       if index(s:allColorSchemeNames, mode) > -1
         call s:SetTheme(mode, '')
         call s:SwitchFont()
+        call s:RedrawAsyntaxHighlight()
       else
         echo 'Failed to find color scheme: ' . mode
       endif
@@ -417,10 +425,12 @@ function s:RandomFavoriteTheme(...)
     if mode ==# 'dark' || mode ==# 'light' || mode ==# ''
       call s:RandomFavorite(mode)
       call s:SwitchFont()
+      call s:RedrawAsyntaxHighlight()
     else
       if index(s:favoriteColorThemeNames, mode) > -1
         call s:SetTheme(mode, '')
         call s:SwitchFont()
+        call s:RedrawAsyntaxHighlight()
       else
         echo 'Failed to find color scheme in favorite: ' . mode
       endif
