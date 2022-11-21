@@ -183,7 +183,7 @@ function! s:GetNextColorScheme(schemesInRandom, start, mode)
 endfunction
 
 function s:ResetGuiCursor()
-  execute 'set guicuror=' . s:originalGuiCursor
+  execute 'set guicursor=' . s:originalGuiCursor
 endfunction
 
 " @param {string} name
