@@ -1,5 +1,5 @@
 node_modules
-plugin/airline.json
-plugin/airline2.json
-plugin/colors.json
+airline.json
+airline2.json
+colors.json
 *.temp.html
