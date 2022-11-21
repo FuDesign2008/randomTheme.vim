@@ -9,12 +9,7 @@
 "
 
 if &compatible || exists('g:random_theme_loaded')
-    if exists(':RandomTheme')
-        " if exists('g:random_theme_start') && g:random_theme_start
-            " execute ':silent RandomTheme'
-        " endif
-        finish
-    endif
+  finish
 endif
 
 let g:random_theme_loaded = 1
