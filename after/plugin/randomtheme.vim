@@ -18,6 +18,7 @@ set cpoptions&vim
 
 
 let s:scriptPath = expand('<sfile>:p:h')
+let s:originalGuiCursor = &guicursor
 
 "  s:allColorThemes {list}  <{name: 'string', light: 0|1}>
 function s:ReadDBIfNeeded()
@@ -181,6 +182,9 @@ function! s:GetNextColorScheme(schemesInRandom, start, mode)
     return {'name': foundName, 'index': foundIndex, 'mode': a:mode}
 endfunction
 
+function s:ResetGuiCursor()
+  execute 'set guicuror=' . s:originalGuiCursor
+endfunction
 
 " @param {string} name
 " @param {'light'|'dark'|''} mode
@@ -206,7 +210,9 @@ function! s:SetTheme(name, mode)
   if foundIndex == -1 || foundName ==# ''
       echomsg 'Failed to find a matched scheme'
   else
-
+      " Some color scheme change guicursor option
+      " so reset it bebore changing to other color schemes
+      call s:ResetGuiCursor()
       if a:mode ==# 'light' || a:mode ==# 'dark'
         execute 'set background=' . a:mode
       endif
