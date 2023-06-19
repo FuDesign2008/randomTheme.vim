@@ -340,6 +340,7 @@ if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
                 \ 'Inconsolata:h13',
                 \ 'Monaco:h12',
                 \ 'Roboto\ Mono:h14',
+                \ 'IntelOne\ Mono:h12',
                 \ 'Source\ Code\ Pro:h12'
                 \]
 endif
