@@ -79,6 +79,8 @@ Available values are here:
 ## Commands
 
 1. `:RandomFont` - select a font from `g:favorite_gui_fonts`
+   - `:RandomFontZoom <size>` - zoom current font with extra size
+   - `:RandomFontZoomReset` - reset current font size, equal to `:RandomFontZoom 0`
 1. `:RandomTheme` - select a color scheme from all available schemes and run `:RandomFont`
    - `:RandomTheme` select a color scheme
    - `:RandomTheme dark` select a dark color scheme
@@ -92,6 +94,8 @@ Available values are here:
 
 ## Change Log
 
+- 2023-06-21
+  - add `:RandomFontZoom <size>` and `:RandomFontZoomReset` Commands
 - 2022-07-14
   - use https://github.com/rafi/awesome-vim-colorschemes
   - add support for `:RandomTheme ${schemeName}` /`:RandomFavorite ${schemeName}`

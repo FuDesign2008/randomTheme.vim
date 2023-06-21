@@ -345,24 +345,78 @@ if exists('g:favorite_gui_fonts') == 0 || empty('g:favorite_gui_fonts')
                 \]
 endif
 
+" @param {string} font
+" @return {Font}
+" @return {Font.name} string
+" @return {Font.size} number
+function s:NormalizeGuiFont(font)
+  " get gui font
+  let value=trim(a:font)
+  let theFont = {}
+  if len(value) == 0
+    "empty
+    return theFont
+  endif
+
+  if stridx(value, ':h') != -1
+    " font name:h10
+    let arr = split(value, ':h')
+    let theFont.name = arr[0]
+    let theFont.size = str2nr(arr[1])
+  elseif stridx(value, '\') != -1
+    " font name\10
+    let arr = split(value, '\')
+    let theFont.name = arr[0]
+    let theFont.size = str2nr(arr[1])
+  endif
+
+  return theFont
+endfunction
+
+let s:fontExtraSize = 0
+" @param {string|number} extraSize
+function s:RandomFontSize(...)
+  let extraSize = 0
+
+  if a:0 == 1
+    let extraSizeStr = trim(a:1)
+    let extraSize = str2nr(a:1)
+  endif
+
+  let s:fontExtraSize = extraSize
+  let guifont = s:GetFontFromFavorite(0)
+  call s:SetGuiFont(guifont)
+endfunction
+
+function s:RandomFontSizeReset()
+  let s:fontExtraSize = 0
+  let guifont = s:GetFontFromFavorite(0)
+  call s:SetGuiFont(guifont)
+endfunction
+
 
 " @see https://forum.ubuntu.com.cn/viewtopic.php?t=45358
 " @see :help setting-guifont
-" @params {string} guifont  font:h14 格式
-function! s:SetGuiFont(guifont)
+" @params {Font}
+" @params {Font.name} string
+" @params {Font.size} number
+function! s:SetGuiFont(nomalizedFont)
     if has('gui_running')
-        let splitted = split(a:guifont, ':h')
-        if len(splitted) != 2
+        let normalized = a:nomalizedFont
+        if  empty(normalized)
             return
         endif
-        let font = splitted[0]
-        let size= splitted[1]
+        let name = normalized.name
+        let size= normalized.size
+        let size = size + s:fontExtraSize
         " for ubuntu vim-gonme
         if has('x11')
-            let commandStr = 'set guifont=' . font . '\ ' . size
+            " set guifont='font name\ 10'
+            let commandStr = 'set guifont=' . name . '\ ' . size
             execute commandStr
         else
-            let commandStr = 'set guifont=' . font . ':h' . size
+            " set guifont='font name:h10'
+            let commandStr = 'set guifont=' . name . ':h' . size
             execute commandStr
         endif
     endif
@@ -371,15 +425,27 @@ endfunction
 
 
 let s:fontSwitchIndex = s:RandomInt(len(g:favorite_gui_fonts))
-function! s:SwitchFont()
+
+" @param {0|1} goNext
+" @param {Font}
+function s:GetFontFromFavorite(goNext)
     if exists('g:favorite_gui_fonts') == 0 ||  empty('g:favorite_gui_fonts')
-        return
+      return {}
     endif
     let length = len(g:favorite_gui_fonts)
     let index = s:fontSwitchIndex % length
-    let guifont = get(g:favorite_gui_fonts, index)
-    let s:fontSwitchIndex = index + 1
-    call s:SetGuiFont(guifont)
+    let value = get(g:favorite_gui_fonts, index)
+    let normalized = s:NormalizeGuiFont(value)
+
+    if a:goNext
+      let s:fontSwitchIndex = index + 1
+    endif
+    return normalized
+endfunction
+
+function! s:SwitchFont()
+  let guifont = s:GetFontFromFavorite(1)
+  call s:SetGuiFont(guifont)
 endfunction
 
 
@@ -477,6 +543,8 @@ function! RandomThemeFavoriteCompleter(A, L, P)
 endfunction
 
 command! -nargs=0 RandomFont call s:SwitchFont()
+command! -nargs=1 RandomFontZoom call s:RandomFontSize(<f-args>)
+command! -nargs=0 RandomFontZoomReset call s:RandomFontSizeReset()
 command! -nargs=? -complete=customlist,RandomThemeCompleter RandomTheme call s:RandomTheme(<f-args>)
 command! -nargs=? -complete=customlist,RandomThemeFavoriteCompleter RandomThemeFavorite call s:RandomFavoriteTheme(<f-args>)
 
