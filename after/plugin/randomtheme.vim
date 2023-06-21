@@ -433,13 +433,14 @@ function s:GetFontFromFavorite(goNext)
       return {}
     endif
     let length = len(g:favorite_gui_fonts)
+
+    if a:goNext
+      let s:fontSwitchIndex += 1
+    endif
+
     let index = s:fontSwitchIndex % length
     let value = get(g:favorite_gui_fonts, index)
     let normalized = s:NormalizeGuiFont(value)
-
-    if a:goNext
-      let s:fontSwitchIndex = index + 1
-    endif
     return normalized
 endfunction
 
