@@ -295,21 +295,21 @@
   },
   {
     "name": "mountaineer-grey",
-    "light": 1,
+    "light": 0,
     "dark": 1,
     "commandBeforeColo": "",
     "airline": ""
   },
   {
     "name": "mountaineer-light",
-    "light": 1,
+    "light": 0,
     "dark": 1,
     "commandBeforeColo": "",
     "airline": ""
   },
   {
     "name": "mountaineer",
-    "light": 1,
+    "light": 0,
     "dark": 1,
     "commandBeforeColo": "",
     "airline": ""

@@ -16,10 +16,10 @@ const airlineThemePath =
   '/Users/fuyg/.vim/bundle/awesome-vim-colorschemes/autoload/airline/themes'
 const airlineThemePath2 =
   '/Users/fuyg/.vim/bundle/vim-airline-themes/autoload/airline/themes'
-const colorSchemeJson = './plugin/colors.json'
-const airlineThemeJson = './plugin/airline.json'
-const airlineThemeJson2 = './plugin/airline2.json'
-const colorThemeJson = './plugin/colorschemes.json'
+const colorSchemeJson = './after/plugin/colors.json'
+const airlineThemeJson = './after/plugin/airline.json'
+const airlineThemeJson2 = './after/plugin/airline2.json'
+const colorThemeJson = './after/plugin/colorschemes.json'
 
 function writeJsonFile(filePath: string, data: any): void {
   const jsonDataAsString = JSON.stringify(data, null, 2)
