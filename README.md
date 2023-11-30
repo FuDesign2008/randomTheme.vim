@@ -53,6 +53,15 @@ let g:favorite_gui_fonts = [
 
 ```
 
+### Time of day `g:random_theme_day_start` / `g:random_theme_night_start`
+
+By default the plugin will apply the daytime theme from 8 to 19. This can be overridden the following way:
+
+```viml
+let g:random_theme_day_start = 10
+let g:random_theme_night_start = 20
+```
+
 ### `g:random_theme_start`
 
 The plugin will use a random color scheme and font when vim starting up by default.
@@ -72,9 +81,11 @@ Available values are here:
 - `'all'` - Use a random color scheme in all, _default value_
 - `'all:light'` - Use a random light color scheme in all
 - `'all:dark'` - Use a random dark color scheme in all
+- `'all:auto'` - Use a random color scheme by day or night
 - `'favorite'` - Use a random color scheme in favorite
 - `'favorite:light'` - Use a random light color scheme in favorite
 - `'favorite:dark'` - Use a random dark color scheme in favorite
+- `'favorite:auto'` - Use a random color scheme by day or night
 
 ## Commands
 
@@ -85,15 +96,21 @@ Available values are here:
    - `:RandomTheme` select a color scheme
    - `:RandomTheme dark` select a dark color scheme
    - `:RandomTheme light` select a light color scheme
+   - `:RandomTheme auto` select a color scheme by day or night
    - `:RandomTheme $shemeName` select a special color scheme
 1. `:RandomThemeFavorite` - select a color scheme from the schemes in `g:favorite_color_schemes` and run `:RandomFont`
    - `:RandomThemeFavorite` select a color scheme
    - `:RandomThemeFavorite dark` select a favorite dark color scheme
    - `:RandomThemeFavorite light` select a favorite light color scheme
+   - `:RandomThemeFavorite auto` select a favorite color scheme by day or night
    - `:RandomThemeFavorite $schemeName` select a special favorite color scheme
 
 ## Change Log
 
+- 2023-11-30
+  - add `g:random_theme_day_start` and `g:random_them_night_start` options
+  - add `:RandomTheme auto`, `:RandomThemeFavorite auto`
+  - add `all:auto`, `favorite:auto` for `g:random_theme_start`
 - 2023-06-21
   - add `:RandomFontZoom <size>` and `:RandomFontZoomReset` Commands
 - 2022-07-14

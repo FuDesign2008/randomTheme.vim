@@ -456,6 +456,21 @@ function! s:RedrawAsyntaxHighlight()
   execute 'syntax sync fromstart'
 endfunction
 
+
+" @return {0 | 1} day or not
+function s:IsDayMode()
+  let l:hour = strftime('%H')
+  let l:mode = 0
+
+  if l:hour > s:dayStart && l:hour < s:nightStart
+    let l:day = 1
+  else
+    let l:day = 0
+  endif
+
+  return l:day
+endfunction
+
 function s:RandomTheme(...)
     let mode = ''
 
@@ -465,6 +480,11 @@ function s:RandomTheme(...)
 
     if mode ==# 'dark' || mode ==# 'light' || mode ==# ''
       call s:RandomAll(mode)
+      call s:SwitchFont()
+      call s:RedrawAsyntaxHighlight()
+    elseif mode ==# 'auto'
+      let l:theme_mode = s:IsDayMode() ? 'light' : 'dark'
+      call s:RandomAll(l:theme_mode)
       call s:SwitchFont()
       call s:RedrawAsyntaxHighlight()
     else
@@ -493,6 +513,11 @@ function s:RandomFavoriteTheme(...)
 
     if mode ==# 'dark' || mode ==# 'light' || mode ==# ''
       call s:RandomFavorite(mode)
+      call s:SwitchFont()
+      call s:RedrawAsyntaxHighlight()
+    elseif mode ==# 'auto'
+      let l:theme_mode = s:IsDayMode() ? 'light' : 'dark'
+      call s:RandomFavorite(l:theme_mode)
       call s:SwitchFont()
       call s:RedrawAsyntaxHighlight()
     else
@@ -551,9 +576,23 @@ command! -nargs=? -complete=customlist,RandomThemeFavoriteCompleter RandomThemeF
 
 
 let s:randomOnStart = 'all'
+let s:dayStart = 8
+let s:nightStart = 19
+
+
 if exists('g:random_theme_start')
     let s:randomOnStart = g:random_theme_start
 endif
+
+if exists('g:random_theme_day_start')
+    let s:dayStart = g:random_theme_day_start
+endif
+
+if exists('g:random_theme_night_start')
+    let s:nightStart = g:random_theme_night_start
+endif
+
+
 
 if s:randomOnStart ==? 'all'
     execute ':RandomTheme'
@@ -561,12 +600,16 @@ elseif s:randomOnStart ==? 'all:light'
     execute ':RandomTheme light'
 elseif s:randomOnStart ==? 'all:dark'
     execute ':RandomTheme dark'
+elseif s:randomOnStart ==? 'all:auto'
+    execute ':RandomTheme auto'
 elseif s:randomOnStart ==? 'favorite'
     execute ':RandomThemeFavorite'
 elseif s:randomOnStart ==? 'favorite:light'
     execute ':RandomThemeFavorite light'
 elseif s:randomOnStart ==? 'favorite:dark'
     execute ':RandomThemeFavorite dark'
+elseif s:randomOnStart ==? 'favorite:auto'
+    execute ':RandomThemeFavorite auto'
 endif
 
 let &cpoptions = s:save_cpo
